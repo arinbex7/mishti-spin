@@ -7,14 +7,14 @@
 <style>
 :root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
 --bg:#fff6e5;--bg2:#ffe3c2;--ink:#3b1220;--muted:#7a5a52;--card:#fff;--line:#ecd6b8;
---brand:#8c1d3a;--brand-ink:#fff;--gold:#f2a516;--err:#c0262d;--ok:#1f9d55}
+--brand:#8c1d3a;--brand-ink:#fff;--gold:#f2a516;--err:#c0262d;--ok:#1f9d55;--purple:#5b2a86}
 html{height:100%}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1c0d13;--bg2:#3a1526;--ink:#fbeedd;--muted:#c9a99b;--card:#2a1620;--line:#4a2a37;--brand:#e0526f;--brand-ink:#1c0d13;--gold:#f6b93b;--err:#ff7b80;--ok:#2ecc71}}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1c0d13;--bg2:#3a1526;--ink:#fbeedd;--muted:#c9a99b;--card:#2a1620;--line:#4a2a37;--brand:#e0526f;--brand-ink:#1c0d13;--gold:#f6b93b;--err:#ff7b80;--ok:#2ecc71;--purple:#a06cd5}}
 *,*::before,*::after{box-sizing:inherit}
 body{margin:0;min-height:100%;color:var(--ink);font:16px/1.55 Georgia,serif;
 background:linear-gradient(160deg,var(--bg),var(--bg2));background-attachment:fixed;overflow-x:hidden}
 h1,h2,h3,button,input,label,textarea{font-family:"Trebuchet MS",Verdana,system-ui,sans-serif}
-main{position:relative;z-index:1;max-width:520px;margin:0 auto;padding:22px 18px 60px}
+main{position:relative;z-index:1;max-width:520px;margin:0 auto;padding:22px 18px 90px}
 .brand{text-align:center;margin:4px 0 14px}
 .brand b{display:block;font-size:clamp(2.6rem,13vw,4.2rem);line-height:1;font-weight:900;font-style:italic;letter-spacing:-.03em;
 background:linear-gradient(180deg,#ffd76a 0%,#f2a516 45%,#c2185b 100%);
@@ -35,6 +35,7 @@ input:focus,textarea:focus,button:focus-visible{outline:3px solid var(--gold);ou
 .btn.gold{background:linear-gradient(180deg,#ffd76a,#f2a516);color:#3b1220}
 .btn.ghost{background:transparent;color:var(--ink);border:2px solid var(--line)}
 .btn.green{background:#1f9d55;color:#fff}
+.btn.purple{background:linear-gradient(180deg,#7c3aed,#5b2a86);color:#fff}
 .btn:disabled{opacity:.55;cursor:not-allowed}
 .badge{display:inline-block;background:var(--gold);color:#3b1220;font-weight:700;font-size:.75rem;padding:3px 10px;border-radius:99px;font-family:"Trebuchet MS",system-ui,sans-serif}
 .hidden{display:none!important}
@@ -46,6 +47,15 @@ input:focus,textarea:focus,button:focus-visible{outline:3px solid var(--gold);ou
 .note{font-size:.8rem;color:var(--muted);margin-top:18px;text-align:center;font-family:"Trebuchet MS",system-ui,sans-serif}
 .spinner{display:inline-block;width:18px;height:18px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:8px}
 @keyframes spin{to{transform:rotate(360deg)}}
+
+/* ===== Bottom navigation ===== */
+.bottom-nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);
+display:flex;justify-content:space-around;padding:8px 0 calc(8px + env(safe-area-inset-bottom,0px));z-index:40;
+font-family:"Trebuchet MS",system-ui,sans-serif}
+.bottom-nav button{background:transparent;border:0;padding:6px 4px;flex:1;cursor:pointer;color:var(--muted);
+font-size:.7rem;font-weight:700;display:flex;flex-direction:column;align-items:center;gap:2px;transition:color .15s}
+.bottom-nav button .ico{font-size:1.4rem;line-height:1}
+.bottom-nav button.active{color:var(--brand)}
 
 /* ===== Spin wheel ===== */
 .wheel-wrap{position:relative;width:100%;max-width:340px;margin:14px auto 22px;aspect-ratio:1}
@@ -74,20 +84,55 @@ padding:6px 14px;border-radius:10px;margin:8px 0 14px;letter-spacing:.06em;backg
 .confetti{position:fixed;inset:0;pointer-events:none;z-index:60}
 
 /* Toast */
-.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:var(--bg);
+.toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:var(--ink);color:var(--bg);
 padding:12px 20px;border-radius:12px;font-family:"Trebuchet MS",system-ui,sans-serif;font-weight:700;
-z-index:100;opacity:0;transition:opacity .25s;pointer-events:none;font-size:.9rem}
+z-index:100;opacity:0;transition:opacity .25s;pointer-events:none;font-size:.9rem;max-width:90%}
 .toast.show{opacity:.95}
 
-/* Mute button */
 #muteBtn{position:fixed;top:calc(10px + env(safe-area-inset-top,0px));right:12px;z-index:15;
 width:40px;height:40px;border-radius:50%;border:2px solid var(--line);background:var(--card);font-size:1.1rem;cursor:pointer}
 
-.history-item{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;
+/* History items */
+.history-item{display:flex;justify-content:space-between;align-items:center;padding:11px 13px;
 background:var(--bg);border:1px solid var(--line);border-radius:10px;margin-bottom:6px;
-font-family:"Trebuchet MS",system-ui,sans-serif;font-size:.9rem}
+font-family:"Trebuchet MS",system-ui,sans-serif;font-size:.88rem}
 .history-item .prize{font-weight:700;color:var(--brand)}
-.history-item .time{font-size:.75rem;color:var(--muted)}
+.history-item .time{font-size:.72rem;color:var(--muted);margin-top:2px}
+.history-item .icon{font-size:1.2rem;margin-right:8px}
+.history-empty{text-align:center;color:var(--muted);padding:20px;font-size:.9rem}
+
+/* Wallet balance */
+.balance-big{text-align:center;padding:22px 0}
+.balance-big .taka{font-size:3rem;font-weight:900;color:var(--brand);font-family:"Trebuchet MS",system-ui,sans-serif;line-height:1}
+.balance-big .taka small{font-size:1.2rem;opacity:.6}
+.balance-big .pts{color:var(--muted);font-size:.9rem;margin-top:8px;font-family:"Trebuchet MS",system-ui,sans-serif}
+
+/* Profile */
+.profile-header{text-align:center;padding:16px 0}
+.avatar{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--brand),var(--gold));
+display:inline-flex;align-items:center;justify-content:center;font-size:2rem;font-weight:900;color:#fff;
+font-family:"Trebuchet MS",system-ui,sans-serif;margin-bottom:10px;box-shadow:0 6px 18px rgba(140,29,58,.35)}
+.profile-name{font-size:1.3rem;font-weight:800;color:var(--brand);font-family:"Trebuchet MS",system-ui,sans-serif}
+.profile-phone{color:var(--muted);font-size:.9rem;font-family:"Trebuchet MS",system-ui,sans-serif;margin-top:2px}
+.profile-row{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--line);
+font-family:"Trebuchet MS",system-ui,sans-serif;font-size:.92rem}
+.profile-row:last-child{border-bottom:0}
+.profile-row .label{color:var(--muted)}
+.profile-row .value{font-weight:700;color:var(--ink)}
+
+/* Leaderboard */
+.lb-item{display:flex;align-items:center;padding:12px 14px;background:var(--bg);border:1px solid var(--line);
+border-radius:12px;margin-bottom:8px;font-family:"Trebuchet MS",system-ui,sans-serif}
+.lb-item.me{background:linear-gradient(135deg,rgba(242,165,22,.15),rgba(140,29,58,.15));border-color:var(--gold);box-shadow:0 0 0 2px var(--gold)}
+.lb-rank{font-weight:900;font-size:1.3rem;color:var(--brand);width:38px;text-align:center}
+.lb-name{flex:1;font-weight:700;font-size:.95rem}
+.lb-pts{font-weight:800;color:var(--gold);font-size:1rem}
+
+/* Redeem card */
+.redeem-card{background:linear-gradient(135deg,rgba(91,42,134,.15),rgba(242,165,22,.15));
+border:2px dashed var(--purple);border-radius:16px;padding:18px;text-align:center;margin-bottom:14px}
+.redeem-card h4{margin:0 0 4px;color:var(--purple);font-size:1.05rem}
+.redeem-card p{margin:0 0 12px;color:var(--muted);font-size:.85rem}
 </style>
 </head>
 <body>
@@ -97,7 +142,7 @@ font-family:"Trebuchet MS",system-ui,sans-serif;font-size:.9rem}
 <main>
   <div class="brand"><b>Arinbex 7</b><span>Mishti Spin Event</span></div>
 
-  <!-- ============ STEP 1: LOGIN ============ -->
+  <!-- ============ LOGIN ============ -->
   <section id="viewLogin">
     <h1>Welcome! 🍬</h1>
     <p class="lead">Enter your name and WhatsApp number to start spinning.</p>
@@ -114,54 +159,126 @@ font-family:"Trebuchet MS",system-ui,sans-serif;font-size:.9rem}
     </div>
   </section>
 
-  <!-- ============ STEP 2: DASHBOARD ============ -->
-  <section id="viewDash" class="hidden">
-    <div class="center" style="margin-bottom:14px">
-      <span class="badge" id="adminBadge" style="display:none">ADMIN</span>
-    </div>
-    <h1 id="welcome">Hi!</h1>
-    <p class="lead">Welcome to Mishti Spin 🎉</p>
+  <!-- ============ MAIN APP ============ -->
+  <section id="viewApp" class="hidden">
 
-    <div class="card">
-      <h3>Your Stats</h3>
-      <div class="stats">
-        <div class="stat"><b id="sPoints">0</b><small>Points</small></div>
-        <div class="stat"><b id="sSpins">0</b><small>Spins Left</small></div>
+    <!-- ===== HOME TAB ===== -->
+    <div id="tabHome" class="tab-panel">
+      <div class="center" style="margin-bottom:10px">
+        <span class="badge" id="adminBadge" style="display:none">ADMIN</span>
       </div>
-      <p class="note" style="margin-top:10px;font-size:.75rem">100 points = 1 taka • Redeem token to earn spins</p>
-    </div>
+      <h1 id="welcome">Hi!</h1>
+      <p class="lead">Welcome to Mishti Spin 🎉</p>
 
-    <!-- ====== SPIN WHEEL ====== -->
-    <div class="card">
-      <h3 style="text-align:center">🎡 Spin the Wheel</h3>
-      <div class="wheel-wrap wheel-glow" id="wheelWrap">
-        <div class="pointer" id="pointer"></div>
-        <div class="wheel" id="wheelEl"><canvas id="wheel" width="700" height="700"></canvas></div>
-        <button class="hub" id="spinBtn">SPIN</button>
+      <div class="card">
+        <h3>Your Stats</h3>
+        <div class="stats">
+          <div class="stat"><b id="sPoints">0</b><small>Points</small></div>
+          <div class="stat"><b id="sSpins">0</b><small>Spins Left</small></div>
+        </div>
+        <p class="note" style="margin-top:10px;font-size:.75rem">100 points = 1 taka • Redeem token to earn spins</p>
       </div>
-      <p class="note" style="margin-top:0">Each spin costs 1 spin credit</p>
+
+      <div class="card">
+        <h3 style="text-align:center">🎡 Spin the Wheel</h3>
+        <div class="wheel-wrap wheel-glow" id="wheelWrap">
+          <div class="pointer" id="pointer"></div>
+          <div class="wheel" id="wheelEl"><canvas id="wheel" width="700" height="700"></canvas></div>
+          <button class="hub" id="spinBtn">SPIN</button>
+        </div>
+        <p class="note" style="margin-top:0">Each spin costs 1 spin credit</p>
+      </div>
+
+      <div class="card">
+        <h3>🎫 Enter Token</h3>
+        <p class="lead" style="text-align:left;margin-bottom:12px;font-size:.85rem">Find the token code inside your chocolate packet.</p>
+        <label for="tokenInput">Token code</label>
+        <input id="tokenInput" placeholder="ARNX-XXXX-XXXX" maxlength="20" autocomplete="off" style="text-transform:uppercase">
+        <div class="err" id="tokenErr" role="alert"></div>
+        <div class="ok" id="tokenOk"></div>
+        <button class="btn gold" id="redeemBtn">Redeem Token</button>
+      </div>
     </div>
 
-    <!-- ====== TOKEN INPUT ====== -->
-    <div class="card">
-      <h3>🎫 Enter Token</h3>
-      <p class="lead" style="text-align:left;margin-bottom:12px;font-size:.85rem">Find the token code inside your chocolate packet.</p>
-      <label for="tokenInput">Token code</label>
-      <input id="tokenInput" placeholder="ARNX-XXXX-XXXX" maxlength="20" autocomplete="off" style="text-transform:uppercase">
-      <div class="err" id="tokenErr" role="alert"></div>
-      <div class="ok" id="tokenOk"></div>
-      <button class="btn gold" id="redeemBtn">Redeem Token</button>
+    <!-- ===== WALLET TAB ===== -->
+    <div id="tabWallet" class="tab-panel hidden">
+      <h1>💰 Wallet</h1>
+      <p class="lead">Your balance &amp; redeem options</p>
+
+      <div class="card">
+        <div class="balance-big">
+          <div class="taka" id="walletTaka">0<small>.00</small></div>
+          <div class="pts"><span id="walletPts">0</span> points</div>
+        </div>
+        <p class="note" style="margin:0;font-size:.75rem">100 points = 1 taka</p>
+      </div>
+
+      <div class="redeem-card">
+        <h4>💸 Redeem Points</h4>
+        <p>Minimum 1000 points (10 taka) needed to redeem. Send request on WhatsApp, we'll process it.</p>
+        <button class="btn purple" id="redeemPointsBtn">Request Redeem</button>
+      </div>
+
+      <div class="card">
+        <h3>📊 Summary</h3>
+        <div class="profile-row"><span class="label">Total Points</span><span class="value" id="wTotalPts">0</span></div>
+        <div class="profile-row"><span class="label">Total Redeemed</span><span class="value" id="wTotalRedeemed">0 pts</span></div>
+        <div class="profile-row"><span class="label">Available Balance</span><span class="value" id="wAvail">0 pts</span></div>
+      </div>
     </div>
 
-    <!-- ====== SPIN HISTORY ====== -->
-    <div class="card" id="historyCard" style="display:none">
-      <h3>📜 Your Spin History</h3>
-      <div id="historyList"></div>
+    <!-- ===== HISTORY TAB ===== -->
+    <div id="tabHistory" class="tab-panel hidden">
+      <h1>📜 History</h1>
+      <p class="lead">All your spins &amp; rewards</p>
+
+      <div class="card">
+        <h3>🎯 Spin History</h3>
+        <div id="spinHistoryList"><div class="history-empty">No spins yet</div></div>
+      </div>
+
+      <div class="card">
+        <h3>🎫 Token Redeems</h3>
+        <div id="tokenHistoryList"><div class="history-empty">No tokens redeemed yet</div></div>
+      </div>
     </div>
 
-    <button class="btn ghost" id="logoutBtn" style="margin-top:6px">Logout</button>
+    <!-- ===== PROFILE TAB ===== -->
+    <div id="tabProfile" class="tab-panel hidden">
+      <h1>👤 Profile</h1>
+      <p class="lead">Your account details</p>
 
-    <p class="note">Coming soon: Wallet, Leaderboard, Admin Panel</p>
+      <div class="card">
+        <div class="profile-header">
+          <div class="avatar" id="avatarInitial">?</div>
+          <div class="profile-name" id="pName">-</div>
+          <div class="profile-phone" id="pPhone">-</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Account Details</h3>
+        <div class="profile-row"><span class="label">Member Since</span><span class="value" id="pJoined">-</span></div>
+        <div class="profile-row"><span class="label">Total Points</span><span class="value" id="pPoints">0</span></div>
+        <div class="profile-row"><span class="label">Total Spins</span><span class="value" id="pSpins">0</span></div>
+        <div class="profile-row"><span class="label">Tokens Used</span><span class="value" id="pTokens">0</span></div>
+        <div class="profile-row"><span class="label">Role</span><span class="value" id="pRole">User</span></div>
+      </div>
+
+      <button class="btn ghost" id="logoutBtn">Logout</button>
+    </div>
+
+    <!-- ===== LEADERBOARD TAB ===== -->
+    <div id="tabLB" class="tab-panel hidden">
+      <h1>🏆 Leaderboard</h1>
+      <p class="lead">Top spin masters</p>
+
+      <div class="card">
+        <h3>Top 10 Players</h3>
+        <div id="lbList"><div class="history-empty">Loading...</div></div>
+      </div>
+    </div>
+
   </section>
 
   <p class="note" id="loadingNote" style="display:none">
@@ -169,6 +286,15 @@ font-family:"Trebuchet MS",system-ui,sans-serif;font-size:.9rem}
     Loading...
   </p>
 </main>
+
+<!-- ============ BOTTOM NAV ============ -->
+<nav class="bottom-nav hidden" id="bottomNav">
+  <button data-tab="tabHome" class="active"><span class="ico">🏠</span>Home</button>
+  <button data-tab="tabWallet"><span class="ico">💰</span>Wallet</button>
+  <button data-tab="tabHistory"><span class="ico">📜</span>History</button>
+  <button data-tab="tabProfile"><span class="ico">👤</span>Profile</button>
+  <button data-tab="tabLB"><span class="ico">🏆</span>Top</button>
+</nav>
 
 <!-- ============ PRIZE MODAL ============ -->
 <div class="overlay" id="prizeOv">
@@ -203,10 +329,26 @@ font-family:"Trebuchet MS",system-ui,sans-serif;font-size:.9rem}
   </div>
 </div>
 
+<!-- ============ REDEEM MODAL ============ -->
+<div class="overlay" id="redeemOv">
+  <div class="modal">
+    <h2 style="margin:0 0 6px">💸 Redeem Request</h2>
+    <p style="color:var(--muted);font-size:.9rem">We'll process your request within 24 hours on WhatsApp.</p>
+    <div style="background:var(--bg);padding:14px;border-radius:12px;text-align:center;margin-bottom:14px">
+      <div style="font-size:1.5rem;font-weight:800;color:var(--brand)" id="redeemAmount">0 taka</div>
+      <div style="color:var(--muted);font-size:.85rem" id="redeemPts">from 0 points</div>
+    </div>
+    <label for="redeemMethod">Preferred method</label>
+    <input id="redeemMethod" value="bKash / Nagad (mention in message)" readonly style="opacity:.7">
+    <div class="err" id="redeemErr"></div>
+    <button class="btn purple" id="redeemSubmitBtn">Send Request on WhatsApp</button>
+    <button class="btn ghost" id="redeemCancelBtn" style="margin-top:8px">Cancel</button>
+  </div>
+</div>
+
 <canvas id="confetti" class="confetti"></canvas>
 <div class="toast" id="toast"></div>
 
-<!-- ============ Firebase SDK ============ -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getAuth, signInAnonymously, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
@@ -226,22 +368,22 @@ const firebaseConfig = {
 };
 
 const ADMIN_PHONES = ["01612929333"];
-const ADMIN_WHATSAPP = "8801612929333";   // WhatsApp number for claims (country code no +)
+const ADMIN_WHATSAPP = "8801612929333";
 
-// Spin counter settings
-const FREE_DELIVERY_EVERY = 50;   // every 50th spin → Free Delivery
-const SWEET_BOX_EVERY     = 300;  // every 300th spin → Sweet Box
+const FREE_DELIVERY_EVERY = 50;
+const SWEET_BOX_EVERY     = 300;
+const POINTS_PER_TAKA     = 100;
+const MIN_REDEEM          = 1000;
 
-// Wheel segments
 const SEGMENTS = [
-  { label: "100 Points",    type: "points",    value: 100, color: "#8c1d3a" },
-  { label: "Free Delivery", type: "free",      value: 100, color: "#1f7a6d" },
-  { label: "200 Points",    type: "points",    value: 200, color: "#d9822b" },
-  { label: "Sweet Box",     type: "box",       value: 0,   color: "#c2185b" },
-  { label: "300 Points",    type: "points",    value: 300, color: "#2f7d5b" },
-  { label: "400 Points",    type: "points",    value: 400, color: "#5b2a86" },
-  { label: "500 Points",    type: "points",    value: 500, color: "#0e7c86" },
-  { label: "600 Points",    type: "points",    value: 600, color: "#a8620a" }
+  { label: "100 Points",    type: "points", value: 100, color: "#8c1d3a" },
+  { label: "Free Delivery", type: "free",   value: 0,   color: "#1f7a6d" },
+  { label: "200 Points",    type: "points", value: 200, color: "#d9822b" },
+  { label: "Sweet Box",     type: "box",    value: 0,   color: "#c2185b" },
+  { label: "300 Points",    type: "points", value: 300, color: "#2f7d5b" },
+  { label: "400 Points",    type: "points", value: 400, color: "#5b2a86" },
+  { label: "500 Points",    type: "points", value: 500, color: "#0e7c86" },
+  { label: "600 Points",    type: "points", value: 600, color: "#a8620a" }
 ];
 const N = SEGMENTS.length;
 const SEG = (Math.PI * 2) / N;
@@ -259,10 +401,10 @@ let userData    = null;
 let spinning    = false;
 let rot         = 0;
 let muted       = localStorage.getItem("mishti_muted") === "1";
+let activeTab   = "tabHome";
 
 // ============== HELPERS ==============
 const $ = id => document.getElementById(id);
-const show = id => { ["viewLogin","viewDash"].forEach(v => $(v).classList.toggle("hidden", v !== id)); };
 const setErr = (id, msg) => { $(id).textContent = msg || ""; };
 
 function toast(msg) {
@@ -272,6 +414,17 @@ function toast(msg) {
   clearTimeout(t._tid);
   t._tid = setTimeout(() => t.classList.remove("show"), 2200);
 }
+
+const fmtDate = ts => {
+  if (!ts) return "-";
+  const d = ts.toDate ? ts.toDate() : new Date(ts);
+  return d.toLocaleString("en-GB", { timeZone: "Asia/Dhaka", day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" });
+};
+const fmtShortDate = ts => {
+  if (!ts) return "";
+  const d = ts.toDate ? ts.toDate() : new Date(ts);
+  return d.toLocaleString("en-GB", { timeZone: "Asia/Dhaka", day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit" });
+};
 
 // ============== SOUND ==============
 let ac;
@@ -288,9 +441,7 @@ function tone(freq, dur, type = "sine", vol = 0.12, when = 0) {
     o.start(t); o.stop(t + dur);
   } catch (e) {}
 }
-function winSound() {
-  [523, 659, 784, 1047, 1319].forEach((f, i) => tone(f, 0.35, "triangle", 0.18, i * 0.11));
-}
+function winSound() { [523, 659, 784, 1047, 1319].forEach((f, i) => tone(f, 0.35, "triangle", 0.18, i * 0.11)); }
 $("muteBtn").textContent = muted ? "🔇" : "🔊";
 $("muteBtn").onclick = () => {
   muted = !muted;
@@ -325,14 +476,12 @@ function confetti(count = 120) {
   })();
 }
 
-// ============== DRAW WHEEL (once) ==============
+// ============== DRAW WHEEL ==============
 (function drawWheel() {
   const cv = $("wheel"), ctx = cv.getContext("2d");
   const W = 700, c = W / 2, r = c - 25;
   ctx.clearRect(0, 0, W, W);
   ctx.translate(c, c);
-
-  // outer rings
   ctx.beginPath(); ctx.arc(0, 0, r + 20, 0, Math.PI * 2); ctx.fillStyle = "#a8620a"; ctx.fill();
   ctx.beginPath(); ctx.arc(0, 0, r + 14, 0, Math.PI * 2); ctx.fillStyle = "#f2a516"; ctx.fill();
 
@@ -347,7 +496,6 @@ function confetti(count = 120) {
     const g = ctx.createRadialGradient(0, 0, 30, 0, 0, r);
     g.addColorStop(0, shade(s.color, 40));
     g.addColorStop(1, s.color);
-
     ctx.beginPath();
     ctx.moveTo(0, 0);
     ctx.arc(0, 0, r, a0, a0 + SEG);
@@ -355,7 +503,6 @@ function confetti(count = 120) {
     ctx.fillStyle = g; ctx.fill();
     ctx.strokeStyle = "rgba(255,255,255,.8)"; ctx.lineWidth = 3; ctx.stroke();
 
-    // text
     ctx.save();
     ctx.rotate(a0 + SEG / 2);
     ctx.textAlign = "right";
@@ -363,7 +510,6 @@ function confetti(count = 120) {
     ctx.shadowColor = "rgba(0,0,0,.55)"; ctx.shadowBlur = 5;
     ctx.font = '800 30px "Trebuchet MS",sans-serif';
     ctx.fillText(s.label, r - 24, 10);
-    // emoji
     ctx.font = "32px system-ui,sans-serif";
     ctx.textAlign = "center";
     const emoji = s.type === "box" ? "🎁" : s.type === "free" ? "🚚" : "🍬";
@@ -371,7 +517,6 @@ function confetti(count = 120) {
     ctx.restore();
   });
 
-  // outer dots
   for (let i = 0; i < 28; i++) {
     const a = (i / 28) * Math.PI * 2;
     ctx.beginPath();
@@ -416,6 +561,7 @@ $("loginBtn").onclick = async () => {
         isAdmin: ADMIN_PHONES.includes(phone),
         points: 0, spins: 0,
         tokensUsed: [],
+        totalRedeemed: 0,
         createdAt: serverTimestamp(),
         lastLogin: serverTimestamp()
       });
@@ -425,7 +571,7 @@ $("loginBtn").onclick = async () => {
     localStorage.setItem("mishti_name", name);
     localStorage.setItem("mishti_phone", phone);
     await loadDashboard(currentUser.uid);
-    show("viewDash");
+    showApp();
   } catch (err) {
     console.error("LOGIN ERROR:", err);
     setErr("loginErr", "Login failed. Try again.");
@@ -459,11 +605,40 @@ window.addEventListener("load", async () => {
     userPhone = savedPhone;
     currentUser = { uid: savedUid };
     await loadDashboard(savedUid);
-    show("viewDash");
+    showApp();
   } else {
-    show("viewLogin");
+    $("viewLogin").classList.remove("hidden");
   }
 });
+
+function showApp() {
+  $("viewLogin").classList.add("hidden");
+  $("viewApp").classList.remove("hidden");
+  $("bottomNav").classList.remove("hidden");
+  switchTab("tabHome");
+}
+
+// ============== TAB SWITCHING ==============
+document.querySelectorAll(".bottom-nav button").forEach(btn => {
+  btn.onclick = () => {
+    const tabId = btn.dataset.tab;
+    switchTab(tabId);
+    document.querySelectorAll(".bottom-nav button").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+  };
+});
+
+function switchTab(tabId) {
+  activeTab = tabId;
+  ["tabHome","tabWallet","tabHistory","tabProfile","tabLB"].forEach(t => {
+    $(t).classList.toggle("hidden", t !== tabId);
+  });
+  if (tabId === "tabWallet") renderWallet();
+  if (tabId === "tabHistory") renderHistory();
+  if (tabId === "tabProfile") renderProfile();
+  if (tabId === "tabLB") renderLeaderboard();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
 
 // ============== LOAD DASHBOARD ==============
 async function loadDashboard(uid) {
@@ -475,37 +650,167 @@ async function loadDashboard(uid) {
     $("sPoints").textContent = userData.points || 0;
     $("sSpins").textContent  = userData.spins  || 0;
     $("adminBadge").style.display = userData.isAdmin ? "inline-block" : "none";
-    // Enable spin button only if has spins
     $("spinBtn").disabled = !(userData.spins > 0);
-    await loadHistory(uid);
   } finally {
     $("loadingNote").style.display = "none";
   }
 }
 
-// ============== LOAD HISTORY ==============
-async function loadHistory(uid) {
+// ============== WALLET ==============
+function renderWallet() {
+  if (!userData) return;
+  const pts = userData.points || 0;
+  const redeemed = userData.totalRedeemed || 0;
+  const avail = pts;
+  const taka = (avail / POINTS_PER_TAKA).toFixed(2);
+
+  $("walletTaka").innerHTML = taka.split(".")[0] + "<small>." + taka.split(".")[1] + "</small>";
+  $("walletPts").textContent = avail;
+  $("wTotalPts").textContent = pts;
+  $("wTotalRedeemed").textContent = redeemed + " pts";
+  $("wAvail").textContent = avail + " pts";
+
+  const redeemable = avail >= MIN_REDEEM;
+  $("redeemPointsBtn").disabled = !redeemable;
+  $("redeemPointsBtn").textContent = redeemable ? "Request Redeem" : `Need ${MIN_REDEEM - avail} more points`;
+}
+
+$("redeemPointsBtn").onclick = () => {
+  if (!userData || (userData.points || 0) < MIN_REDEEM) return;
+  const taka = ((userData.points || 0) / POINTS_PER_TAKA).toFixed(2);
+  $("redeemAmount").textContent = taka + " taka";
+  $("redeemPts").textContent = "from " + userData.points + " points";
+  $("redeemErr").textContent = "";
+  $("redeemOv").classList.add("open");
+};
+$("redeemCancelBtn").onclick = () => $("redeemOv").classList.remove("open");
+
+$("redeemSubmitBtn").onclick = async () => {
+  const uid = currentUser?.uid;
+  if (!uid || !userData) return;
+  const pts = userData.points || 0;
+  if (pts < MIN_REDEEM) return;
+
+  const taka = (pts / POINTS_PER_TAKA).toFixed(2);
+  const btn = $("redeemSubmitBtn");
+  btn.disabled = true; btn.innerHTML = '<span class="spinner"></span>Sending...';
+
   try {
-    const q = query(
-      collection(db, "spins"),
-      where("uid", "==", uid),
-      orderBy("createdAt", "desc"),
-      limit(10)
-    );
+    await addDoc(collection(db, "redeem_requests"), {
+      uid,
+      name: userData.name || "",
+      phone: userData.phone || "",
+      points: pts,
+      taka: parseFloat(taka),
+      status: "pending",
+      createdAt: serverTimestamp()
+    });
+
+    const waText = `💸 POINTS REDEEM REQUEST\n\nName: ${userData.name}\nPhone: ${userData.phone}\nPoints: ${pts}\nTaka: ${taka}\n\nPlease process this request.`;
+    window.open(`https://wa.me/${ADMIN_WHATSAPP}?text=${encodeURIComponent(waText)}`, "_blank");
+
+    $("redeemOv").classList.remove("open");
+    toast("Request sent! We'll process it soon.");
+  } catch (e) {
+    console.error(e);
+    $("redeemErr").textContent = "Could not send. Try again.";
+  } finally {
+    btn.disabled = false; btn.textContent = "Send Request on WhatsApp";
+  }
+};
+
+// ============== HISTORY ==============
+async function renderHistory() {
+  const uid = currentUser?.uid;
+  if (!uid) return;
+
+  // Spins
+  try {
+    const q = query(collection(db, "spins"), where("uid", "==", uid), orderBy("createdAt", "desc"), limit(50));
     const snap = await getDocs(q);
-    if (snap.empty) { $("historyCard").style.display = "none"; return; }
-    $("historyCard").style.display = "block";
-    $("historyList").innerHTML = "";
+    const el = $("spinHistoryList");
+    if (snap.empty) {
+      el.innerHTML = '<div class="history-empty">No spins yet</div>';
+    } else {
+      el.innerHTML = "";
+      snap.forEach(d => {
+        const s = d.data();
+        const icon = s.prizeType === "box" ? "🎁" : s.prizeType === "free" ? "🚚" : "🎯";
+        const div = document.createElement("div");
+        div.className = "history-item";
+        div.innerHTML = `<div><span class="icon">${icon}</span><span class="prize">${s.prizeLabel || "Prize"}</span><div class="time">${fmtShortDate(s.createdAt)}</div></div>`;
+        el.appendChild(div);
+      });
+    }
+  } catch (e) {
+    console.error("SPIN HISTORY ERROR:", e);
+    $("spinHistoryList").innerHTML = '<div class="history-empty">Could not load</div>';
+  }
+
+  // Token redeems
+  try {
+    const q = query(collection(db, "token_logs"), where("uid", "==", uid), orderBy("redeemedAt", "desc"), limit(50));
+    const snap = await getDocs(q);
+    const el = $("tokenHistoryList");
+    if (snap.empty) {
+      el.innerHTML = '<div class="history-empty">No tokens redeemed yet</div>';
+    } else {
+      el.innerHTML = "";
+      snap.forEach(d => {
+        const s = d.data();
+        const div = document.createElement("div");
+        div.className = "history-item";
+        div.innerHTML = `<div><span class="icon">🎫</span><span class="prize">${s.token}</span><div class="time">${fmtShortDate(s.redeemedAt)}</div></div>`;
+        el.appendChild(div);
+      });
+    }
+  } catch (e) {
+    console.error("TOKEN HISTORY ERROR:", e);
+    $("tokenHistoryList").innerHTML = '<div class="history-empty">Could not load</div>';
+  }
+}
+
+// ============== PROFILE ==============
+function renderProfile() {
+  if (!userData) return;
+  const name = userData.name || "-";
+  $("avatarInitial").textContent = name.charAt(0).toUpperCase() || "?";
+  $("pName").textContent = name;
+  $("pPhone").textContent = userData.phone || "-";
+  $("pJoined").textContent = fmtDate(userData.createdAt);
+  $("pPoints").textContent = userData.points || 0;
+  $("pSpins").textContent = (userData.tokensUsed || []).length;
+  $("pTokens").textContent = (userData.tokensUsed || []).length;
+  $("pRole").textContent = userData.isAdmin ? "⭐ Admin" : "User";
+}
+
+// ============== LEADERBOARD ==============
+async function renderLeaderboard() {
+  const el = $("lbList");
+  el.innerHTML = '<div class="history-empty">Loading...</div>';
+  try {
+    const q = query(collection(db, "users"), orderBy("points", "desc"), limit(10));
+    const snap = await getDocs(q);
+    if (snap.empty) {
+      el.innerHTML = '<div class="history-empty">No data yet</div>';
+      return;
+    }
+    el.innerHTML = "";
+    const myUid = currentUser?.uid;
+    let rank = 0;
     snap.forEach(d => {
-      const s = d.data();
-      const time = s.createdAt?.toDate?.().toLocaleString("en-GB", { timeZone: "Asia/Dhaka", day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit" }) || "";
-      const el = document.createElement("div");
-      el.className = "history-item";
-      el.innerHTML = `<span class="prize">${s.prizeLabel || "Prize"}</span><span class="time">${time}</span>`;
-      $("historyList").appendChild(el);
+      rank++;
+      const u = d.data();
+      const isMe = d.id === myUid;
+      const medal = rank === 1 ? "🥇" : rank === 2 ? "🥈" : rank === 3 ? "🥉" : `#${rank}`;
+      const div = document.createElement("div");
+      div.className = "lb-item" + (isMe ? " me" : "");
+      div.innerHTML = `<div class="lb-rank">${medal}</div><div class="lb-name">${u.name || "User"}${isMe ? " (You)" : ""}</div><div class="lb-pts">${u.points || 0} pts</div>`;
+      el.appendChild(div);
     });
   } catch (e) {
-    console.error("HISTORY LOAD ERROR:", e);
+    console.error("LB ERROR:", e);
+    el.innerHTML = '<div class="history-empty">Could not load</div>';
   }
 }
 
@@ -515,7 +820,7 @@ $("redeemBtn").onclick = async () => {
   const raw = $("tokenInput").value.trim().toUpperCase();
   if (!raw) return setErr("tokenErr", "Enter a token code.");
 
-  const uid = currentUser?.uid || localStorage.getItem("mishti_uid");
+  const uid = currentUser?.uid;
   if (!uid) return setErr("tokenErr", "Please login again.");
 
   const btn = $("redeemBtn");
@@ -530,9 +835,7 @@ $("redeemBtn").onclick = async () => {
     const t = tokenSnap.data();
     if (t.is_used) { setErr("tokenErr", "⚠️ This token is already used."); return; }
 
-    await updateDoc(tokenRef, {
-      is_used: true, used_by: uid, used_at: serverTimestamp()
-    });
+    await updateDoc(tokenRef, { is_used: true, used_by: uid, used_at: serverTimestamp() });
 
     const userRef = doc(db, "users", uid);
     const userSnap = await getDoc(userRef);
@@ -565,51 +868,31 @@ $("redeemBtn").onclick = async () => {
 
 // ============== SPIN LOGIC ==============
 function pickPrizeSegment(globalSpinNo) {
-  // Guaranteed prizes
-  if (globalSpinNo > 0 && globalSpinNo % SWEET_BOX_EVERY === 0) {
-    return SEGMENTS.findIndex(s => s.type === "box");
-  }
-  if (globalSpinNo > 0 && globalSpinNo % FREE_DELIVERY_EVERY === 0) {
-    return SEGMENTS.findIndex(s => s.type === "free");
-  }
-  // Random probability
-  // 100: 40%, 200: 25%, 300: 18%, 400: 8%, 500: 5%, 600: 2%
-  // Free Delivery: 1.5%, Sweet Box: 0.5%
+  if (globalSpinNo > 0 && globalSpinNo % SWEET_BOX_EVERY === 0) return SEGMENTS.findIndex(s => s.type === "box");
+  if (globalSpinNo > 0 && globalSpinNo % FREE_DELIVERY_EVERY === 0) return SEGMENTS.findIndex(s => s.type === "free");
   const r = Math.random() * 100;
-  if (r < 40) return 0;    // 100
-  if (r < 65) return 2;    // 200
-  if (r < 83) return 4;    // 300
-  if (r < 91) return 5;    // 400
-  if (r < 96) return 6;    // 500
-  if (r < 98) return 7;    // 600
-  if (r < 99.5) return 1;  // Free Delivery 1.5%
-  return 3;                // Sweet Box 0.5%
+  if (r < 40) return 0;
+  if (r < 65) return 2;
+  if (r < 83) return 4;
+  if (r < 91) return 5;
+  if (r < 96) return 6;
+  if (r < 98) return 7;
+  if (r < 99.5) return 1;
+  return 3;
 }
 
 async function getGlobalSpinNo() {
-  const ref = doc(db, "settings", "spin_counter");
-  const snap = await getDoc(ref);
-  if (!snap.exists()) {
-    await setDoc(ref, { count: 0 });
-    return 0;
-  }
-  return snap.data().count || 0;
-}
-async function incrementGlobalSpin() {
-  const ref = doc(db, "settings", "spin_counter");
-  await setDoc(ref, { count: increment(1) }, { merge: true });
-  const snap = await getDoc(ref);
+  const snap = await getDoc(doc(db, "settings", "spin_counter"));
+  if (!snap.exists()) { await setDoc(doc(db, "settings", "spin_counter"), { count: 0 }); return 0; }
   return snap.data().count || 0;
 }
 
 $("spinBtn").onclick = async () => {
   if (spinning) return;
-  const uid = currentUser?.uid || localStorage.getItem("mishti_uid");
+  const uid = currentUser?.uid;
   if (!uid) return toast("Please login");
 
-  // Re-fetch to avoid stale data
-  const userRef = doc(db, "users", uid);
-  const userSnap = await getDoc(userRef);
+  const userSnap = await getDoc(doc(db, "users", uid));
   const u = userSnap.data() || {};
   if (!u.spins || u.spins < 1) return toast("No spins left. Redeem a token!");
 
@@ -617,27 +900,18 @@ $("spinBtn").onclick = async () => {
   $("spinBtn").disabled = true;
 
   try {
-    // Reserve 1 spin immediately
-    await updateDoc(userRef, { spins: (u.spins || 0) - 1 });
-
-    // Get current global spin number + increment
+    await updateDoc(doc(db, "users", uid), { spins: (u.spins || 0) - 1 });
     const prevNo = await getGlobalSpinNo();
     const spinNo = prevNo + 1;
     await setDoc(doc(db, "settings", "spin_counter"), { count: spinNo }, { merge: true });
 
-    // Pick winning segment
     const idx = pickPrizeSegment(spinNo);
     const seg = SEGMENTS[idx];
-
-    // Calculate rotation
     const jitter = (Math.random() - 0.5) * SEG * 0.6;
     const target = (-Math.PI / 2) - (idx + 0.5) * SEG - jitter;
     const delta = ((((target - rot) % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2)) + Math.PI * 2 * 6;
 
-    // Animate
-    animateWheel(rot, delta, 5200, () => {
-      handleWin(uid, seg, spinNo, u);
-    });
+    animateWheel(rot, delta, 5200, () => handleWin(uid, seg, spinNo, u));
   } catch (err) {
     console.error("SPIN ERROR:", err);
     spinning = false;
@@ -649,15 +923,11 @@ $("spinBtn").onclick = async () => {
 function animateWheel(startRot, delta, duration, onDone) {
   const t0 = performance.now();
   let lastSeg = -1;
-  document.body.classList.add("busy");
-
   (function frame(now) {
     const p = Math.min((now - t0) / duration, 1);
     const e = 1 - Math.pow(1 - p, 3.4);
     rot = startRot + delta * e;
     $("wheelEl").style.transform = `rotate(${rot}rad)`;
-
-    // Tick sound when passing a segment boundary
     const underIdx = Math.floor((((-Math.PI / 2 - rot) / SEG) % N + N) % N);
     if (underIdx !== lastSeg) {
       lastSeg = underIdx;
@@ -665,15 +935,11 @@ function animateWheel(startRot, delta, duration, onDone) {
       if (navigator.vibrate) try { navigator.vibrate(4); } catch(e){}
     }
     if (p < 1) requestAnimationFrame(frame);
-    else {
-      document.body.classList.remove("busy");
-      onDone();
-    }
+    else onDone();
   })(t0);
 }
 
-// ============== HANDLE WIN ==============
-async function handleWin(uid, seg, spinNo, userDataSnapshot) {
+async function handleWin(uid, seg, spinNo, u) {
   spinning = false;
   winSound();
   if (navigator.vibrate) try { navigator.vibrate([80, 60, 160]); } catch(e){}
@@ -683,100 +949,52 @@ async function handleWin(uid, seg, spinNo, userDataSnapshot) {
     const userRef = doc(db, "users", uid);
 
     if (seg.type === "points") {
-      // Add points
       await updateDoc(userRef, { points: increment(seg.value) });
-      // Log spin
       await addDoc(collection(db, "spins"), {
-        uid,
-        name: userDataSnapshot.name || "",
-        phone: userDataSnapshot.phone || "",
-        prizeLabel: seg.label,
-        prizeType: "points",
-        prizeValue: seg.value,
-        spinNo,
-        createdAt: serverTimestamp()
+        uid, name: u.name || "", phone: u.phone || "",
+        prizeLabel: seg.label, prizeType: "points", prizeValue: seg.value,
+        spinNo, createdAt: serverTimestamp()
       });
-      showPrizeModal({
-        title: "🎉 Congratulations!",
-        text: `You won ${seg.label}!`,
-        coupon: null,
-        whatsapp: null
-      });
+      showPrizeModal({ title: "🎉 Congratulations!", text: `You won ${seg.label}!`, coupon: null, whatsapp: null });
       toast(`+${seg.value} points`);
     } else if (seg.type === "free") {
-      // Free delivery voucher
       const code = "FREEDEL-" + (1000 + Math.floor(Math.random() * 9000));
       await updateDoc(userRef, { lastVoucher: code });
       await addDoc(collection(db, "spins"), {
-        uid,
-        name: userDataSnapshot.name || "",
-        phone: userDataSnapshot.phone || "",
-        prizeLabel: "Free Delivery 🚚",
-        prizeType: "free",
-        prizeValue: 0,
-        coupon: code,
-        spinNo,
-        createdAt: serverTimestamp()
+        uid, name: u.name || "", phone: u.phone || "",
+        prizeLabel: "Free Delivery 🚚", prizeType: "free", prizeValue: 0,
+        coupon: code, spinNo, createdAt: serverTimestamp()
       });
-      const waText = `Hi, I spun the wheel at Arinbex 7 and won FREE DELIVERY!\n\nName: ${userDataSnapshot.name}\nPhone: ${userDataSnapshot.phone}\nVoucher: ${code}\n\nI want to claim it on my next order.`;
-      showPrizeModal({
-        title: "🚚 Free Delivery Won!",
-        text: "You won Free Delivery!",
-        coupon: code,
-        whatsapp: waText
-      });
+      const waText = `Hi, I won FREE DELIVERY at Arinbex 7!\n\nName: ${u.name}\nPhone: ${u.phone}\nVoucher: ${code}`;
+      showPrizeModal({ title: "🚚 Free Delivery!", text: "You won Free Delivery!", coupon: code, whatsapp: waText });
     } else if (seg.type === "box") {
-      // Sweet Box — ask for address
       await addDoc(collection(db, "spins"), {
-        uid,
-        name: userDataSnapshot.name || "",
-        phone: userDataSnapshot.phone || "",
-        prizeLabel: "Sweet Box 🎁",
-        prizeType: "box",
-        prizeValue: 0,
-        spinNo,
-        createdAt: serverTimestamp()
+        uid, name: u.name || "", phone: u.phone || "",
+        prizeLabel: "Sweet Box 🎁", prizeType: "box", prizeValue: 0,
+        spinNo, createdAt: serverTimestamp()
       });
-      showPrizeModal({
-        title: "🎁 Sweet Box Won!",
-        text: "Amazing! You won a Sweet Box!",
-        coupon: null,
-        whatsapp: null
-      });
+      showPrizeModal({ title: "🎁 Sweet Box!", text: "You won a Sweet Box!", coupon: null, whatsapp: null });
       setTimeout(() => openBoxModal(), 800);
     }
-
     await loadDashboard(uid);
   } catch (err) {
     console.error("HANDLE WIN ERROR:", err);
-    toast("Could not save prize. Contact support.");
+    toast("Could not save prize.");
   }
 }
 
 // ============== PRIZE MODAL ==============
-let currentWaText = null;
 function showPrizeModal({ title, text, coupon, whatsapp }) {
   $("prizeTitle").textContent = title;
   $("prizeText").textContent = text;
-
-  if (coupon) {
-    $("prizeCoupon").textContent = coupon;
-    $("prizeCouponWrap").style.display = "block";
-  } else {
-    $("prizeCouponWrap").style.display = "none";
-  }
-
-  currentWaText = whatsapp;
+  if (coupon) { $("prizeCoupon").textContent = coupon; $("prizeCouponWrap").style.display = "block"; }
+  else { $("prizeCouponWrap").style.display = "none"; }
   if (whatsapp) {
-    $("prizeWhatsBtn").onclick = () => {
-      const url = `https://wa.me/${ADMIN_WHATSAPP}?text=${encodeURIComponent(whatsapp)}`;
-      window.open(url, "_blank");
-    };
+    $("prizeWhatsBtn").onclick = () => window.open(`https://wa.me/${ADMIN_WHATSAPP}?text=${encodeURIComponent(whatsapp)}`, "_blank");
     $("prizeWhatsWrap").style.display = "block";
   } else {
     $("prizeWhatsWrap").style.display = "none";
   }
-
   $("prizeOv").classList.add("open");
 }
 $("prizeCloseBtn").onclick = () => $("prizeOv").classList.remove("open");
@@ -796,21 +1014,17 @@ $("boxSubmitBtn").onclick = async () => {
   if (name.length < 2) return $("boxErr").textContent = "Enter your name.";
   if (addr.length < 8) return $("boxErr").textContent = "Enter a complete address.";
 
-  const uid = currentUser?.uid || localStorage.getItem("mishti_uid");
+  const uid = currentUser?.uid;
   const phone = userData?.phone || "";
-
   const btn = $("boxSubmitBtn");
   btn.disabled = true; btn.innerHTML = '<span class="spinner"></span>Saving...';
 
   try {
-    await addDoc(collection(db, "box_claims"), {
-      uid, name, phone, address: addr,
-      createdAt: serverTimestamp()
-    });
-    const waText = `🎁 SWEET BOX CLAIM\n\nName: ${name}\nPhone: ${phone}\nAddress: ${addr}\n\nI won a Sweet Box on Mishti Spin!`;
+    await addDoc(collection(db, "box_claims"), { uid, name, phone, address: addr, createdAt: serverTimestamp() });
+    const waText = `🎁 SWEET BOX CLAIM\n\nName: ${name}\nPhone: ${phone}\nAddress: ${addr}`;
     window.open(`https://wa.me/${ADMIN_WHATSAPP}?text=${encodeURIComponent(waText)}`, "_blank");
     $("boxOv").classList.remove("open");
-    toast("Claim saved! Send WhatsApp message to confirm.");
+    toast("Claim saved!");
   } catch (e) {
     console.error(e);
     $("boxErr").textContent = "Could not save. Try again.";
@@ -820,12 +1034,8 @@ $("boxSubmitBtn").onclick = async () => {
 };
 
 // ============== INPUT FIXES ==============
-$("tokenInput").addEventListener("input", e => {
-  e.target.value = e.target.value.toUpperCase().replace(/[^A-Z0-9-]/g, "");
-});
-$("loginPhone").addEventListener("input", e => {
-  e.target.value = e.target.value.replace(/\D/g, "").slice(0, 11);
-});
+$("tokenInput").addEventListener("input", e => { e.target.value = e.target.value.toUpperCase().replace(/[^A-Z0-9-]/g, ""); });
+$("loginPhone").addEventListener("input", e => { e.target.value = e.target.value.replace(/\D/g, "").slice(0, 11); });
 
 // ============== LOGOUT ==============
 $("logoutBtn").onclick = async () => {
