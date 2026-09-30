@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Admin – Mishti Spin</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#0f0710;--bg2:#1c0d13;--ink:#fbeedd;--muted:#c9a99b;--card:#2a1620;--line:#4a2a37;
+--brand:#e0526f;--brand-ink:#fff;--gold:#f6b93b;--err:#ff7b80;--ok:#2ecc71;--blue:#4aa8e0}
+html{height:100%}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;min-height:100%;color:var(--ink);font:15px/1.5 "Trebuchet MS",Verdana,system-ui,sans-serif;
+background:linear-gradient(160deg,var(--bg),var(--bg2));background-attachment:fixed;overflow-x:hidden}
+main{max-width:900px;margin:0 auto;padding:20px 16px 80px}
+h1,h2,h3{font-family:"Trebuchet MS",Verdana,system-ui,sans-serif;margin:0 0 8px}
+h1{font-size:1.6rem;color:var(--brand);text-align:center}
+h2{font-size:1.3rem;color:var(--brand)}
+h3{font-size:1.05rem;color:var(--gold)}
+.header{text-align:center;margin-bottom:20px}
+.header .logo{display:inline-block;padding:6px 16px;border:2px solid var(--gold);border-radius:99px;color:var(--gold);font-weight:700;font-size:.85rem;letter-spacing:.06em}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:14px}
+label{display:block;font-weight:700;font-size:.9rem;margin-bottom:6px;color:var(--muted)}
+input,select,textarea{width:100%;font-size:1rem;padding:12px;border-radius:10px;border:2px solid var(--line);
+background:var(--bg);color:var(--ink);margin-bottom:12px;font-family:inherit}
+input:focus,textarea:focus,select:focus{outline:3px solid var(--gold);outline-offset:2px}
+.btn{width:100%;border:0;border-radius:10px;padding:13px;font-size:.95rem;font-weight:700;cursor:pointer;
+background:var(--brand);color:#fff;transition:transform .12s;font-family:inherit}
+.btn:active{transform:scale(.97)}
+.btn.gold{background:linear-gradient(180deg,#ffd76a,#f2a516);color:#3b1220}
+.btn.green{background:#1f9d55}
+.btn.blue{background:#2a7ab8}
+.btn.ghost{background:transparent;color:var(--ink);border:2px solid var(--line)}
+.btn.small{width:auto;padding:7px 14px;font-size:.82rem}
+.btn:disabled{opacity:.55;cursor:not-allowed}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-top:10px}
+.stat{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:14px;text-align:center}
+.stat b{display:block;font-size:1.7rem;color:var(--brand);font-family:"Trebuchet MS",system-ui,sans-serif}
+.stat small{color:var(--muted);font-size:.72rem;text-transform:uppercase;letter-spacing:.05em}
+.err{color:var(--err);font-size:.88rem;min-height:1.2em;margin:0 0 10px}
+.ok{color:var(--ok);font-size:.88rem;margin:0 0 10px}
+.note{font-size:.78rem;color:var(--muted);margin-top:10px}
+.hidden{display:none!important}
+.list-item{display:flex;justify-content:space-between;align-items:center;gap:8px;
+padding:12px;background:var(--bg);border:1px solid var(--line);border-radius:10px;margin-bottom:6px;flex-wrap:wrap}
+.list-item .info{flex:1;min-width:180px}
+.list-item .name{font-weight:700;color:var(--ink)}
+.list-item .sub{font-size:.78rem;color:var(--muted);margin-top:2px}
+.list-item .pts{color:var(--gold);font-weight:800;font-size:1rem}
+.tabs{display:flex;gap:6px;overflow-x:auto;margin-bottom:14px;padding-bottom:4px}
+.tabs button{white-space:nowrap;background:var(--bg);color:var(--muted);border:2px solid var(--line);
+border-radius:99px;padding:8px 14px;font-weight:700;font-size:.85rem;cursor:pointer;font-family:inherit}
+.tabs button.active{background:var(--brand);color:#fff;border-color:var(--brand)}
+.spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,.3);
+border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:6px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:var(--bg);
+padding:12px 20px;border-radius:12px;font-weight:700;z-index:100;opacity:0;transition:opacity .25s;
+pointer-events:none;font-size:.88rem;max-width:90%}
+.toast.show{opacity:.95}
+.badge{display:inline-block;padding:3px 9px;border-radius:99px;font-size:.72rem;font-weight:700}
+.badge.pending{background:#f6b93b;color:#3b1220}
+.badge.approved{background:#2ecc71;color:#0a3d1e}
+.badge.paid{background:#4aa8e0;color:#0b2740}
+.badge.rejected{background:#e0526f;color:#fff}
+textarea{min-height:80px;font-family:"Courier New",monospace;font-size:.85rem}
+.copy-pre{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px;
+font-family:"Courier New",monospace;font-size:.75rem;max-height:180px;overflow-y:auto;
+white-space:pre-wrap;word-break:break-all;margin-top:10px;color:var(--muted)}
+</style>
+</head>
+<body>
+
+<main>
+  <div class="header">
+    <div class="logo">ADMIN PANEL</div>
+    <h1 style="margin-top:12px">Arinbex 7 · Mishti Spin</h1>
+  </div>
+
+  <!-- ============ LOGIN ============ -->
+  <section id="viewLogin">
+    <div class="card">
+      <h3>Admin Login</h3>
+      <p class="note" style="margin-bottom:14px">Only admin phone allowed (01612929333)</p>
+
+      <label for="adminPhone">Your admin phone</label>
+      <input id="adminPhone" type="tel" inputmode="numeric" maxlength="11" placeholder="01XXXXXXXXX">
+
+      <label for="adminName">Your name</label>
+      <input id="adminName" placeholder="Your name" maxlength="60">
+
+      <div class="err" id="loginErr"></div>
+      <button class="btn gold" id="loginBtn">Login as Admin 🔐</button>
+    </div>
+  </section>
+
+  <!-- ============ ADMIN APP ============ -->
+  <section id="viewApp" class="hidden">
+
+    <div style="text-align:center;margin-bottom:14px">
+      <span id="adminNameLabel" style="color:var(--gold);font-weight:700"></span>
+      <button class="btn ghost small" id="logoutBtn" style="margin-left:8px">Logout</button>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs" id="tabs">
+      <button data-tab="tabDash" class="active">📊 Dashboard</button>
+      <button data-tab="tabUsers">👥 Users</button>
+      <button data-tab="tabTokens">🎫 Tokens</button>
+      <button data-tab="tabWinners">🏆 Winners</button>
+      <button data-tab="tabRedeem">💸 Redeem</button>
+    </div>
+
+    <!-- ===== DASHBOARD ===== -->
+    <div id="tabDash" class="tab-panel">
+      <div class="card">
+        <h3>📊 Overview</h3>
+        <div class="grid">
+          <div class="stat"><b id="stUsers">-</b><small>Users</small></div>
+          <div class="stat"><b id="stSpins">-</b><small>Total Spins</small></div>
+          <div class="stat"><b id="stPoints">-</b><small>Points Given</small></div>
+          <div class="stat"><b id="stTokens">-</b><small>Tokens Used</small></div>
+          <div class="stat"><b id="stBoxes">-</b><small>Sweet Boxes</small></div>
+          <div class="stat"><b id="stFree">-</b><small>Free Deliv.</small></div>
+          <div class="stat"><b id="stCounter">-</b><small>Global Spin #</small></div>
+          <div class="stat"><b id="stRedeem">-</b><small>Pending Redeem</small></div>
+        </div>
+        <button class="btn ghost" id="refreshDashBtn" style="margin-top:14px">🔄 Refresh</button>
+      </div>
+    </div>
+
+    <!-- ===== USERS ===== -->
+    <div id="tabUsers" class="tab-panel hidden">
+      <div class="card">
+        <h3>👥 Search User</h3>
+        <input id="userSearch" placeholder="Search by name or phone" maxlength="60">
+        <button class="btn blue" id="searchUserBtn">🔍 Search</button>
+        <button class="btn ghost" id="loadAllUsersBtn" style="margin-top:8px">📋 Load All Users</button>
+        <div class="err" id="userSearchErr"></div>
+      </div>
+      <div class="card" id="userResultCard" style="display:none">
+        <h3>🔍 Result</h3>
+        <div id="userResult"></div>
+      </div>
+      <div class="card" id="userListCard" style="display:none">
+        <h3>📋 All Users <span id="userCount" style="color:var(--muted);font-size:.85rem"></span></h3>
+        <div id="userList"></div>
+      </div>
+    </div>
+
+    <!-- ===== TOKENS ===== -->
+    <div id="tabTokens" class="tab-panel hidden">
+      <div class="card">
+        <h3>🎫 Generate Tokens</h3>
+        <label for="genCount">How many?</label>
+        <input id="genCount" type="number" value="100" min="1" max="1000">
+
+        <label for="genPrefix">Prefix</label>
+        <input id="genPrefix" value="ARNX" maxlength="10" style="text-transform:uppercase">
+
+        <div class="err" id="genErr"></div>
+        <button class="btn gold" id="genBtn">⚡ Generate</button>
+        <div id="genOutput" style="display:none">
+          <p class="note">✅ Tokens generated. Copy below:</p>
+          <div class="copy-pre" id="genList"></div>
+          <button class="btn blue" id="copyTokensBtn" style="margin-top:8px">📋 Copy All</button>
+        </div>
+      </div>
+      <div class="card">
+        <h3>📊 Token Stats</h3>
+        <button class="btn ghost" id="loadTokenStatsBtn">Load Stats</button>
+        <div id="tokenStats" style="margin-top:12px"></div>
+      </div>
+    </div>
+
+    <!-- ===== WINNERS ===== -->
+    <div id="tabWinners" class="tab-panel hidden">
+      <div class="card">
+        <h3>🏆 Recent Winners</h3>
+        <div class="tabs" style="margin-bottom:10px">
+          <button data-winner="all" class="active">All</button>
+          <button data-winner="box">🎁 Sweet Box</button>
+          <button data-winner="free">🚚 Free Delivery</button>
+        </div>
+        <button class="btn blue" id="loadWinnersBtn">🔄 Load Winners</button>
+        <div id="winnersList" style="margin-top:12px"></div>
+      </div>
+    </div>
+
+    <!-- ===== REDEEM ===== -->
+    <div id="tabRedeem" class="tab-panel hidden">
+      <div class="card">
+        <h3>💸 Redeem Requests</h3>
+        <button class="btn blue" id="loadRedeemBtn">🔄 Load Requests</button>
+        <div id="redeemList" style="margin-top:12px"></div>
+      </div>
+    </div>
+
+  </section>
+
+  <p class="note" id="loadingNote" style="display:none;text-align:center">
+    <span class="spinner"></span> Loading...
+  </p>
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, signInAnonymously, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import {
+  getFirestore, doc, getDoc, setDoc, updateDoc, collection, addDoc,
+  query, where, getDocs, orderBy, limit, serverTimestamp, increment
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+// ============== CONFIG ==============
+const firebaseConfig = {
+  apiKey: "AIzaSyAv15cvIVjO4R7KokvcoykuCH_21iD5ETU",
+  authDomain: "arambex-7.firebaseapp.com",
+  projectId: "arambex-7",
+  storageBucket: "arambex-7.firebasestorage.app",
+  messagingSenderId: "132079784610",
+  appId: "1:132079784610:web:6850f5516dac44695d7dfb"
+};
+const ADMIN_PHONES = ["01612929333"];
+
+const app  = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db   = getFirestore(app);
+
+// ============== STATE ==============
+let adminUser = null;
+let adminPhone = "";
+let adminName = "";
+let winnerFilter = "all";
+
+// ============== HELPERS ==============
+const $ = id => document.getElementById(id);
+const setErr = (id, msg) => { $(id).textContent = msg || ""; };
+
+function toast(msg) {
+  const t = $("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  clearTimeout(t._tid);
+  t._tid = setTimeout(() => t.classList.remove("show"), 2400);
+}
+
+const fmtDate = ts => {
+  if (!ts) return "-";
+  const d = ts.toDate ? ts.toDate() : new Date(ts);
+  return d.toLocaleString("en-GB", { timeZone: "Asia/Dhaka", day: "2-digit", month: "short", year: "2-digit", hour: "2-digit", minute: "2-digit" });
+};
+
+// ============== LOGIN ==============
+$("loginBtn").onclick = async () => {
+  setErr("loginErr", "");
+  const phone = $("adminPhone").value.replace(/\D/g, "").slice(0, 11);
+  const name  = $("adminName").value.trim() || "Admin";
+
+  if (!ADMIN_PHONES.includes(phone)) {
+    return setErr("loginErr", "❌ This phone is not an admin.");
+  }
+  if (name.length < 2) return setErr("loginErr", "Enter your name.");
+
+  const btn = $("loginBtn");
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>Logging in...';
+
+  try {
+    let cred;
+    try { cred = await signInAnonymously(auth); } catch(e){}
+
+    const adminUid = cred?.user?.uid || "admin_" + phone;
+    const ref = doc(db, "users", adminUid);
+    const snap = await getDoc(ref);
+    if (!snap.exists()) {
+      await setDoc(ref, {
+        name, phone,
+        isAdmin: true,
+        points: 0, spins: 0,
+        tokensUsed: [],
+        createdAt: serverTimestamp()
+      });
+    } else {
+      await setDoc(ref, { name, isAdmin: true, lastLogin: serverTimestamp() }, { merge: true });
+    }
+
+    adminUser = { uid: adminUid };
+    adminPhone = phone;
+    adminName = name;
+    localStorage.setItem("mishti_admin_uid", adminUid);
+    localStorage.setItem("mishti_admin_phone", phone);
+    localStorage.setItem("mishti_admin_name", name);
+
+    showApp();
+    loadDashboard();
+  } catch (err) {
+    console.error(err);
+    setErr("loginErr", "Login failed. Try again.");
+  } finally {
+    btn.disabled = false;
+    btn.textContent = "Login as Admin 🔐";
+  }
+};
+
+// ============== AUTO LOGIN ==============
+window.addEventListener("load", async () => {
+  const savedUid = localStorage.getItem("mishti_admin_uid");
+  const savedPhone = localStorage.getItem("mishti_admin_phone");
+  const savedName = localStorage.getItem("mishti_admin_name");
+
+  if (savedUid && ADMIN_PHONES.includes(savedPhone)) {
+    adminUser = { uid: savedUid };
+    adminPhone = savedPhone;
+    adminName = savedName;
+    showApp();
+    loadDashboard();
+  } else {
+    $("viewLogin").classList.remove("hidden");
+  }
+});
+
+function showApp() {
+  $("viewLogin").classList.add("hidden");
+  $("viewApp").classList.remove("hidden");
+  $("adminNameLabel").textContent = "👋 " + adminName;
+}
+
+$("logoutBtn").onclick = async () => {
+  try { await signOut(auth); } catch(e){}
+  localStorage.removeItem("mishti_admin_uid");
+  localStorage.removeItem("mishti_admin_phone");
+  localStorage.removeItem("mishti_admin_name");
+  location.reload();
+};
+
+// ============== TABS ==============
+document.querySelectorAll("#tabs button").forEach(btn => {
+  btn.onclick = () => {
+    document.querySelectorAll("#tabs button").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    ["tabDash","tabUsers","tabTokens","tabWinners","tabRedeem"].forEach(t => {
+      $(t).classList.toggle("hidden", t !== btn.dataset.tab);
+    });
+  };
+});
+
+// ============== DASHBOARD ==============
+async function loadDashboard() {
+  $("loadingNote").style.display = "block";
+  try {
+    const usersSnap = await getDocs(collection(db, "users"));
+    $("stUsers").textContent = usersSnap.size;
+
+    let totalPoints = 0, totalSpins = 0, totalTokens = 0;
+    usersSnap.forEach(d => {
+      const u = d.data();
+      totalPoints += u.points || 0;
+      totalSpins += (u.tokensUsed || []).length;
+      totalTokens += (u.tokensUsed || []).length;
+    });
+    $("stPoints").textContent = totalPoints.toLocaleString();
+    $("stSpins").textContent = totalSpins;
+    $("stTokens").textContent = totalTokens;
+
+    try {
+      const spinsSnap = await getDocs(collection(db, "spins"));
+      let boxes = 0, free = 0;
+      spinsSnap.forEach(d => {
+        const s = d.data();
+        if (s.prizeType === "box") boxes++;
+        if (s.prizeType === "free") free++;
+      });
+      $("stBoxes").textContent = boxes;
+      $("stFree").textContent = free;
+    } catch(e) { console.error(e); }
+
+    try {
+      const counterSnap = await getDoc(doc(db, "settings", "spin_counter"));
+      $("stCounter").textContent = counterSnap.exists() ? (counterSnap.data().count || 0) : 0;
+    } catch(e) {}
+
+    try {
+      const q = query(collection(db, "redeem_requests"), where("status", "==", "pending"));
+      const rSnap = await getDocs(q);
+      $("stRedeem").textContent = rSnap.size;
+    } catch(e) { $("stRedeem").textContent = 0; }
+
+  } finally {
+    $("loadingNote").style.display = "none";
+  }
+}
+$("refreshDashBtn").onclick = loadDashboard;
+
+// ============== USER SEARCH ==============
+$("searchUserBtn").onclick = async () => {
+  const q = $("userSearch").value.trim().toLowerCase();
+  if (!q) return setErr("userSearchErr", "Enter name or phone.");
+  setErr("userSearchErr", "");
+  $("userResultCard").style.display = "none";
+  $("loadingNote").style.display = "block";
+
+  try {
+    const results = [];
+    const q1 = query(collection(db, "users"), where("phone", "==", q));
+    const s1 = await getDocs(q1);
+    s1.forEach(d => results.push({ id: d.id, ...d.data() }));
+
+    if (results.length === 0) {
+      const allSnap = await getDocs(collection(db, "users"));
+      allSnap.forEach(d => {
+        const u = d.data();
+        if ((u.name || "").toLowerCase().includes(q)) results.push({ id: d.id, ...u });
+      });
+    }
+
+    if (results.length === 0) {
+      $("userResult").innerHTML = '<div class="note">No user found.</div>';
+    } else {
+      $("userResult").innerHTML = "";
+      results.slice(0, 20).forEach(u => renderUserCard(u, $("userResult")));
+    }
+    $("userResultCard").style.display = "block";
+  } finally {
+    $("loadingNote").style.display = "none";
+  }
+};
+
+$("loadAllUsersBtn").onclick = async () => {
+  $("loadingNote").style.display = "block";
+  try {
+    const snap = await getDocs(collection(db, "users"));
+    $("userList").innerHTML = "";
+    $("userCount").textContent = "(" + snap.size + ")";
+    const users = [];
+    snap.forEach(d => users.push({ id: d.id, ...d.data() }));
+    users.sort((a, b) => (b.points || 0) - (a.points || 0));
+    users.forEach(u => renderUserCard(u, $("userList")));
+    $("userListCard").style.display = "block";
+  } finally {
+    $("loadingNote").style.display = "none";
+  }
+};
+
+function renderUserCard(u, container) {
+  const div = document.createElement("div");
+  div.className = "list-item";
+  div.innerHTML = `
+    <div class="info">
+      <div class="name">${u.name || "Unknown"} ${u.isAdmin ? "⭐" : ""}</div>
+      <div class="sub">📱 ${u.phone || "-"} · Spins: ${u.spins || 0} · Tokens: ${(u.tokensUsed || []).length}</div>
+      <div class="sub">Joined: ${fmtDate(u.createdAt)}</div>
+    </div>
+    <div class="pts">${u.points || 0} pts</div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap">
+      <button class="btn gold small" data-add="${u.id}">+100</button>
+      <button class="btn ghost small" data-rem="${u.id}">-100</button>
+    </div>
+  `;
+  container.appendChild(div);
+
+  div.querySelector("[data-add]").onclick = () => adjustPoints(u.id, +100);
+  div.querySelector("[data-rem]").onclick = () => adjustPoints(u.id, -100);
+}
+
+async function adjustPoints(uid, delta) {
+  try {
+    await updateDoc(doc(db, "users", uid), { points: increment(delta) });
+    toast(`Points ${delta > 0 ? "+" : ""}${delta}`);
+    setTimeout(() => { $("searchUserBtn").click(); $("loadAllUsersBtn").click(); loadDashboard(); }, 400);
+  } catch (e) {
+    toast("Error adjusting points");
+  }
+}
+
+// ============== TOKEN GENERATOR ==============
+$("genBtn").onclick = async () => {
+  setErr("genErr", "");
+  const count = parseInt($("genCount").value, 10) || 0;
+  const prefix = ($("genPrefix").value || "ARNX").toUpperCase().replace(/[^A-Z0-9]/g, "");
+  if (count < 1 || count > 1000) return setErr("genErr", "Enter 1-1000.");
+
+  const btn = $("genBtn");
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>Generating...';
+
+  try {
+    const codes = [];
+    const charset = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+    for (let i = 0; i < count; i++) {
+      let mid1 = "", mid2 = "";
+      for (let j = 0; j < 4; j++) mid1 += charset[Math.floor(Math.random() * charset.length)];
+      for (let j = 0; j < 4; j++) mid2 += charset[Math.floor(Math.random() * charset.length)];
+      codes.push(`${prefix}-${mid1}-${mid2}`);
+    }
+
+    const chunks = [];
+    for (let i = 0; i < codes.length; i += 400) chunks.push(codes.slice(i, i + 400));
+
+    let saved = 0;
+    for (const chunk of chunks) {
+      const promises = chunk.map(code =>
+        setDoc(doc(db, "tokens", code), { is_used: false, createdAt: serverTimestamp() })
+          .then(() => saved++)
+          .catch(e => console.warn("Skip dup:", code))
+      );
+      await Promise.all(promises);
+    }
+
+    $("genList").textContent = codes.join("\n");
+    $("genOutput").style.display = "block";
+    toast(`✅ Generated ${saved} tokens`);
+  } catch (err) {
+    console.error(err);
+    setErr("genErr", "Error generating. Try fewer.");
+  } finally {
+    btn.disabled = false;
+    btn.textContent = "⚡ Generate";
+  }
+};
+
+$("copyTokensBtn").onclick = async () => {
+  const text = $("genList").textContent;
+  try {
+    await navigator.clipboard.writeText(text);
+    toast("📋 Copied to clipboard");
+  } catch (e) {
+    const ta = document.createElement("textarea");
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand("copy");
+    ta.remove();
+    toast("📋 Copied");
+  }
+};
+
+$("loadTokenStatsBtn").onclick = async () => {
+  $("loadingNote").style.display = "block";
+  try {
+    const snap = await getDocs(collection(db, "tokens"));
+    let used = 0, unused = 0;
+    snap.forEach(d => { d.data().is_used ? used++ : unused++; });
+    $("tokenStats").innerHTML = `
+      <div class="stat"><b>${snap.size}</b><small>Total</small></div>
+      <div class="stat" style="margin-top:8px"><b>${used}</b><small>Used</small></div>
+      <div class="stat" style="margin-top:8px"><b>${unused}</b><small>Unused</small></div>
+    `;
+  } finally {
+    $("loadingNote").style.display = "none";
+  }
+};
+
+// ============== WINNERS ==============
+document.querySelectorAll("[data-winner]").forEach(btn => {
+  btn.onclick = () => {
+    document.querySelectorAll("[data-winner]").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    winnerFilter = btn.dataset.winner;
+    loadWinners();
+  };
+});
+
+$("loadWinnersBtn").onclick = loadWinners;
+
+async function loadWinners() {
+  $("loadingNote").style.display = "block";
+  try {
+    let q = query(collection(db, "spins"), orderBy("createdAt", "desc"), limit(100));
+    const snap = await getDocs(q);
+    const list = $("winnersList");
+    list.innerHTML = "";
+    let count = 0;
+    snap.forEach(d => {
+      const s = d.data();
+      if (winnerFilter !== "all" && s.prizeType !== winnerFilter) return;
+      count++;
+      const icon = s.prizeType === "box" ? "🎁" : s.prizeType === "free" ? "🚚" : "🎯";
+      const div = document.createElement("div");
+      div.className = "list-item";
+      div.innerHTML = `
+        <div class="info">
+          <div class="name">${icon} ${s.prizeLabel}</div>
+          <div class="sub">👤 ${s.name || "-"} · 📱 ${s.phone || "-"}</div>
+          <div class="sub">Spin #${s.spinNo || "?"} · ${fmtDate(s.createdAt)}</div>
+          ${s.coupon ? `<div class="sub">🎫 ${s.coupon}</div>` : ""}
+        </div>
+      `;
+      list.appendChild(div);
+    });
+    if (count === 0) list.innerHTML = '<div class="note">No winners found.</div>';
+  } finally {
+    $("loadingNote").style.display = "none";
+  }
+}
+
+// ============== REDEEM ==============
+$("loadRedeemBtn").onclick = async () => {
+  $("loadingNote").style.display = "block";
+  try {
+    const q = query(collection(db, "redeem_requests"), orderBy("createdAt", "desc"), limit(50));
+    const snap = await getDocs(q);
+    const list = $("redeemList");
+    list.innerHTML = "";
+    if (snap.empty) { list.innerHTML = '<div class="note">No redeem requests yet.</div>'; return; }
+    snap.forEach(d => {
+      const r = d.data();
+      const div = document.createElement("div");
+      div.className = "list-item";
+      div.innerHTML = `
+        <div class="info">
+          <div class="name">${r.name || "-"} <span class="badge ${r.status || "pending"}">${r.status || "pending"}</span></div>
+          <div class="sub">📱 ${r.phone || "-"}</div>
+          <div class="sub">💸 ${r.taka || 0} taka (${r.points || 0} pts) · ${fmtDate(r.createdAt)}</div>
+          <div class="sub" style="font-size:.7rem;color:#8a6a5a">UID: ${r.uid || "-"}</div>
+        </div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <button class="btn green small" data-approve="${d.id}">✅ Approve</button>
+          <button class="btn ghost small" data-reject="${d.id}">❌ Reject</button>
+        </div>
+      `;
+      list.appendChild(div);
+      div.querySelector("[data-approve]").onclick = () => updateRedeem(d.id, "approved");
+      div.querySelector("[data-reject]").onclick = () => updateRedeem(d.id, "rejected");
+    });
+  } finally {
+    $("loadingNote").style.display = "none";
+  }
+};
+
+async function updateRedeem(id, status) {
+  try {
+    // Get request first
+    const reqRef = doc(db, "redeem_requests", id);
+    const reqSnap = await getDoc(reqRef);
+    if (!reqSnap.exists()) return toast("Request not found");
+
+    const req = reqSnap.data();
+    const oldStatus = req.status || "pending";
+
+    // If approving and not already approved, deduct points
+    if (status === "approved" && oldStatus !== "approved") {
+      if (!req.uid) {
+        console.error("Missing UID in redeem request");
+        return toast("⚠️ Missing user ID");
+      }
+
+      const userRef = doc(db, "users", req.uid);
+      const userSnap = await getDoc(userRef);
+
+      if (!userSnap.exists()) {
+        toast("⚠️ User not found");
+        return;
+      }
+
+      const u = userSnap.data();
+      const currentPts = u.points || 0;
+      const redeemPts = req.points || 0;
+
+      // Deduct points, track redeemed
+      await updateDoc(userRef, {
+        points: Math.max(0, currentPts - redeemPts),
+        totalRedeemed: (u.totalRedeemed || 0) + redeemPts
+      });
+    }
+
+    // Update status
+    await updateDoc(reqRef, {
+      status,
+      handledAt: serverTimestamp(),
+      handledBy: adminPhone || "admin"
+    });
+
+    toast("✅ " + status);
+    $("loadRedeemBtn").click();
+    loadDashboard();
+  } catch (e) {
+    console.error("REDEEM UPDATE ERROR:", e);
+    toast("Error: " + (e.message || "unknown"));
+  }
+}
+
+// Phone input
+$("adminPhone").addEventListener("input", e => {
+  e.target.value = e.target.value.replace(/\D/g, "").slice(0, 11);
+});
+
+</script>
+</body>
+</html>
