@@ -42,9 +42,6 @@ input:focus,button:focus-visible{outline:3px solid var(--gold);outline-offset:2p
 .stat b{display:block;font-size:1.8rem;color:var(--brand);font-family:"Trebuchet MS",system-ui,sans-serif}
 .stat small{color:var(--muted);font-size:.75rem;text-transform:uppercase;letter-spacing:.06em}
 .note{font-size:.8rem;color:var(--muted);margin-top:18px;text-align:center;font-family:"Trebuchet MS",system-ui,sans-serif}
-.overlay{position:fixed;inset:0;background:rgba(20,5,10,.7);display:none;align-items:center;justify-content:center;padding:18px;z-index:50}
-.overlay.open{display:flex}
-.modal{width:100%;max-width:400px;background:var(--card);border-radius:18px;padding:22px;border:1px solid var(--line)}
 .spinner{display:inline-block;width:18px;height:18px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:8px}
 @keyframes spin{to{transform:rotate(360deg)}}
 </style>
@@ -57,7 +54,7 @@ input:focus,button:focus-visible{outline:3px solid var(--gold);outline-offset:2p
   <!-- ============ STEP 1: LOGIN ============ -->
   <section id="viewLogin">
     <h1>Welcome! 🍬</h1>
-    <p class="lead">Login with your WhatsApp number to start spinning.</p>
+    <p class="lead">Enter your name and WhatsApp number to start spinning.</p>
 
     <div class="card">
       <label for="loginName">Your name</label>
@@ -67,30 +64,13 @@ input:focus,button:focus-visible{outline:3px solid var(--gold);outline-offset:2p
       <input id="loginPhone" type="tel" inputmode="numeric" maxlength="11" placeholder="01XXXXXXXXX">
       <div class="err" id="loginErr" role="alert"></div>
 
-      <button class="btn gold" id="sendOtpBtn">Send OTP</button>
+      <button class="btn gold" id="loginBtn">Start Spinning 🎯</button>
     </div>
+
+    <p class="note">Your number is only used to track your spins &amp; prizes.</p>
   </section>
 
-  <!-- ============ STEP 2: OTP VERIFY ============ -->
-  <section id="viewOtp" class="hidden">
-    <h1>Enter OTP 📩</h1>
-    <p class="lead" id="otpLead">We sent a code to your WhatsApp.</p>
-
-    <div class="card">
-      <label for="otpCode">6-digit OTP</label>
-      <input id="otpCode" type="tel" inputmode="numeric" maxlength="6" placeholder="123456">
-      <div class="err" id="otpErr" role="alert"></div>
-
-      <button class="btn gold" id="verifyBtn">Verify</button>
-      <button class="btn ghost" id="backLoginBtn" style="margin-top:8px">← Back</button>
-    </div>
-
-    <div class="card" id="recaptchaCard" style="padding:8px">
-      <div id="recaptcha-container"></div>
-    </div>
-  </section>
-
-  <!-- ============ STEP 3: DASHBOARD ============ -->
+  <!-- ============ STEP 2: DASHBOARD ============ -->
   <section id="viewDash" class="hidden">
     <div class="center" style="margin-bottom:14px">
       <span class="badge" id="adminBadge" style="display:none">ADMIN</span>
@@ -118,7 +98,7 @@ input:focus,button:focus-visible{outline:3px solid var(--gold);outline-offset:2p
 
     <button class="btn ghost" id="logoutBtn" style="margin-top:6px">Logout</button>
 
-    <p class="note">More features coming: Spin Wheel, Wallet, History</p>
+    <p class="note">Coming soon: Spin Wheel, Wallet, History</p>
   </section>
 
   <p class="note" id="loadingNote" style="display:none">
@@ -131,7 +111,7 @@ input:focus,button:focus-visible{outline:3px solid var(--gold);outline-offset:2p
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import {
-  getAuth, RecaptchaVerifier, signInWithPhoneNumber, onAuthStateChanged, signOut
+  getAuth, signInAnonymously, onAuthStateChanged, signOut
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import {
   getFirestore, doc, getDoc, setDoc, updateDoc, collection, addDoc,
@@ -145,13 +125,11 @@ const firebaseConfig = {
   projectId: "arambex-7",
   storageBucket: "arambex-7.firebasestorage.app",
   messagingSenderId: "132079784610",
-  appId: "1:132079784610:web:6850f5516dac44695d7dfb",
-  measurementId: "G-38KHMPYFZH"
+  appId: "1:132079784610:web:6850f5516dac44695d7dfb"
 };
 
 // ============== ADMIN SETTINGS ==============
 const ADMIN_PHONES = ["01612929333"];
-const ADMIN_NAME   = "Arinbex Admin";
 
 // ============== INIT ==============
 const app  = initializeApp(firebaseConfig);
@@ -159,139 +137,121 @@ const auth = getAuth(app);
 const db   = getFirestore(app);
 
 // ============== STATE ==============
-let currentUser  = null;
-let userName     = "";
-let userPhone    = "";
-let confirmation = null;
+let currentUser = null;
+let userName    = "";
+let userPhone   = "";
 
 // ============== HELPERS ==============
 const $ = id => document.getElementById(id);
-const show = id => { ["viewLogin","viewOtp","viewDash"].forEach(v => $(v).classList.toggle("hidden", v !== id)); };
+const show = id => { ["viewLogin","viewDash"].forEach(v => $(v).classList.toggle("hidden", v !== id)); };
 const setErr = (id, msg) => { $(id).textContent = msg || ""; };
-const phoneToE164 = p => "+880" + p.replace(/^0/, "");
-const fmtPhone = p => p.startsWith("+880") ? "0" + p.slice(4) : p;
 
-// ============== RECAPTCHA ==============
-function setupRecaptcha() {
-  if (window.recaptchaVerifier) return;
-  window.recaptchaVerifier = new RecaptchaVerifier(auth, "recaptcha-container", {
-    size: "invisible",
-    callback: () => {}
-  });
-}
-
-// ============== SEND OTP ==============
-$("sendOtpBtn").onclick = async () => {
+// ============== LOGIN ==============
+$("loginBtn").onclick = async () => {
   setErr("loginErr","");
   const name  = $("loginName").value.trim();
   const phone = $("loginPhone").value.replace(/\D/g,"").slice(0,11);
 
-  if (name.length < 2)  return setErr("loginErr","Enter your name.");
-  if (!/^01[3-9]\d{8}$/.test(phone)) return setErr("loginErr","Enter a valid 11-digit WhatsApp number.");
+  if (name.length < 2)  return setErr("loginErr","Enter your name (at least 2 letters).");
+  if (!/^01[3-9]\d{8}$/.test(phone)) return setErr("loginErr","Enter a valid 11-digit number (01XXXXXXXXX).");
 
   userName = name;
   userPhone = phone;
-  localStorage.setItem("pending_name", name);
-  localStorage.setItem("pending_phone", phone);
 
-  const btn = $("sendOtpBtn");
+  const btn = $("loginBtn");
   btn.disabled = true;
-  btn.innerHTML = '<span class="spinner"></span>Sending...';
+  btn.innerHTML = '<span class="spinner"></span>Logging in...';
 
   try {
-    setupRecaptcha();
-    confirmation = await signInWithPhoneNumber(auth, phoneToE164(phone), window.recaptchaVerifier);
-    $("otpLead").textContent = "OTP sent to " + phone + ". Enter it below.";
-    show("viewOtp");
-    $("otpCode").focus();
+    // Check if this phone already exists (same account)
+    const existing = await findUserByPhone(phone);
+
+    if (existing) {
+      // Same phone → reuse that Firebase Auth account
+      // But we can't switch auth easily, so use the existing UID from DB
+      await setDoc(doc(db, "users", existing.id), {
+        name, phone,
+        isAdmin: ADMIN_PHONES.includes(phone),
+        lastLogin: serverTimestamp()
+      }, { merge: true });
+
+      // Store active uid locally
+      localStorage.setItem("mishti_uid", existing.id);
+      currentUser = { uid: existing.id };
+      localStorage.setItem("mishti_name", name);
+      localStorage.setItem("mishti_phone", phone);
+      await loadDashboard(existing.id);
+      show("viewDash");
+    } else {
+      // New user → sign in anonymously + create user doc
+      const cred = await signInAnonymously(auth);
+      const uid = cred.user.uid;
+
+      await setDoc(doc(db, "users", uid), {
+        name, phone,
+        isAdmin: ADMIN_PHONES.includes(phone),
+        points: 0,
+        spins: 0,
+        tokensUsed: [],
+        createdAt: serverTimestamp(),
+        lastLogin: serverTimestamp()
+      });
+
+      localStorage.setItem("mishti_uid", uid);
+      localStorage.setItem("mishti_name", name);
+      localStorage.setItem("mishti_phone", phone);
+      currentUser = cred.user;
+      await loadDashboard(uid);
+      show("viewDash");
+    }
   } catch (err) {
-    console.error(err);
-    let msg = "Failed to send OTP. Try again.";
-    if (err.code === "auth/too-many-requests") msg = "Too many attempts. Wait a bit.";
-    if (err.code === "auth/invalid-phone-number") msg = "Invalid phone number.";
+    console.error("LOGIN ERROR:", err);
+    let msg = "Login failed. Try again.";
+    if (err.code === "auth/operation-not-allowed") msg = "⚠️ Anonymous login not enabled. Check Firebase Console.";
+    if (err.code === "auth/network-request-failed") msg = "Network error. Check your internet.";
     setErr("loginErr", msg);
   } finally {
     btn.disabled = false;
-    btn.textContent = "Send OTP";
+    btn.textContent = "Start Spinning 🎯";
   }
 };
 
-// ============== VERIFY OTP ==============
-$("verifyBtn").onclick = async () => {
-  setErr("otpErr","");
-  const code = $("otpCode").value.replace(/\D/g,"").slice(0,6);
-  if (code.length !== 6) return setErr("otpErr","Enter the 6-digit code.");
-
-  const btn = $("verifyBtn");
-  btn.disabled = true;
-  btn.innerHTML = '<span class="spinner"></span>Verifying...';
-
+// ============== FIND USER BY PHONE ==============
+async function findUserByPhone(phone) {
   try {
-    const result = await confirmation.confirm(code);
-    currentUser = result.user;
-    await ensureUserDoc(currentUser.uid);
-    // onAuthStateChanged will handle rest
-  } catch (err) {
-    console.error(err);
-    setErr("otpErr", "Wrong OTP. Try again.");
-  } finally {
-    btn.disabled = false;
-    btn.textContent = "Verify";
-  }
-};
-
-$("backLoginBtn").onclick = () => {
-  setErr("otpErr","");
-  show("viewLogin");
-};
-
-// ============== AUTH STATE ==============
-onAuthStateChanged(auth, async (user) => {
-  if (!user) {
-    currentUser = null;
-    show("viewLogin");
-    return;
-  }
-  currentUser = user;
-  await ensureUserDoc(user.uid);
-  await loadDashboard();
-  show("viewDash");
-});
-
-// ============== ENSURE USER DOC ==============
-async function ensureUserDoc(uid) {
-  const ref = doc(db, "users", uid);
-  const snap = await getDoc(ref);
-  const phone = userPhone || localStorage.getItem("pending_phone") || fmtPhone(auth.currentUser.phoneNumber || "");
-  const name  = userName  || localStorage.getItem("pending_name")  || "Friend";
-  const isAdmin = ADMIN_PHONES.includes(phone);
-
-  if (!snap.exists()) {
-    await setDoc(ref, {
-      name,
-      phone,
-      isAdmin,
-      points: 0,
-      spins: 0,
-      tokensUsed: [],
-      createdAt: serverTimestamp()
-    });
-  } else {
-    // update name/phone if changed
-    const data = snap.data();
-    const updates = {};
-    if (data.name !== name) updates.name = name;
-    if (data.phone !== phone) updates.phone = phone;
-    if (data.isAdmin !== isAdmin) updates.isAdmin = isAdmin;
-    if (Object.keys(updates).length) await updateDoc(ref, updates);
+    const q = query(collection(db, "users"), where("phone", "==", phone));
+    const snap = await getDocs(q);
+    if (snap.empty) return null;
+    const d = snap.docs[0];
+    return { id: d.id, ...d.data() };
+  } catch (e) {
+    console.error("FIND USER ERROR:", e);
+    return null;
   }
 }
 
+// ============== AUTO LOGIN (if already logged) ==============
+window.addEventListener("load", async () => {
+  const savedUid = localStorage.getItem("mishti_uid");
+  const savedName = localStorage.getItem("mishti_name");
+  const savedPhone = localStorage.getItem("mishti_phone");
+
+  if (savedUid && savedName && savedPhone) {
+    userName = savedName;
+    userPhone = savedPhone;
+    currentUser = { uid: savedUid };
+    await loadDashboard(savedUid);
+    show("viewDash");
+  } else {
+    show("viewLogin");
+  }
+});
+
 // ============== LOAD DASHBOARD ==============
-async function loadDashboard() {
+async function loadDashboard(uid) {
   $("loadingNote").style.display = "block";
   try {
-    const snap = await getDoc(doc(db, "users", currentUser.uid));
+    const snap = await getDoc(doc(db, "users", uid));
     const d = snap.data() || {};
     $("welcome").textContent = "Hi, " + (d.name || "Friend") + "!";
     $("sPoints").textContent = d.points || 0;
@@ -308,6 +268,9 @@ $("redeemBtn").onclick = async () => {
   const raw = $("tokenInput").value.trim().toUpperCase();
   if (!raw) return setErr("tokenErr","Enter a token code.");
 
+  const uid = currentUser?.uid || localStorage.getItem("mishti_uid");
+  if (!uid) return setErr("tokenErr","Please login again.");
+
   const btn = $("redeemBtn");
   btn.disabled = true;
   btn.innerHTML = '<span class="spinner"></span>Checking...';
@@ -316,27 +279,24 @@ $("redeemBtn").onclick = async () => {
     const tokenRef  = doc(db, "tokens", raw);
     const tokenSnap = await getDoc(tokenRef);
 
-    // 1. Token exists?
     if (!tokenSnap.exists()) {
       setErr("tokenErr","❌ Invalid token. Please check the code.");
       return;
     }
     const t = tokenSnap.data();
 
-    // 2. Already used?
     if (t.is_used) {
       setErr("tokenErr","⚠️ This token has already been used.");
       return;
     }
 
-    // 3. Mark used + give spin
     await updateDoc(tokenRef, {
       is_used: true,
-      used_by: currentUser.uid,
+      used_by: uid,
       used_at: serverTimestamp()
     });
 
-    const userRef = doc(db, "users", currentUser.uid);
+    const userRef = doc(db, "users", uid);
     const userSnap = await getDoc(userRef);
     const u = userSnap.data() || {};
     const usedList = u.tokensUsed || [];
@@ -347,9 +307,8 @@ $("redeemBtn").onclick = async () => {
       tokensUsed: usedList
     });
 
-    // 4. Log the redemption
     await addDoc(collection(db, "token_logs"), {
-      uid: currentUser.uid,
+      uid: uid,
       token: raw,
       name: u.name || "",
       phone: u.phone || "",
@@ -358,10 +317,10 @@ $("redeemBtn").onclick = async () => {
 
     $("tokenOk").textContent = "✅ Token accepted! You got 1 spin.";
     $("tokenInput").value = "";
-    await loadDashboard();
+    await loadDashboard(uid);
 
   } catch (err) {
-    console.error(err);
+    console.error("TOKEN ERROR:", err);
     setErr("tokenErr","Something went wrong. Try again.");
   } finally {
     btn.disabled = false;
@@ -381,14 +340,14 @@ $("loginPhone").addEventListener("input", e => {
 
 // ============== LOGOUT ==============
 $("logoutBtn").onclick = async () => {
-  await signOut(auth);
-  localStorage.removeItem("pending_name");
-  localStorage.removeItem("pending_phone");
+  try { await signOut(auth); } catch(e){}
+  localStorage.removeItem("mishti_uid");
+  localStorage.removeItem("mishti_name");
+  localStorage.removeItem("mishti_phone");
   location.reload();
 };
 
-// Expose admin constants globally (for later parts)
-window.__MISHTI__ = { ADMIN_PHONES, ADMIN_NAME, db, auth, currentUser: () => currentUser };
+window.__MISHTI__ = { ADMIN_PHONES, db, auth };
 </script>
 
 </body>
