@@ -13,7 +13,7 @@ html{height:100%}
 *,*::before,*::after{box-sizing:inherit}
 body{margin:0;min-height:100%;color:var(--ink);font:16px/1.55 Georgia,serif;
 background:linear-gradient(160deg,var(--bg),var(--bg2));background-attachment:fixed;overflow-x:hidden}
-h1,h2,h3,button,input,label{font-family:"Trebuchet MS",Verdana,system-ui,sans-serif}
+h1,h2,h3,button,input,label,textarea{font-family:"Trebuchet MS",Verdana,system-ui,sans-serif}
 main{position:relative;z-index:1;max-width:520px;margin:0 auto;padding:22px 18px 60px}
 .brand{text-align:center;margin:4px 0 14px}
 .brand b{display:block;font-size:clamp(2.6rem,13vw,4.2rem);line-height:1;font-weight:900;font-style:italic;letter-spacing:-.03em;
@@ -22,17 +22,19 @@ background:linear-gradient(180deg,#ffd76a 0%,#f2a516 45%,#c2185b 100%);
 filter:drop-shadow(0 3px 0 rgba(140,29,58,.35))}
 .brand span{display:inline-block;margin-top:6px;padding:4px 14px;border-radius:99px;border:1.5px solid var(--gold);color:var(--brand);font-weight:700;font-size:.85rem;letter-spacing:.04em}
 h1{font-size:clamp(1.6rem,7vw,2.2rem);line-height:1.15;margin:0 0 10px;color:var(--brand);letter-spacing:-.02em;text-align:center}
+h3{margin:0 0 8px;color:var(--brand)}
 .lead{color:var(--muted);margin:0 0 20px;text-align:center;font-size:.95rem}
 .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 8px 24px rgba(140,29,58,.1);margin-bottom:16px}
 label{display:block;font-weight:700;font-size:.9rem;margin-bottom:6px}
-input{width:100%;font-size:1rem;padding:14px;border-radius:12px;border:2px solid var(--line);background:var(--bg);color:var(--ink);margin-bottom:12px}
-input:focus,button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+input,textarea{width:100%;font-size:1rem;padding:14px;border-radius:12px;border:2px solid var(--line);background:var(--bg);color:var(--ink);margin-bottom:12px}
+input:focus,textarea:focus,button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
 .err{color:var(--err);font-size:.88rem;min-height:1.3em;margin:0 0 10px;font-family:"Trebuchet MS",system-ui,sans-serif}
 .ok{color:var(--ok);font-size:.88rem;font-family:"Trebuchet MS",system-ui,sans-serif;margin:0 0 10px}
 .btn{width:100%;border:0;border-radius:12px;padding:15px;font-size:1rem;font-weight:700;cursor:pointer;background:var(--brand);color:var(--brand-ink);transition:transform .12s}
 .btn:active{transform:scale(.97)}
 .btn.gold{background:linear-gradient(180deg,#ffd76a,#f2a516);color:#3b1220}
 .btn.ghost{background:transparent;color:var(--ink);border:2px solid var(--line)}
+.btn.green{background:#1f9d55;color:#fff}
 .btn:disabled{opacity:.55;cursor:not-allowed}
 .badge{display:inline-block;background:var(--gold);color:#3b1220;font-weight:700;font-size:.75rem;padding:3px 10px;border-radius:99px;font-family:"Trebuchet MS",system-ui,sans-serif}
 .hidden{display:none!important}
@@ -44,9 +46,53 @@ input:focus,button:focus-visible{outline:3px solid var(--gold);outline-offset:2p
 .note{font-size:.8rem;color:var(--muted);margin-top:18px;text-align:center;font-family:"Trebuchet MS",system-ui,sans-serif}
 .spinner{display:inline-block;width:18px;height:18px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:8px}
 @keyframes spin{to{transform:rotate(360deg)}}
+
+/* ===== Spin wheel ===== */
+.wheel-wrap{position:relative;width:100%;max-width:340px;margin:14px auto 22px;aspect-ratio:1}
+.pointer{position:absolute;left:50%;top:-10px;margin-left:-15px;width:0;height:0;
+border-left:15px solid transparent;border-right:15px solid transparent;border-top:32px solid var(--gold);
+filter:drop-shadow(0 2px 2px rgba(0,0,0,.4));z-index:3;transform-origin:50% 10%;transition:transform .1s}
+.wheel{position:absolute;inset:0;will-change:transform;transform:translateZ(0)}
+.wheel canvas{width:100%;height:100%;display:block}
+.hub{position:absolute;inset:0;margin:auto;width:76px;height:76px;border-radius:50%;
+border:4px solid var(--gold);background:var(--brand);color:var(--brand-ink);
+font-weight:800;font-size:.95rem;cursor:pointer;z-index:3;box-shadow:0 4px 14px rgba(0,0,0,.4);
+animation:pulse 1.6s ease-in-out infinite}
+.hub:disabled{animation:none;opacity:.6}
+@keyframes pulse{50%{transform:scale(1.08)}}
+.wheel-glow::before{content:"";position:absolute;inset:-6px;border-radius:50%;
+box-shadow:0 0 30px 8px rgba(242,165,22,.55);animation:glowpulse 2s ease-in-out infinite;pointer-events:none}
+@keyframes glowpulse{0%,100%{opacity:.25}50%{opacity:1}}
+
+/* ===== Modals ===== */
+.overlay{position:fixed;inset:0;background:rgba(20,5,10,.72);display:none;align-items:center;justify-content:center;padding:18px;z-index:50;overflow-y:auto}
+.overlay.open{display:flex}
+.modal{width:100%;max-width:420px;background:var(--card);border-radius:18px;padding:22px;border:1px solid var(--line);margin:auto}
+.prize-big{font-size:1.5rem;font-weight:800;color:var(--brand);margin:0 0 4px;text-align:center}
+.coupon{display:inline-block;font:700 1.3rem "Courier New",monospace;border:2px dashed var(--gold);
+padding:6px 14px;border-radius:10px;margin:8px 0 14px;letter-spacing:.06em;background:var(--bg)}
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:60}
+
+/* Toast */
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:var(--bg);
+padding:12px 20px;border-radius:12px;font-family:"Trebuchet MS",system-ui,sans-serif;font-weight:700;
+z-index:100;opacity:0;transition:opacity .25s;pointer-events:none;font-size:.9rem}
+.toast.show{opacity:.95}
+
+/* Mute button */
+#muteBtn{position:fixed;top:calc(10px + env(safe-area-inset-top,0px));right:12px;z-index:15;
+width:40px;height:40px;border-radius:50%;border:2px solid var(--line);background:var(--card);font-size:1.1rem;cursor:pointer}
+
+.history-item{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;
+background:var(--bg);border:1px solid var(--line);border-radius:10px;margin-bottom:6px;
+font-family:"Trebuchet MS",system-ui,sans-serif;font-size:.9rem}
+.history-item .prize{font-weight:700;color:var(--brand)}
+.history-item .time{font-size:.75rem;color:var(--muted)}
 </style>
 </head>
 <body>
+
+<button id="muteBtn" aria-label="Toggle sound">🔊</button>
 
 <main>
   <div class="brand"><b>Arinbex 7</b><span>Mishti Spin Event</span></div>
@@ -66,8 +112,6 @@ input:focus,button:focus-visible{outline:3px solid var(--gold);outline-offset:2p
 
       <button class="btn gold" id="loginBtn">Start Spinning 🎯</button>
     </div>
-
-    <p class="note">Your number is only used to track your spins &amp; prizes.</p>
   </section>
 
   <!-- ============ STEP 2: DASHBOARD ============ -->
@@ -79,15 +123,28 @@ input:focus,button:focus-visible{outline:3px solid var(--gold);outline-offset:2p
     <p class="lead">Welcome to Mishti Spin 🎉</p>
 
     <div class="card">
-      <h3 style="margin:0 0 8px;color:var(--brand)">Your Stats</h3>
+      <h3>Your Stats</h3>
       <div class="stats">
         <div class="stat"><b id="sPoints">0</b><small>Points</small></div>
         <div class="stat"><b id="sSpins">0</b><small>Spins Left</small></div>
       </div>
+      <p class="note" style="margin-top:10px;font-size:.75rem">100 points = 1 taka • Redeem token to earn spins</p>
     </div>
 
+    <!-- ====== SPIN WHEEL ====== -->
     <div class="card">
-      <h3 style="margin:0 0 8px;color:var(--brand)">🎫 Enter Token</h3>
+      <h3 style="text-align:center">🎡 Spin the Wheel</h3>
+      <div class="wheel-wrap wheel-glow" id="wheelWrap">
+        <div class="pointer" id="pointer"></div>
+        <div class="wheel" id="wheelEl"><canvas id="wheel" width="700" height="700"></canvas></div>
+        <button class="hub" id="spinBtn">SPIN</button>
+      </div>
+      <p class="note" style="margin-top:0">Each spin costs 1 spin credit</p>
+    </div>
+
+    <!-- ====== TOKEN INPUT ====== -->
+    <div class="card">
+      <h3>🎫 Enter Token</h3>
       <p class="lead" style="text-align:left;margin-bottom:12px;font-size:.85rem">Find the token code inside your chocolate packet.</p>
       <label for="tokenInput">Token code</label>
       <input id="tokenInput" placeholder="ARNX-XXXX-XXXX" maxlength="20" autocomplete="off" style="text-transform:uppercase">
@@ -96,9 +153,15 @@ input:focus,button:focus-visible{outline:3px solid var(--gold);outline-offset:2p
       <button class="btn gold" id="redeemBtn">Redeem Token</button>
     </div>
 
+    <!-- ====== SPIN HISTORY ====== -->
+    <div class="card" id="historyCard" style="display:none">
+      <h3>📜 Your Spin History</h3>
+      <div id="historyList"></div>
+    </div>
+
     <button class="btn ghost" id="logoutBtn" style="margin-top:6px">Logout</button>
 
-    <p class="note">Coming soon: Spin Wheel, Wallet, History</p>
+    <p class="note">Coming soon: Wallet, Leaderboard, Admin Panel</p>
   </section>
 
   <p class="note" id="loadingNote" style="display:none">
@@ -107,18 +170,52 @@ input:focus,button:focus-visible{outline:3px solid var(--gold);outline-offset:2p
   </p>
 </main>
 
-<!-- ============ Firebase SDK (v10 modular) ============ -->
+<!-- ============ PRIZE MODAL ============ -->
+<div class="overlay" id="prizeOv">
+  <div class="modal">
+    <h2 id="prizeTitle" style="text-align:center;margin:0 0 8px;color:var(--brand)">🎉 Congratulations!</h2>
+    <p class="prize-big" id="prizeText">You won!</p>
+    <div class="center" id="prizeCouponWrap" style="display:none">
+      <p style="color:var(--muted);font-size:.9rem;margin-bottom:4px">Your coupon code:</p>
+      <div class="coupon" id="prizeCoupon">----</div>
+    </div>
+    <div id="prizeWhatsWrap" style="display:none">
+      <button class="btn green" id="prizeWhatsBtn">📲 Send claim on WhatsApp</button>
+    </div>
+    <button class="btn ghost" id="prizeCloseBtn" style="margin-top:10px">Close</button>
+  </div>
+</div>
+
+<!-- ============ SWEET BOX MODAL ============ -->
+<div class="overlay" id="boxOv">
+  <div class="modal">
+    <h2 style="margin:0 0 6px">🎁 Sweet Box Claim</h2>
+    <p style="color:var(--muted);font-size:.9rem">Please enter your delivery details. We'll contact you on WhatsApp.</p>
+    <label for="boxName">Full name</label>
+    <input id="boxName" maxlength="60">
+    <label for="boxPhone">WhatsApp number</label>
+    <input id="boxPhone" readonly>
+    <label for="boxAddr">Delivery address</label>
+    <textarea id="boxAddr" rows="3"></textarea>
+    <div class="err" id="boxErr"></div>
+    <button class="btn green" id="boxSubmitBtn">Claim Sweet Box</button>
+    <button class="btn ghost" id="boxCancelBtn" style="margin-top:8px">Cancel</button>
+  </div>
+</div>
+
+<canvas id="confetti" class="confetti"></canvas>
+<div class="toast" id="toast"></div>
+
+<!-- ============ Firebase SDK ============ -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import {
-  getAuth, signInAnonymously, onAuthStateChanged, signOut
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getAuth, signInAnonymously, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import {
   getFirestore, doc, getDoc, setDoc, updateDoc, collection, addDoc,
-  query, where, getDocs, serverTimestamp
+  query, where, getDocs, orderBy, limit, serverTimestamp, increment
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-// ============== FIREBASE CONFIG ==============
+// ============== CONFIG ==============
 const firebaseConfig = {
   apiKey: "AIzaSyAv15cvIVjO4R7KokvcoykuCH_21iD5ETU",
   authDomain: "arambex-7.firebaseapp.com",
@@ -128,8 +225,26 @@ const firebaseConfig = {
   appId: "1:132079784610:web:6850f5516dac44695d7dfb"
 };
 
-// ============== ADMIN SETTINGS ==============
 const ADMIN_PHONES = ["01612929333"];
+const ADMIN_WHATSAPP = "8801612929333";   // WhatsApp number for claims (country code no +)
+
+// Spin counter settings
+const FREE_DELIVERY_EVERY = 50;   // every 50th spin → Free Delivery
+const SWEET_BOX_EVERY     = 300;  // every 300th spin → Sweet Box
+
+// Wheel segments
+const SEGMENTS = [
+  { label: "100 Points",    type: "points",    value: 100, color: "#8c1d3a" },
+  { label: "Free Delivery", type: "free",      value: 100, color: "#1f7a6d" },
+  { label: "200 Points",    type: "points",    value: 200, color: "#d9822b" },
+  { label: "Sweet Box",     type: "box",       value: 0,   color: "#c2185b" },
+  { label: "300 Points",    type: "points",    value: 300, color: "#2f7d5b" },
+  { label: "400 Points",    type: "points",    value: 400, color: "#5b2a86" },
+  { label: "500 Points",    type: "points",    value: 500, color: "#0e7c86" },
+  { label: "600 Points",    type: "points",    value: 600, color: "#a8620a" }
+];
+const N = SEGMENTS.length;
+const SEG = (Math.PI * 2) / N;
 
 // ============== INIT ==============
 const app  = initializeApp(firebaseConfig);
@@ -140,20 +255,140 @@ const db   = getFirestore(app);
 let currentUser = null;
 let userName    = "";
 let userPhone   = "";
+let userData    = null;
+let spinning    = false;
+let rot         = 0;
+let muted       = localStorage.getItem("mishti_muted") === "1";
 
 // ============== HELPERS ==============
 const $ = id => document.getElementById(id);
 const show = id => { ["viewLogin","viewDash"].forEach(v => $(v).classList.toggle("hidden", v !== id)); };
 const setErr = (id, msg) => { $(id).textContent = msg || ""; };
 
+function toast(msg) {
+  const t = $("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  clearTimeout(t._tid);
+  t._tid = setTimeout(() => t.classList.remove("show"), 2200);
+}
+
+// ============== SOUND ==============
+let ac;
+function tone(freq, dur, type = "sine", vol = 0.12, when = 0) {
+  if (muted) return;
+  try {
+    ac = ac || new (window.AudioContext || window.webkitAudioContext)();
+    if (ac.state === "suspended") ac.resume();
+    const o = ac.createOscillator(), g = ac.createGain(), t = ac.currentTime + when;
+    o.type = type; o.frequency.value = freq;
+    g.gain.setValueAtTime(vol, t);
+    g.gain.exponentialRampToValueAtTime(0.001, t + dur);
+    o.connect(g); g.connect(ac.destination);
+    o.start(t); o.stop(t + dur);
+  } catch (e) {}
+}
+function winSound() {
+  [523, 659, 784, 1047, 1319].forEach((f, i) => tone(f, 0.35, "triangle", 0.18, i * 0.11));
+}
+$("muteBtn").textContent = muted ? "🔇" : "🔊";
+$("muteBtn").onclick = () => {
+  muted = !muted;
+  localStorage.setItem("mishti_muted", muted ? "1" : "0");
+  $("muteBtn").textContent = muted ? "🔇" : "🔊";
+};
+
+// ============== CONFETTI ==============
+function confetti(count = 120) {
+  const cv = $("confetti"), x = cv.getContext("2d");
+  cv.width = innerWidth; cv.height = innerHeight;
+  const cols = ["#f2a516", "#e0526f", "#2f7d5b", "#5b2a86", "#ffffff", "#ff7a00"];
+  const ps = Array.from({ length: count }, () => ({
+    x: innerWidth / 2, y: innerHeight * 0.4,
+    vx: (Math.random() - 0.5) * 18, vy: Math.random() * -15 - 3,
+    s: 5 + Math.random() * 7, c: cols[Math.random() * cols.length | 0],
+    r: Math.random() * 6, vr: (Math.random() - 0.5) * 0.4
+  }));
+  let f = 0;
+  (function tick() {
+    x.clearRect(0, 0, cv.width, cv.height);
+    ps.forEach(p => {
+      p.vy += 0.35; p.vx *= 0.995;
+      p.x += p.vx; p.y += p.vy; p.r += p.vr;
+      x.save(); x.translate(p.x, p.y); x.rotate(p.r);
+      x.fillStyle = p.c;
+      x.fillRect(-p.s / 2, -p.s / 2, p.s, p.s * 0.6);
+      x.restore();
+    });
+    if (++f < 150) requestAnimationFrame(tick);
+    else x.clearRect(0, 0, cv.width, cv.height);
+  })();
+}
+
+// ============== DRAW WHEEL (once) ==============
+(function drawWheel() {
+  const cv = $("wheel"), ctx = cv.getContext("2d");
+  const W = 700, c = W / 2, r = c - 25;
+  ctx.clearRect(0, 0, W, W);
+  ctx.translate(c, c);
+
+  // outer rings
+  ctx.beginPath(); ctx.arc(0, 0, r + 20, 0, Math.PI * 2); ctx.fillStyle = "#a8620a"; ctx.fill();
+  ctx.beginPath(); ctx.arc(0, 0, r + 14, 0, Math.PI * 2); ctx.fillStyle = "#f2a516"; ctx.fill();
+
+  const shade = (hex, a) => {
+    const n = parseInt(hex.slice(1), 16);
+    const f = v => Math.min(255, v + a);
+    return `rgb(${f(n >> 16)},${f((n >> 8) & 255)},${f(n & 255)})`;
+  };
+
+  SEGMENTS.forEach((s, i) => {
+    const a0 = i * SEG;
+    const g = ctx.createRadialGradient(0, 0, 30, 0, 0, r);
+    g.addColorStop(0, shade(s.color, 40));
+    g.addColorStop(1, s.color);
+
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.arc(0, 0, r, a0, a0 + SEG);
+    ctx.closePath();
+    ctx.fillStyle = g; ctx.fill();
+    ctx.strokeStyle = "rgba(255,255,255,.8)"; ctx.lineWidth = 3; ctx.stroke();
+
+    // text
+    ctx.save();
+    ctx.rotate(a0 + SEG / 2);
+    ctx.textAlign = "right";
+    ctx.fillStyle = "#fff";
+    ctx.shadowColor = "rgba(0,0,0,.55)"; ctx.shadowBlur = 5;
+    ctx.font = '800 30px "Trebuchet MS",sans-serif';
+    ctx.fillText(s.label, r - 24, 10);
+    // emoji
+    ctx.font = "32px system-ui,sans-serif";
+    ctx.textAlign = "center";
+    const emoji = s.type === "box" ? "🎁" : s.type === "free" ? "🚚" : "🍬";
+    ctx.fillText(emoji, r * 0.32, 10);
+    ctx.restore();
+  });
+
+  // outer dots
+  for (let i = 0; i < 28; i++) {
+    const a = (i / 28) * Math.PI * 2;
+    ctx.beginPath();
+    ctx.arc(Math.cos(a) * (r + 8), Math.sin(a) * (r + 8), 5, 0, Math.PI * 2);
+    ctx.fillStyle = i % 2 ? "#fffbe0" : "#e6b04a";
+    ctx.fill();
+  }
+})();
+
 // ============== LOGIN ==============
 $("loginBtn").onclick = async () => {
-  setErr("loginErr","");
+  setErr("loginErr", "");
   const name  = $("loginName").value.trim();
-  const phone = $("loginPhone").value.replace(/\D/g,"").slice(0,11);
+  const phone = $("loginPhone").value.replace(/\D/g, "").slice(0, 11);
 
-  if (name.length < 2)  return setErr("loginErr","Enter your name (at least 2 letters).");
-  if (!/^01[3-9]\d{8}$/.test(phone)) return setErr("loginErr","Enter a valid 11-digit number (01XXXXXXXXX).");
+  if (name.length < 2)  return setErr("loginErr", "Enter your name (at least 2 letters).");
+  if (!/^01[3-9]\d{8}$/.test(phone)) return setErr("loginErr", "Enter a valid 11-digit number.");
 
   userName = name;
   userPhone = phone;
@@ -163,60 +398,43 @@ $("loginBtn").onclick = async () => {
   btn.innerHTML = '<span class="spinner"></span>Logging in...';
 
   try {
-    // Check if this phone already exists (same account)
     const existing = await findUserByPhone(phone);
 
     if (existing) {
-      // Same phone → reuse that Firebase Auth account
-      // But we can't switch auth easily, so use the existing UID from DB
       await setDoc(doc(db, "users", existing.id), {
         name, phone,
         isAdmin: ADMIN_PHONES.includes(phone),
         lastLogin: serverTimestamp()
       }, { merge: true });
-
-      // Store active uid locally
       localStorage.setItem("mishti_uid", existing.id);
       currentUser = { uid: existing.id };
-      localStorage.setItem("mishti_name", name);
-      localStorage.setItem("mishti_phone", phone);
-      await loadDashboard(existing.id);
-      show("viewDash");
     } else {
-      // New user → sign in anonymously + create user doc
       const cred = await signInAnonymously(auth);
       const uid = cred.user.uid;
-
       await setDoc(doc(db, "users", uid), {
         name, phone,
         isAdmin: ADMIN_PHONES.includes(phone),
-        points: 0,
-        spins: 0,
+        points: 0, spins: 0,
         tokensUsed: [],
         createdAt: serverTimestamp(),
         lastLogin: serverTimestamp()
       });
-
       localStorage.setItem("mishti_uid", uid);
-      localStorage.setItem("mishti_name", name);
-      localStorage.setItem("mishti_phone", phone);
       currentUser = cred.user;
-      await loadDashboard(uid);
-      show("viewDash");
     }
+    localStorage.setItem("mishti_name", name);
+    localStorage.setItem("mishti_phone", phone);
+    await loadDashboard(currentUser.uid);
+    show("viewDash");
   } catch (err) {
     console.error("LOGIN ERROR:", err);
-    let msg = "Login failed. Try again.";
-    if (err.code === "auth/operation-not-allowed") msg = "⚠️ Anonymous login not enabled. Check Firebase Console.";
-    if (err.code === "auth/network-request-failed") msg = "Network error. Check your internet.";
-    setErr("loginErr", msg);
+    setErr("loginErr", "Login failed. Try again.");
   } finally {
     btn.disabled = false;
     btn.textContent = "Start Spinning 🎯";
   }
 };
 
-// ============== FIND USER BY PHONE ==============
 async function findUserByPhone(phone) {
   try {
     const q = query(collection(db, "users"), where("phone", "==", phone));
@@ -230,7 +448,7 @@ async function findUserByPhone(phone) {
   }
 }
 
-// ============== AUTO LOGIN (if already logged) ==============
+// ============== AUTO LOGIN ==============
 window.addEventListener("load", async () => {
   const savedUid = localStorage.getItem("mishti_uid");
   const savedName = localStorage.getItem("mishti_name");
@@ -252,24 +470,53 @@ async function loadDashboard(uid) {
   $("loadingNote").style.display = "block";
   try {
     const snap = await getDoc(doc(db, "users", uid));
-    const d = snap.data() || {};
-    $("welcome").textContent = "Hi, " + (d.name || "Friend") + "!";
-    $("sPoints").textContent = d.points || 0;
-    $("sSpins").textContent  = d.spins  || 0;
-    $("adminBadge").style.display = d.isAdmin ? "inline-block" : "none";
+    userData = snap.data() || {};
+    $("welcome").textContent = "Hi, " + (userData.name || "Friend") + "!";
+    $("sPoints").textContent = userData.points || 0;
+    $("sSpins").textContent  = userData.spins  || 0;
+    $("adminBadge").style.display = userData.isAdmin ? "inline-block" : "none";
+    // Enable spin button only if has spins
+    $("spinBtn").disabled = !(userData.spins > 0);
+    await loadHistory(uid);
   } finally {
     $("loadingNote").style.display = "none";
   }
 }
 
+// ============== LOAD HISTORY ==============
+async function loadHistory(uid) {
+  try {
+    const q = query(
+      collection(db, "spins"),
+      where("uid", "==", uid),
+      orderBy("createdAt", "desc"),
+      limit(10)
+    );
+    const snap = await getDocs(q);
+    if (snap.empty) { $("historyCard").style.display = "none"; return; }
+    $("historyCard").style.display = "block";
+    $("historyList").innerHTML = "";
+    snap.forEach(d => {
+      const s = d.data();
+      const time = s.createdAt?.toDate?.().toLocaleString("en-GB", { timeZone: "Asia/Dhaka", day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit" }) || "";
+      const el = document.createElement("div");
+      el.className = "history-item";
+      el.innerHTML = `<span class="prize">${s.prizeLabel || "Prize"}</span><span class="time">${time}</span>`;
+      $("historyList").appendChild(el);
+    });
+  } catch (e) {
+    console.error("HISTORY LOAD ERROR:", e);
+  }
+}
+
 // ============== REDEEM TOKEN ==============
 $("redeemBtn").onclick = async () => {
-  setErr("tokenErr",""); $("tokenOk").textContent = "";
+  setErr("tokenErr", ""); $("tokenOk").textContent = "";
   const raw = $("tokenInput").value.trim().toUpperCase();
-  if (!raw) return setErr("tokenErr","Enter a token code.");
+  if (!raw) return setErr("tokenErr", "Enter a token code.");
 
   const uid = currentUser?.uid || localStorage.getItem("mishti_uid");
-  if (!uid) return setErr("tokenErr","Please login again.");
+  if (!uid) return setErr("tokenErr", "Please login again.");
 
   const btn = $("redeemBtn");
   btn.disabled = true;
@@ -279,21 +526,12 @@ $("redeemBtn").onclick = async () => {
     const tokenRef  = doc(db, "tokens", raw);
     const tokenSnap = await getDoc(tokenRef);
 
-    if (!tokenSnap.exists()) {
-      setErr("tokenErr","❌ Invalid token. Please check the code.");
-      return;
-    }
+    if (!tokenSnap.exists()) { setErr("tokenErr", "❌ Invalid token. Check the code."); return; }
     const t = tokenSnap.data();
-
-    if (t.is_used) {
-      setErr("tokenErr","⚠️ This token has already been used.");
-      return;
-    }
+    if (t.is_used) { setErr("tokenErr", "⚠️ This token is already used."); return; }
 
     await updateDoc(tokenRef, {
-      is_used: true,
-      used_by: uid,
-      used_at: serverTimestamp()
+      is_used: true, used_by: uid, used_at: serverTimestamp()
     });
 
     const userRef = doc(db, "users", uid);
@@ -308,34 +546,285 @@ $("redeemBtn").onclick = async () => {
     });
 
     await addDoc(collection(db, "token_logs"), {
-      uid: uid,
-      token: raw,
-      name: u.name || "",
-      phone: u.phone || "",
+      uid, token: raw, name: u.name || "", phone: u.phone || "",
       redeemedAt: serverTimestamp()
     });
 
     $("tokenOk").textContent = "✅ Token accepted! You got 1 spin.";
     $("tokenInput").value = "";
+    toast("+1 Spin added");
     await loadDashboard(uid);
-
   } catch (err) {
     console.error("TOKEN ERROR:", err);
-    setErr("tokenErr","Something went wrong. Try again.");
+    setErr("tokenErr", "Something went wrong. Try again.");
   } finally {
     btn.disabled = false;
     btn.textContent = "Redeem Token";
   }
 };
 
-// Auto-uppercase token input
-$("tokenInput").addEventListener("input", e => {
-  e.target.value = e.target.value.toUpperCase().replace(/[^A-Z0-9-]/g,"");
-});
+// ============== SPIN LOGIC ==============
+function pickPrizeSegment(globalSpinNo) {
+  // Guaranteed prizes
+  if (globalSpinNo > 0 && globalSpinNo % SWEET_BOX_EVERY === 0) {
+    return SEGMENTS.findIndex(s => s.type === "box");
+  }
+  if (globalSpinNo > 0 && globalSpinNo % FREE_DELIVERY_EVERY === 0) {
+    return SEGMENTS.findIndex(s => s.type === "free");
+  }
+  // Random probability
+  // 100: 40%, 200: 25%, 300: 18%, 400: 8%, 500: 5%, 600: 2%
+  // Free Delivery: 1.5%, Sweet Box: 0.5%
+  const r = Math.random() * 100;
+  if (r < 40) return 0;    // 100
+  if (r < 65) return 2;    // 200
+  if (r < 83) return 4;    // 300
+  if (r < 91) return 5;    // 400
+  if (r < 96) return 6;    // 500
+  if (r < 98) return 7;    // 600
+  if (r < 99.5) return 1;  // Free Delivery 1.5%
+  return 3;                // Sweet Box 0.5%
+}
 
-// Phone input only digits
+async function getGlobalSpinNo() {
+  const ref = doc(db, "settings", "spin_counter");
+  const snap = await getDoc(ref);
+  if (!snap.exists()) {
+    await setDoc(ref, { count: 0 });
+    return 0;
+  }
+  return snap.data().count || 0;
+}
+async function incrementGlobalSpin() {
+  const ref = doc(db, "settings", "spin_counter");
+  await setDoc(ref, { count: increment(1) }, { merge: true });
+  const snap = await getDoc(ref);
+  return snap.data().count || 0;
+}
+
+$("spinBtn").onclick = async () => {
+  if (spinning) return;
+  const uid = currentUser?.uid || localStorage.getItem("mishti_uid");
+  if (!uid) return toast("Please login");
+
+  // Re-fetch to avoid stale data
+  const userRef = doc(db, "users", uid);
+  const userSnap = await getDoc(userRef);
+  const u = userSnap.data() || {};
+  if (!u.spins || u.spins < 1) return toast("No spins left. Redeem a token!");
+
+  spinning = true;
+  $("spinBtn").disabled = true;
+
+  try {
+    // Reserve 1 spin immediately
+    await updateDoc(userRef, { spins: (u.spins || 0) - 1 });
+
+    // Get current global spin number + increment
+    const prevNo = await getGlobalSpinNo();
+    const spinNo = prevNo + 1;
+    await setDoc(doc(db, "settings", "spin_counter"), { count: spinNo }, { merge: true });
+
+    // Pick winning segment
+    const idx = pickPrizeSegment(spinNo);
+    const seg = SEGMENTS[idx];
+
+    // Calculate rotation
+    const jitter = (Math.random() - 0.5) * SEG * 0.6;
+    const target = (-Math.PI / 2) - (idx + 0.5) * SEG - jitter;
+    const delta = ((((target - rot) % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2)) + Math.PI * 2 * 6;
+
+    // Animate
+    animateWheel(rot, delta, 5200, () => {
+      handleWin(uid, seg, spinNo, u);
+    });
+  } catch (err) {
+    console.error("SPIN ERROR:", err);
+    spinning = false;
+    $("spinBtn").disabled = false;
+    toast("Spin failed. Try again.");
+  }
+};
+
+function animateWheel(startRot, delta, duration, onDone) {
+  const t0 = performance.now();
+  let lastSeg = -1;
+  document.body.classList.add("busy");
+
+  (function frame(now) {
+    const p = Math.min((now - t0) / duration, 1);
+    const e = 1 - Math.pow(1 - p, 3.4);
+    rot = startRot + delta * e;
+    $("wheelEl").style.transform = `rotate(${rot}rad)`;
+
+    // Tick sound when passing a segment boundary
+    const underIdx = Math.floor((((-Math.PI / 2 - rot) / SEG) % N + N) % N);
+    if (underIdx !== lastSeg) {
+      lastSeg = underIdx;
+      tone(650 + underIdx * 25, 0.04, "square", 0.05);
+      if (navigator.vibrate) try { navigator.vibrate(4); } catch(e){}
+    }
+    if (p < 1) requestAnimationFrame(frame);
+    else {
+      document.body.classList.remove("busy");
+      onDone();
+    }
+  })(t0);
+}
+
+// ============== HANDLE WIN ==============
+async function handleWin(uid, seg, spinNo, userDataSnapshot) {
+  spinning = false;
+  winSound();
+  if (navigator.vibrate) try { navigator.vibrate([80, 60, 160]); } catch(e){}
+  confetti(seg.type === "points" ? 80 : 150);
+
+  try {
+    const userRef = doc(db, "users", uid);
+
+    if (seg.type === "points") {
+      // Add points
+      await updateDoc(userRef, { points: increment(seg.value) });
+      // Log spin
+      await addDoc(collection(db, "spins"), {
+        uid,
+        name: userDataSnapshot.name || "",
+        phone: userDataSnapshot.phone || "",
+        prizeLabel: seg.label,
+        prizeType: "points",
+        prizeValue: seg.value,
+        spinNo,
+        createdAt: serverTimestamp()
+      });
+      showPrizeModal({
+        title: "🎉 Congratulations!",
+        text: `You won ${seg.label}!`,
+        coupon: null,
+        whatsapp: null
+      });
+      toast(`+${seg.value} points`);
+    } else if (seg.type === "free") {
+      // Free delivery voucher
+      const code = "FREEDEL-" + (1000 + Math.floor(Math.random() * 9000));
+      await updateDoc(userRef, { lastVoucher: code });
+      await addDoc(collection(db, "spins"), {
+        uid,
+        name: userDataSnapshot.name || "",
+        phone: userDataSnapshot.phone || "",
+        prizeLabel: "Free Delivery 🚚",
+        prizeType: "free",
+        prizeValue: 0,
+        coupon: code,
+        spinNo,
+        createdAt: serverTimestamp()
+      });
+      const waText = `Hi, I spun the wheel at Arinbex 7 and won FREE DELIVERY!\n\nName: ${userDataSnapshot.name}\nPhone: ${userDataSnapshot.phone}\nVoucher: ${code}\n\nI want to claim it on my next order.`;
+      showPrizeModal({
+        title: "🚚 Free Delivery Won!",
+        text: "You won Free Delivery!",
+        coupon: code,
+        whatsapp: waText
+      });
+    } else if (seg.type === "box") {
+      // Sweet Box — ask for address
+      await addDoc(collection(db, "spins"), {
+        uid,
+        name: userDataSnapshot.name || "",
+        phone: userDataSnapshot.phone || "",
+        prizeLabel: "Sweet Box 🎁",
+        prizeType: "box",
+        prizeValue: 0,
+        spinNo,
+        createdAt: serverTimestamp()
+      });
+      showPrizeModal({
+        title: "🎁 Sweet Box Won!",
+        text: "Amazing! You won a Sweet Box!",
+        coupon: null,
+        whatsapp: null
+      });
+      setTimeout(() => openBoxModal(), 800);
+    }
+
+    await loadDashboard(uid);
+  } catch (err) {
+    console.error("HANDLE WIN ERROR:", err);
+    toast("Could not save prize. Contact support.");
+  }
+}
+
+// ============== PRIZE MODAL ==============
+let currentWaText = null;
+function showPrizeModal({ title, text, coupon, whatsapp }) {
+  $("prizeTitle").textContent = title;
+  $("prizeText").textContent = text;
+
+  if (coupon) {
+    $("prizeCoupon").textContent = coupon;
+    $("prizeCouponWrap").style.display = "block";
+  } else {
+    $("prizeCouponWrap").style.display = "none";
+  }
+
+  currentWaText = whatsapp;
+  if (whatsapp) {
+    $("prizeWhatsBtn").onclick = () => {
+      const url = `https://wa.me/${ADMIN_WHATSAPP}?text=${encodeURIComponent(whatsapp)}`;
+      window.open(url, "_blank");
+    };
+    $("prizeWhatsWrap").style.display = "block";
+  } else {
+    $("prizeWhatsWrap").style.display = "none";
+  }
+
+  $("prizeOv").classList.add("open");
+}
+$("prizeCloseBtn").onclick = () => $("prizeOv").classList.remove("open");
+
+// ============== SWEET BOX MODAL ==============
+function openBoxModal() {
+  $("boxName").value = userData?.name || "";
+  $("boxPhone").value = userData?.phone || "";
+  $("boxErr").textContent = "";
+  $("boxOv").classList.add("open");
+}
+$("boxCancelBtn").onclick = () => $("boxOv").classList.remove("open");
+
+$("boxSubmitBtn").onclick = async () => {
+  const name = $("boxName").value.trim();
+  const addr = $("boxAddr").value.trim();
+  if (name.length < 2) return $("boxErr").textContent = "Enter your name.";
+  if (addr.length < 8) return $("boxErr").textContent = "Enter a complete address.";
+
+  const uid = currentUser?.uid || localStorage.getItem("mishti_uid");
+  const phone = userData?.phone || "";
+
+  const btn = $("boxSubmitBtn");
+  btn.disabled = true; btn.innerHTML = '<span class="spinner"></span>Saving...';
+
+  try {
+    await addDoc(collection(db, "box_claims"), {
+      uid, name, phone, address: addr,
+      createdAt: serverTimestamp()
+    });
+    const waText = `🎁 SWEET BOX CLAIM\n\nName: ${name}\nPhone: ${phone}\nAddress: ${addr}\n\nI won a Sweet Box on Mishti Spin!`;
+    window.open(`https://wa.me/${ADMIN_WHATSAPP}?text=${encodeURIComponent(waText)}`, "_blank");
+    $("boxOv").classList.remove("open");
+    toast("Claim saved! Send WhatsApp message to confirm.");
+  } catch (e) {
+    console.error(e);
+    $("boxErr").textContent = "Could not save. Try again.";
+  } finally {
+    btn.disabled = false; btn.textContent = "Claim Sweet Box";
+  }
+};
+
+// ============== INPUT FIXES ==============
+$("tokenInput").addEventListener("input", e => {
+  e.target.value = e.target.value.toUpperCase().replace(/[^A-Z0-9-]/g, "");
+});
 $("loginPhone").addEventListener("input", e => {
-  e.target.value = e.target.value.replace(/\D/g,"").slice(0,11);
+  e.target.value = e.target.value.replace(/\D/g, "").slice(0, 11);
 });
 
 // ============== LOGOUT ==============
@@ -347,7 +836,7 @@ $("logoutBtn").onclick = async () => {
   location.reload();
 };
 
-window.__MISHTI__ = { ADMIN_PHONES, db, auth };
+window.__MISHTI__ = { ADMIN_PHONES, ADMIN_WHATSAPP, db, auth };
 </script>
 
 </body>
