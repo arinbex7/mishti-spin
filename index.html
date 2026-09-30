@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mishti Spin – Arinbex 7</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#fff6e5;--bg2:#ffe3c2;--ink:#3b1220;--muted:#7a5a52;--card:#fff;--line:#ecd6b8;
+--brand:#8c1d3a;--brand-ink:#fff;--gold:#f2a516;--err:#c0262d;--ok:#1f9d55}
+html{height:100%}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1c0d13;--bg2:#3a1526;--ink:#fbeedd;--muted:#c9a99b;--card:#2a1620;--line:#4a2a37;--brand:#e0526f;--brand-ink:#1c0d13;--gold:#f6b93b;--err:#ff7b80;--ok:#2ecc71}}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;min-height:100%;color:var(--ink);font:16px/1.55 Georgia,serif;
+background:linear-gradient(160deg,var(--bg),var(--bg2));background-attachment:fixed;overflow-x:hidden}
+h1,h2,h3,button,input,label{font-family:"Trebuchet MS",Verdana,system-ui,sans-serif}
+main{position:relative;z-index:1;max-width:520px;margin:0 auto;padding:22px 18px 60px}
+.brand{text-align:center;margin:4px 0 14px}
+.brand b{display:block;font-size:clamp(2.6rem,13vw,4.2rem);line-height:1;font-weight:900;font-style:italic;letter-spacing:-.03em;
+background:linear-gradient(180deg,#ffd76a 0%,#f2a516 45%,#c2185b 100%);
+-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;
+filter:drop-shadow(0 3px 0 rgba(140,29,58,.35))}
+.brand span{display:inline-block;margin-top:6px;padding:4px 14px;border-radius:99px;border:1.5px solid var(--gold);color:var(--brand);font-weight:700;font-size:.85rem;letter-spacing:.04em}
+h1{font-size:clamp(1.6rem,7vw,2.2rem);line-height:1.15;margin:0 0 10px;color:var(--brand);letter-spacing:-.02em;text-align:center}
+.lead{color:var(--muted);margin:0 0 20px;text-align:center;font-size:.95rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 8px 24px rgba(140,29,58,.1);margin-bottom:16px}
+label{display:block;font-weight:700;font-size:.9rem;margin-bottom:6px}
+input{width:100%;font-size:1rem;padding:14px;border-radius:12px;border:2px solid var(--line);background:var(--bg);color:var(--ink);margin-bottom:12px}
+input:focus,button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.err{color:var(--err);font-size:.88rem;min-height:1.3em;margin:0 0 10px;font-family:"Trebuchet MS",system-ui,sans-serif}
+.ok{color:var(--ok);font-size:.88rem;font-family:"Trebuchet MS",system-ui,sans-serif;margin:0 0 10px}
+.btn{width:100%;border:0;border-radius:12px;padding:15px;font-size:1rem;font-weight:700;cursor:pointer;background:var(--brand);color:var(--brand-ink);transition:transform .12s}
+.btn:active{transform:scale(.97)}
+.btn.gold{background:linear-gradient(180deg,#ffd76a,#f2a516);color:#3b1220}
+.btn.ghost{background:transparent;color:var(--ink);border:2px solid var(--line)}
+.btn:disabled{opacity:.55;cursor:not-allowed}
+.badge{display:inline-block;background:var(--gold);color:#3b1220;font-weight:700;font-size:.75rem;padding:3px 10px;border-radius:99px;font-family:"Trebuchet MS",system-ui,sans-serif}
+.hidden{display:none!important}
+.center{text-align:center}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.stat{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:12px;text-align:center}
+.stat b{display:block;font-size:1.8rem;color:var(--brand);font-family:"Trebuchet MS",system-ui,sans-serif}
+.stat small{color:var(--muted);font-size:.75rem;text-transform:uppercase;letter-spacing:.06em}
+.note{font-size:.8rem;color:var(--muted);margin-top:18px;text-align:center;font-family:"Trebuchet MS",system-ui,sans-serif}
+.overlay{position:fixed;inset:0;background:rgba(20,5,10,.7);display:none;align-items:center;justify-content:center;padding:18px;z-index:50}
+.overlay.open{display:flex}
+.modal{width:100%;max-width:400px;background:var(--card);border-radius:18px;padding:22px;border:1px solid var(--line)}
+.spinner{display:inline-block;width:18px;height:18px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:8px}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+
+<main>
+  <div class="brand"><b>Arinbex 7</b><span>Mishti Spin Event</span></div>
+
+  <!-- ============ STEP 1: LOGIN ============ -->
+  <section id="viewLogin">
+    <h1>Welcome! 🍬</h1>
+    <p class="lead">Login with your WhatsApp number to start spinning.</p>
+
+    <div class="card">
+      <label for="loginName">Your name</label>
+      <input id="loginName" placeholder="e.g. Rafi Ahmed" maxlength="60" autocomplete="name">
+
+      <label for="loginPhone">WhatsApp number</label>
+      <input id="loginPhone" type="tel" inputmode="numeric" maxlength="11" placeholder="01XXXXXXXXX">
+      <div class="err" id="loginErr" role="alert"></div>
+
+      <button class="btn gold" id="sendOtpBtn">Send OTP</button>
+    </div>
+  </section>
+
+  <!-- ============ STEP 2: OTP VERIFY ============ -->
+  <section id="viewOtp" class="hidden">
+    <h1>Enter OTP 📩</h1>
+    <p class="lead" id="otpLead">We sent a code to your WhatsApp.</p>
+
+    <div class="card">
+      <label for="otpCode">6-digit OTP</label>
+      <input id="otpCode" type="tel" inputmode="numeric" maxlength="6" placeholder="123456">
+      <div class="err" id="otpErr" role="alert"></div>
+
+      <button class="btn gold" id="verifyBtn">Verify</button>
+      <button class="btn ghost" id="backLoginBtn" style="margin-top:8px">← Back</button>
+    </div>
+
+    <div class="card" id="recaptchaCard" style="padding:8px">
+      <div id="recaptcha-container"></div>
+    </div>
+  </section>
+
+  <!-- ============ STEP 3: DASHBOARD ============ -->
+  <section id="viewDash" class="hidden">
+    <div class="center" style="margin-bottom:14px">
+      <span class="badge" id="adminBadge" style="display:none">ADMIN</span>
+    </div>
+    <h1 id="welcome">Hi!</h1>
+    <p class="lead">Welcome to Mishti Spin 🎉</p>
+
+    <div class="card">
+      <h3 style="margin:0 0 8px;color:var(--brand)">Your Stats</h3>
+      <div class="stats">
+        <div class="stat"><b id="sPoints">0</b><small>Points</small></div>
+        <div class="stat"><b id="sSpins">0</b><small>Spins Left</small></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 style="margin:0 0 8px;color:var(--brand)">🎫 Enter Token</h3>
+      <p class="lead" style="text-align:left;margin-bottom:12px;font-size:.85rem">Find the token code inside your chocolate packet.</p>
+      <label for="tokenInput">Token code</label>
+      <input id="tokenInput" placeholder="ARNX-XXXX-XXXX" maxlength="20" autocomplete="off" style="text-transform:uppercase">
+      <div class="err" id="tokenErr" role="alert"></div>
+      <div class="ok" id="tokenOk"></div>
+      <button class="btn gold" id="redeemBtn">Redeem Token</button>
+    </div>
+
+    <button class="btn ghost" id="logoutBtn" style="margin-top:6px">Logout</button>
+
+    <p class="note">More features coming: Spin Wheel, Wallet, History</p>
+  </section>
+
+  <p class="note" id="loadingNote" style="display:none">
+    <span class="spinner" style="border-color:rgba(140,29,58,.3);border-top-color:var(--brand)"></span>
+    Loading...
+  </p>
+</main>
+
+<!-- ============ Firebase SDK (v10 modular) ============ -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import {
+  getAuth, RecaptchaVerifier, signInWithPhoneNumber, onAuthStateChanged, signOut
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import {
+  getFirestore, doc, getDoc, setDoc, updateDoc, collection, addDoc,
+  query, where, getDocs, serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+// ============== FIREBASE CONFIG ==============
+const firebaseConfig = {
+  apiKey: "AIzaSyAv15cvIVjO4R7KokvcoykuCH_21iD5ETU",
+  authDomain: "arambex-7.firebaseapp.com",
+  projectId: "arambex-7",
+  storageBucket: "arambex-7.firebasestorage.app",
+  messagingSenderId: "132079784610",
+  appId: "1:132079784610:web:6850f5516dac44695d7dfb",
+  measurementId: "G-38KHMPYFZH"
+};
+
+// ============== ADMIN SETTINGS ==============
+const ADMIN_PHONES = ["01612929333"];
+const ADMIN_NAME   = "Arinbex Admin";
+
+// ============== INIT ==============
+const app  = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db   = getFirestore(app);
+
+// ============== STATE ==============
+let currentUser  = null;
+let userName     = "";
+let userPhone    = "";
+let confirmation = null;
+
+// ============== HELPERS ==============
+const $ = id => document.getElementById(id);
+const show = id => { ["viewLogin","viewOtp","viewDash"].forEach(v => $(v).classList.toggle("hidden", v !== id)); };
+const setErr = (id, msg) => { $(id).textContent = msg || ""; };
+const phoneToE164 = p => "+880" + p.replace(/^0/, "");
+const fmtPhone = p => p.startsWith("+880") ? "0" + p.slice(4) : p;
+
+// ============== RECAPTCHA ==============
+function setupRecaptcha() {
+  if (window.recaptchaVerifier) return;
+  window.recaptchaVerifier = new RecaptchaVerifier(auth, "recaptcha-container", {
+    size: "invisible",
+    callback: () => {}
+  });
+}
+
+// ============== SEND OTP ==============
+$("sendOtpBtn").onclick = async () => {
+  setErr("loginErr","");
+  const name  = $("loginName").value.trim();
+  const phone = $("loginPhone").value.replace(/\D/g,"").slice(0,11);
+
+  if (name.length < 2)  return setErr("loginErr","Enter your name.");
+  if (!/^01[3-9]\d{8}$/.test(phone)) return setErr("loginErr","Enter a valid 11-digit WhatsApp number.");
+
+  userName = name;
+  userPhone = phone;
+  localStorage.setItem("pending_name", name);
+  localStorage.setItem("pending_phone", phone);
+
+  const btn = $("sendOtpBtn");
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>Sending...';
+
+  try {
+    setupRecaptcha();
+    confirmation = await signInWithPhoneNumber(auth, phoneToE164(phone), window.recaptchaVerifier);
+    $("otpLead").textContent = "OTP sent to " + phone + ". Enter it below.";
+    show("viewOtp");
+    $("otpCode").focus();
+  } catch (err) {
+    console.error(err);
+    let msg = "Failed to send OTP. Try again.";
+    if (err.code === "auth/too-many-requests") msg = "Too many attempts. Wait a bit.";
+    if (err.code === "auth/invalid-phone-number") msg = "Invalid phone number.";
+    setErr("loginErr", msg);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = "Send OTP";
+  }
+};
+
+// ============== VERIFY OTP ==============
+$("verifyBtn").onclick = async () => {
+  setErr("otpErr","");
+  const code = $("otpCode").value.replace(/\D/g,"").slice(0,6);
+  if (code.length !== 6) return setErr("otpErr","Enter the 6-digit code.");
+
+  const btn = $("verifyBtn");
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>Verifying...';
+
+  try {
+    const result = await confirmation.confirm(code);
+    currentUser = result.user;
+    await ensureUserDoc(currentUser.uid);
+    // onAuthStateChanged will handle rest
+  } catch (err) {
+    console.error(err);
+    setErr("otpErr", "Wrong OTP. Try again.");
+  } finally {
+    btn.disabled = false;
+    btn.textContent = "Verify";
+  }
+};
+
+$("backLoginBtn").onclick = () => {
+  setErr("otpErr","");
+  show("viewLogin");
+};
+
+// ============== AUTH STATE ==============
+onAuthStateChanged(auth, async (user) => {
+  if (!user) {
+    currentUser = null;
+    show("viewLogin");
+    return;
+  }
+  currentUser = user;
+  await ensureUserDoc(user.uid);
+  await loadDashboard();
+  show("viewDash");
+});
+
+// ============== ENSURE USER DOC ==============
+async function ensureUserDoc(uid) {
+  const ref = doc(db, "users", uid);
+  const snap = await getDoc(ref);
+  const phone = userPhone || localStorage.getItem("pending_phone") || fmtPhone(auth.currentUser.phoneNumber || "");
+  const name  = userName  || localStorage.getItem("pending_name")  || "Friend";
+  const isAdmin = ADMIN_PHONES.includes(phone);
+
+  if (!snap.exists()) {
+    await setDoc(ref, {
+      name,
+      phone,
+      isAdmin,
+      points: 0,
+      spins: 0,
+      tokensUsed: [],
+      createdAt: serverTimestamp()
+    });
+  } else {
+    // update name/phone if changed
+    const data = snap.data();
+    const updates = {};
+    if (data.name !== name) updates.name = name;
+    if (data.phone !== phone) updates.phone = phone;
+    if (data.isAdmin !== isAdmin) updates.isAdmin = isAdmin;
+    if (Object.keys(updates).length) await updateDoc(ref, updates);
+  }
+}
+
+// ============== LOAD DASHBOARD ==============
+async function loadDashboard() {
+  $("loadingNote").style.display = "block";
+  try {
+    const snap = await getDoc(doc(db, "users", currentUser.uid));
+    const d = snap.data() || {};
+    $("welcome").textContent = "Hi, " + (d.name || "Friend") + "!";
+    $("sPoints").textContent = d.points || 0;
+    $("sSpins").textContent  = d.spins  || 0;
+    $("adminBadge").style.display = d.isAdmin ? "inline-block" : "none";
+  } finally {
+    $("loadingNote").style.display = "none";
+  }
+}
+
+// ============== REDEEM TOKEN ==============
+$("redeemBtn").onclick = async () => {
+  setErr("tokenErr",""); $("tokenOk").textContent = "";
+  const raw = $("tokenInput").value.trim().toUpperCase();
+  if (!raw) return setErr("tokenErr","Enter a token code.");
+
+  const btn = $("redeemBtn");
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>Checking...';
+
+  try {
+    const tokenRef  = doc(db, "tokens", raw);
+    const tokenSnap = await getDoc(tokenRef);
+
+    // 1. Token exists?
+    if (!tokenSnap.exists()) {
+      setErr("tokenErr","❌ Invalid token. Please check the code.");
+      return;
+    }
+    const t = tokenSnap.data();
+
+    // 2. Already used?
+    if (t.is_used) {
+      setErr("tokenErr","⚠️ This token has already been used.");
+      return;
+    }
+
+    // 3. Mark used + give spin
+    await updateDoc(tokenRef, {
+      is_used: true,
+      used_by: currentUser.uid,
+      used_at: serverTimestamp()
+    });
+
+    const userRef = doc(db, "users", currentUser.uid);
+    const userSnap = await getDoc(userRef);
+    const u = userSnap.data() || {};
+    const usedList = u.tokensUsed || [];
+    usedList.push(raw);
+
+    await updateDoc(userRef, {
+      spins: (u.spins || 0) + 1,
+      tokensUsed: usedList
+    });
+
+    // 4. Log the redemption
+    await addDoc(collection(db, "token_logs"), {
+      uid: currentUser.uid,
+      token: raw,
+      name: u.name || "",
+      phone: u.phone || "",
+      redeemedAt: serverTimestamp()
+    });
+
+    $("tokenOk").textContent = "✅ Token accepted! You got 1 spin.";
+    $("tokenInput").value = "";
+    await loadDashboard();
+
+  } catch (err) {
+    console.error(err);
+    setErr("tokenErr","Something went wrong. Try again.");
+  } finally {
+    btn.disabled = false;
+    btn.textContent = "Redeem Token";
+  }
+};
+
+// Auto-uppercase token input
+$("tokenInput").addEventListener("input", e => {
+  e.target.value = e.target.value.toUpperCase().replace(/[^A-Z0-9-]/g,"");
+});
+
+// Phone input only digits
+$("loginPhone").addEventListener("input", e => {
+  e.target.value = e.target.value.replace(/\D/g,"").slice(0,11);
+});
+
+// ============== LOGOUT ==============
+$("logoutBtn").onclick = async () => {
+  await signOut(auth);
+  localStorage.removeItem("pending_name");
+  localStorage.removeItem("pending_phone");
+  location.reload();
+};
+
+// Expose admin constants globally (for later parts)
+window.__MISHTI__ = { ADMIN_PHONES, ADMIN_NAME, db, auth, currentUser: () => currentUser };
+</script>
+
+</body>
+</html>
