@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>QR Image Maker – Arinbex 7</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);
+--bg:#0a0612;--card:#1f1225;--card2:#2a1a30;--line:#3a2540;
+--ink:#f5e6d3;--muted:#a896a8;--brand:#ff4d6d;--gold:#ffc947;--gold2:#f5a623;
+--ok:#10b981;--err:#ef4444;--blue:#3b82f6;--teal:#14b8a6}
+html{height:100%}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;min-height:100%;color:var(--ink);
+font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI","Trebuchet MS",sans-serif;
+background:radial-gradient(ellipse at top,#2a1525 0%,#0a0612 60%);background-attachment:fixed;overflow-x:hidden}
+main{max-width:720px;margin:0 auto;padding:20px 14px 100px}
+.header{text-align:center;margin-bottom:22px}
+.header .badge-logo{display:inline-block;padding:5px 14px;border:1.5px solid var(--gold);
+border-radius:99px;color:var(--gold);font-weight:700;font-size:.72rem;letter-spacing:.15em;
+background:rgba(255,201,71,.08)}
+.header h1{font-size:clamp(1.3rem,5vw,1.7rem);font-weight:900;margin:12px 0 4px;
+background:linear-gradient(135deg,#ffd76a 0%,#ff4d6d 100%);
+-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+.header .subtitle{color:var(--muted);font-size:.82rem}
+.card{background:linear-gradient(145deg,var(--card),var(--card2));border:1px solid var(--line);
+border-radius:18px;padding:20px;margin-bottom:14px;box-shadow:0 4px 20px rgba(0,0,0,.25)}
+.card h3{margin:0 0 14px;font-size:1rem;color:var(--gold);display:flex;align-items:center;gap:8px;font-weight:800}
+label{display:block;font-weight:700;font-size:.82rem;margin-bottom:6px;color:var(--muted);
+text-transform:uppercase;letter-spacing:.05em}
+input,select,textarea{width:100%;font-size:1rem;padding:12px 14px;border-radius:11px;
+border:1.5px solid var(--line);background:rgba(0,0,0,.25);color:var(--ink);
+margin-bottom:12px;font-family:inherit;outline:none;transition:all .2s}
+input:focus,textarea:focus,select:focus{border-color:var(--gold);background:rgba(0,0,0,.4)}
+.btn{width:100%;border:0;border-radius:11px;padding:13px;font-size:.92rem;font-weight:700;
+cursor:pointer;background:linear-gradient(135deg,var(--brand),#ff8fa3);color:#fff;
+font-family:inherit;transition:all .15s;box-shadow:0 3px 10px rgba(255,77,109,.25)}
+.btn:active{transform:scale(.98)}
+.btn.gold{background:linear-gradient(135deg,#ffd76a,var(--gold2));color:#1a0d1f}
+.btn.green{background:linear-gradient(135deg,#10b981,#059669)}
+.btn.teal{background:linear-gradient(135deg,#14b8a6,#0d9488)}
+.btn.blue{background:linear-gradient(135deg,#3b82f6,#2563eb)}
+.btn.purple{background:linear-gradient(135deg,#a855f7,#7e22ce)}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line);box-shadow:none}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn.small{padding:8px 14px;font-size:.8rem;border-radius:99px;width:auto}
+.step-badge{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;
+border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#1a0d1f;
+font-weight:900;font-size:.85rem;margin-right:6px}
+.file-input{display:none}
+.file-label{display:block;padding:20px;border:2px dashed var(--line);border-radius:12px;
+text-align:center;cursor:pointer;color:var(--muted);transition:all .2s;margin-bottom:12px;
+font-weight:700;font-size:1rem}
+.file-label:hover{border-color:var(--gold);color:var(--gold);background:rgba(255,201,71,.05)}
+.preview-box{background:rgba(0,0,0,.3);border:1px solid var(--line);border-radius:12px;
+padding:12px;margin-bottom:14px;text-align:center;min-height:100px;display:flex;
+align-items:center;justify-content:center;position:relative}
+.preview-box img{max-width:100%;max-height:280px;border-radius:8px}
+.preview-box .remove-img-btn{position:absolute;top:8px;right:8px;background:rgba(239,68,68,.85);
+color:#fff;border:0;border-radius:50%;width:32px;height:32px;font-weight:900;cursor:pointer;
+font-family:inherit;font-size:1.1rem;display:flex;align-items:center;justify-content:center}
+.result-box{background:rgba(0,0,0,.3);border:2px solid var(--teal);border-radius:12px;
+padding:14px;margin-top:14px;text-align:center}
+.result-box img{max-width:100%;border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.4)}
+.position-options{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.position-options label{flex:1;min-width:100px;background:rgba(255,255,255,.03);
+border:1.5px solid var(--line);border-radius:10px;padding:10px;text-align:center;
+cursor:pointer;text-transform:none;letter-spacing:0;font-size:.85rem;color:var(--ink);
+transition:all .2s;margin-bottom:0;font-weight:700}
+.position-options label:hover{border-color:var(--gold)}
+.position-options input{display:none}
+.position-options label.active{background:linear-gradient(135deg,rgba(255,201,71,.2),rgba(255,77,109,.15));
+border-color:var(--gold);box-shadow:0 0 0 2px var(--gold)}
+.token-mode-options{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.token-mode-options label{flex:1;min-width:140px;background:rgba(255,255,255,.03);
+border:1.5px solid var(--line);border-radius:10px;padding:12px;text-align:center;
+cursor:pointer;text-transform:none;letter-spacing:0;font-size:.85rem;color:var(--ink);
+transition:all .2s;margin-bottom:0;font-weight:700}
+.token-mode-options label:hover{border-color:var(--gold)}
+.token-mode-options input{display:none}
+.token-mode-options label.active{background:linear-gradient(135deg,rgba(16,185,129,.2),rgba(20,184,166,.15));
+border-color:var(--ok);box-shadow:0 0 0 2px var(--ok)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);
+background:linear-gradient(135deg,var(--card),var(--card2));color:var(--ink);
+padding:13px 22px;border-radius:12px;font-weight:700;z-index:200;
+border:1px solid var(--line);box-shadow:0 10px 30px rgba(0,0,0,.5);
+opacity:0;transition:opacity .3s;pointer-events:none;font-size:.85rem;max-width:90%}
+.toast.show{opacity:1}
+.spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.3);
+border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;
+vertical-align:middle;margin-right:6px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.hint{font-size:.78rem;color:var(--muted);line-height:1.5;margin-bottom:12px}
+.result-actions{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.result-actions .btn{flex:1;min-width:120px}
+#loadingQR{display:none;padding:20px;text-align:center;color:var(--gold);font-weight:700}
+#libStatus{font-size:.75rem;text-align:center;padding:8px;border-radius:8px;margin-bottom:10px;font-weight:700}
+#libStatus.ok{background:rgba(16,185,129,.15);color:#34d399;border:1px solid rgba(16,185,129,.3)}
+#libStatus.loading{background:rgba(255,201,71,.15);color:var(--gold);border:1px solid rgba(255,201,71,.3)}
+#libStatus.err{background:rgba(239,68,68,.15);color:#f87171;border:1px solid rgba(239,68,68,.3)}
+.optional-badge{display:inline-block;background:rgba(148,163,184,.2);color:#cbd5e1;
+padding:3px 10px;border-radius:99px;font-size:.68rem;font-weight:800;
+text-transform:uppercase;letter-spacing:.08em;margin-left:8px}
+.save-badge{display:inline-block;background:rgba(16,185,129,.2);color:#34d399;
+padding:3px 10px;border-radius:99px;font-size:.68rem;font-weight:800;
+text-transform:uppercase;letter-spacing:.08em;margin-left:8px}
+.status-msg{font-size:.8rem;padding:8px 12px;border-radius:8px;margin-bottom:10px;text-align:center;font-weight:700}
+.status-msg.ok{background:rgba(16,185,129,.15);color:#34d399;border:1px solid rgba(16,185,129,.3)}
+.status-msg.err{background:rgba(239,68,68,.15);color:#f87171;border:1px solid rgba(239,68,68,.3)}
+
+/* Token List from Database */
+.token-list-toolbar{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}
+.token-list-toolbar input{flex:1;min-width:150px;margin-bottom:0!important}
+.token-list-toolbar .btn{width:auto;padding:10px 14px}
+.token-list{max-height:340px;overflow-y:auto;border:1px solid var(--line);border-radius:12px;padding:8px;background:rgba(0,0,0,.2)}
+.token-list::-webkit-scrollbar{width:6px}
+.token-list::-webkit-scrollbar-track{background:transparent}
+.token-list::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px}
+.token-item{padding:10px 12px;background:rgba(255,255,255,.025);border:1.5px solid var(--line);
+border-radius:10px;margin-bottom:6px;cursor:pointer;transition:all .15s;
+display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.token-item:hover{border-color:var(--gold);background:rgba(255,201,71,.08);transform:translateX(2px)}
+.token-item.selected{border-color:var(--teal);background:linear-gradient(135deg,rgba(20,184,166,.15),rgba(168,85,247,.08));box-shadow:0 0 0 2px rgba(20,184,166,.4)}
+.token-item .tk-code{font-family:"Courier New",monospace;font-weight:800;color:var(--gold);font-size:.88rem;letter-spacing:.04em}
+.token-item .tk-meta{font-size:.7rem;color:var(--muted);margin-top:2px}
+.token-item .tk-check{color:var(--teal);font-weight:900;font-size:1.2rem}
+.token-empty{padding:20px;text-align:center;color:var(--muted);font-size:.85rem}
+.token-list-info{font-size:.75rem;color:var(--muted);margin-bottom:8px;text-align:center}
+.mode-info{background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.3);border-radius:10px;padding:10px;font-size:.78rem;color:#93c5fd;margin-bottom:12px;line-height:1.5}
+</style>
+</head>
+<body>
+
+<main>
+  <div class="header">
+    <div class="badge-logo">QR IMAGE MAKER</div>
+    <h1>Arinbex 7 · QR Generator</h1>
+    <div class="subtitle">QR Code + Token = Final Image</div>
+  </div>
+
+  <div id="libStatus" class="loading">⏳ QR Library loading...</div>
+
+  <!-- STEP 1: QR Content -->
+  <div class="card">
+    <h3><span class="step-badge">1</span> QR Code Content</h3>
+    <p class="hint">QR scan করলে এই URL/text এ যাবে। Tournament link বা কোনো information দিতে পারো।</p>
+    <label for="qrContent">QR Content (URL or Text)</label>
+    <input id="qrContent" placeholder="https://arinbex7.github.io/mishti-spin/" maxlength="500">
+    <button class="btn ghost small" id="loadDefaultBtn">📥 Load Default from Admin</button>
+  </div>
+
+  <!-- STEP 2: Token Code -->
+  <div class="card">
+    <h3><span class="step-badge">2</span> Token Code <span class="save-badge">Save to DB</span></h3>
+    <p class="hint">Token code টা image এ text হিসেবে বসবে। User এই token দিয়ে app এ spin পাবে।</p>
+
+    <div class="token-mode-options">
+      <label class="active" data-tmode="generate">
+        <input type="radio" name="tokenMode" value="generate" checked>
+        <span>🎲 Manual Generate</span>
+      </label>
+      <label data-tmode="database">
+        <input type="radio" name="tokenMode" value="database">
+        <span>📋 Load from Database</span>
+      </label>
+    </div>
+
+    <!-- MANUAL MODE -->
+    <div id="manualMode">
+      <label for="tokenText">Token Code</label>
+      <input id="tokenText" placeholder="ARNX-1234-5678" maxlength="30" style="text-transform:uppercase">
+      <div id="tokenStatus" class="status-msg" style="display:none"></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn ghost small" id="randomTokenBtn">🎲 Random Generate</button>
+        <button class="btn ghost small" id="saveTokenBtn">💾 Save to Database</button>
+      </div>
+    </div>
+
+    <!-- DATABASE MODE -->
+    <div id="databaseMode" style="display:none">
+      <div class="mode-info">
+        💡 অ্যাডমিন প্যানেল থেকে Generate করা <b>আনইউজড টোকেনগুলো</b> এখানে দেখাবে। যেকোনো টোকেনে ক্লিক করলে সেটা select হবে এবং QR জেনারেট হবে।
+      </div>
+      <div class="token-list-toolbar">
+        <input id="tokenSearchInput" placeholder="🔍 Search token..." maxlength="30" style="text-transform:uppercase">
+        <button class="btn blue small" id="loadTokensBtn">🔄 Load</button>
+        <button class="btn green small" id="refreshTokensBtn">🔃 Refresh</button>
+      </div>
+      <div class="token-list-info" id="tokenListInfo">Click "Load" to fetch unused tokens</div>
+      <div class="token-list" id="tokenList">
+        <div class="token-empty">📋 Load button ক্লিক করো</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3: Optional Image -->
+  <div class="card">
+    <h3><span class="step-badge">3</span> ছবি Upload <span class="optional-badge">Optional</span></h3>
+    <p class="hint">
+      ছবি দিলে সেটার উপরে/নিচে QR বসবে। <b>ছবি না দিলেও কাজ করবে</b> — তখন শুধু QR + Token এর সুন্দর branded image তৈরি হবে।
+    </p>
+    <input type="file" id="imgFile" accept="image/*" class="file-input">
+    <label for="imgFile" class="file-label" id="fileLabel">📷 Tap to select image (or skip)</label>
+    <div class="preview-box" id="imgPreview" style="display:none">
+      <img id="previewImg" alt="Preview">
+      <button class="remove-img-btn" id="removeImgBtn" title="Remove image">✕</button>
+    </div>
+  </div>
+
+  <!-- STEP 4: QR Position -->
+  <div class="card" id="positionCard">
+    <h3><span class="step-badge">4</span> QR Position</h3>
+    <p class="hint">QR code ছবির কোথায় বসবে সেটা select করো। (ছবি না দিলে এই setting এর দরকার নেই)</p>
+    <div class="position-options">
+      <label class="active" data-pos="bottom">
+        <input type="radio" name="qrPos" value="bottom" checked>
+        <span>⬇️ Bottom Only</span>
+      </label>
+      <label data-pos="top">
+        <input type="radio" name="qrPos" value="top">
+        <span>⬆️ Top Only</span>
+      </label>
+      <label data-pos="both">
+        <input type="radio" name="qrPos" value="both">
+        <span>⬆️⬇️ Both</span>
+      </label>
+    </div>
+    <label for="bannerText">Banner Text (QR এর উপরে)</label>
+    <input id="bannerText" placeholder="Scan to Enter Tournament!" maxlength="60">
+  </div>
+
+  <!-- STEP 5: Generate -->
+  <div class="card">
+    <h3><span class="step-badge">5</span> Generate Final Image</h3>
+    <button class="btn teal" id="generateBtn" style="font-size:1rem;padding:16px" disabled>⏳ Loading Library...</button>
+    <div id="loadingQR"><span class="spinner"></span> Generating...</div>
+    <div class="result-box" id="resultBox" style="display:none">
+      <h3 style="justify-content:center;margin-bottom:14px">✅ Your Final Image</h3>
+      <img id="resultImg" alt="Result">
+      <div class="result-actions">
+        <button class="btn green" id="downloadBtn">📥 Download</button>
+        <button class="btn blue" id="shareBtn">📤 Share</button>
+        <button class="btn ghost" id="resetBtn">🔄 Reset</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div class="toast" id="toast"></div>
+
+<!-- QR Library Loader -->
+<script>
+(function loadQRLibrary() {
+  const sources = [
+    "https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js",
+    "https://unpkg.com/qrcode@1.5.3/build/qrcode.min.js",
+    "https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
+  ];
+  let idx = 0;
+  window.__qrLibReady = false;
+  function tryNext() {
+    if (idx >= sources.length) {
+      document.getElementById("libStatus").className = "err";
+      document.getElementById("libStatus").textContent = "❌ QR Library load failed. Reload করুন।";
+      return;
+    }
+    const url = sources[idx];
+    const script = document.createElement("script");
+    script.src = url;
+    script.onload = () => {
+      window.__qrLibReady = true;
+      const status = document.getElementById("libStatus");
+      status.className = "ok";
+      status.textContent = "✅ QR Library ready!";
+      const btn = document.getElementById("generateBtn");
+      btn.disabled = false;
+      btn.textContent = "🎨 Generate Final Image";
+    };
+    script.onerror = () => { idx++; tryNext(); };
+    document.head.appendChild(script);
+  }
+  tryNext();
+})();
+</script>
+
+<script>
+const $ = id => document.getElementById(id);
+let uploadedImage = null;
+let finalBlob = null;
+let selectedTokenFromDB = null;
+let allUnusedTokens = [];
+let currentTokenMode = "generate";
+
+// Firestore REST helpers
+const PROJECT_ID = "arambex-7";
+const API_KEY = "AIzaSyAv15cvIVjO4R7KokvcoykuCH_21iD5ETU";
+const BASE_URL = `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents`;
+
+function toast(msg) {
+  const t = $("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  clearTimeout(t._tid);
+  t._tid = setTimeout(() => t.classList.remove("show"), 2400);
+}
+
+function showTokenStatus(msg, isOk = true) {
+  const el = $("tokenStatus");
+  el.textContent = msg;
+  el.className = "status-msg " + (isOk ? "ok" : "err");
+  el.style.display = "block";
+  clearTimeout(el._tid);
+  el._tid = setTimeout(() => { el.style.display = "none"; }, 3000);
+}
+
+// Position toggle
+document.querySelectorAll(".position-options label").forEach(lbl => {
+  lbl.onclick = () => {
+    document.querySelectorAll(".position-options label").forEach(l => l.classList.remove("active"));
+    lbl.classList.add("active");
+  };
+});
+
+// ============ TOKEN MODE TOGGLE ============
+document.querySelectorAll(".token-mode-options label").forEach(lbl => {
+  lbl.onclick = () => {
+    document.querySelectorAll(".token-mode-options label").forEach(l => l.classList.remove("active"));
+    lbl.classList.add("active");
+    currentTokenMode = lbl.dataset.tmode;
+
+    if (currentTokenMode === "database") {
+      $("manualMode").style.display = "none";
+      $("databaseMode").style.display = "block";
+      // Auto-load tokens on switch
+      if (allUnusedTokens.length === 0) loadUnusedTokens();
+    } else {
+      $("manualMode").style.display = "block";
+      $("databaseMode").style.display = "none";
+    }
+  };
+});
+
+// ============ LOAD TOKENS FROM DATABASE ============
+async function loadUnusedTokens() {
+  const listEl = $("tokenList");
+  const infoEl = $("tokenListInfo");
+  listEl.innerHTML = '<div class="token-empty"><span class="spinner"></span> Loading unused tokens...</div>';
+  infoEl.textContent = "⏳ Fetching...";
+
+  try {
+    // Query Firestore: tokens where is_used == false
+    const url = `${BASE_URL}:runQuery?key=${API_KEY}`;
+    const body = {
+      structuredQuery: {
+        from: [{ collectionId: "tokens" }],
+        where: {
+          fieldFilter: {
+            field: { fieldPath: "is_used" },
+            op: "EQUAL",
+            value: { booleanValue: false }
+          }
+        },
+        limit: 500
+      }
+    };
+
+    const res = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body)
+    });
+
+    if (!res.ok) {
+      throw new Error("Firestore query failed: " + res.status);
+    }
+
+    const data = await res.json();
+    allUnusedTokens = [];
+
+    data.forEach(item => {
+      if (!item.document) return;
+      const doc = item.document;
+      const code = doc.name.split("/").pop();
+      const fields = doc.fields || {};
+      allUnusedTokens.push({
+        code: code,
+        createdAt: fields.createdAt?.timestampValue || null,
+        source: fields.source?.stringValue || "admin"
+      });
+    });
+
+    // Sort by createdAt desc (newest first)
+    allUnusedTokens.sort((a, b) => {
+      if (!a.createdAt) return 1;
+      if (!b.createdAt) return -1;
+      return new Date(b.createdAt) - new Date(a.createdAt);
+    });
+
+    renderTokenList();
+    infoEl.textContent = `✅ ${allUnusedTokens.length} unused token(s) found`;
+  } catch (e) {
+    console.error(e);
+    listEl.innerHTML = `<div class="token-empty">❌ Error: ${e.message}</div>`;
+    infoEl.textContent = "❌ Failed to load";
+  }
+}
+
+function renderTokenList() {
+  const listEl = $("tokenList");
+  const searchTerm = $("tokenSearchInput").value.trim().toUpperCase();
+
+  let filtered = allUnusedTokens;
+  if (searchTerm) {
+    filtered = filtered.filter(t => t.code.includes(searchTerm));
+  }
+
+  if (filtered.length === 0) {
+    listEl.innerHTML = '<div class="token-empty">No tokens found</div>';
+    return;
+  }
+
+  listEl.innerHTML = "";
+  filtered.slice(0, 500).forEach(t => {
+    const div = document.createElement("div");
+    div.className = "token-item" + (selectedTokenFromDB === t.code ? " selected" : "");
+    const dateStr = t.createdAt
+      ? new Date(t.createdAt).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "2-digit" })
+      : "-";
+    div.innerHTML = `
+      <div>
+        <div class="tk-code">${t.code}</div>
+        <div class="tk-meta">📅 ${dateStr} · 📦 ${t.source}</div>
+      </div>
+      ${selectedTokenFromDB === t.code ? '<span class="tk-check">✓</span>' : ''}
+    `;
+    div.onclick = () => selectTokenFromDB(t.code);
+    listEl.appendChild(div);
+  });
+}
+
+function selectTokenFromDB(code) {
+  selectedTokenFromDB = code;
+  $("tokenText").value = code;
+  renderTokenList();
+  toast("✅ Token selected: " + code);
+  // Scroll to generate button
+  $("generateBtn").scrollIntoView({ behavior: "smooth", block: "center" });
+}
+
+$("loadTokensBtn").onclick = loadUnusedTokens;
+$("refreshTokensBtn").onclick = () => {
+  selectedTokenFromDB = null;
+  loadUnusedTokens();
+};
+$("tokenSearchInput").addEventListener("input", e => {
+  e.target.value = e.target.value.toUpperCase().replace(/[^A-Z0-9-]/g, "");
+  renderTokenList();
+});
+
+// ============ LOAD QR CONFIG ============
+async function loadQRConfig() {
+  try {
+    const url = `${BASE_URL}/settings/qr_config?key=${API_KEY}`;
+    const res = await fetch(url);
+    if (res.ok) {
+      const data = await res.json();
+      const fields = data.fields || {};
+      $("qrContent").value = fields.defaultUrl?.stringValue || "https://arinbex7.github.io/mishti-spin/";
+      $("bannerText").value = fields.bannerText?.stringValue || "Scan to Enter Tournament!";
+    } else {
+      $("qrContent").value = "https://arinbex7.github.io/mishti-spin/";
+      $("bannerText").value = "Scan to Enter Tournament!";
+    }
+  } catch(e) {
+    $("qrContent").value = "https://arinbex7.github.io/mishti-spin/";
+    $("bannerText").value = "Scan to Enter Tournament!";
+  }
+}
+loadQRConfig();
+
+$("loadDefaultBtn").onclick = async () => {
+  await loadQRConfig();
+  toast("✅ Loaded default");
+};
+
+// ============ RANDOM TOKEN ============
+function generateRandomCode() {
+  const charset = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  let m1 = "", m2 = "";
+  for (let i = 0; i < 4; i++) m1 += charset[Math.floor(Math.random() * charset.length)];
+  for (let i = 0; i < 4; i++) m2 += charset[Math.floor(Math.random() * charset.length)];
+  return `ARNX-${m1}-${m2}`;
+}
+
+$("randomTokenBtn").onclick = () => {
+  $("tokenText").value = generateRandomCode();
+  document.querySelectorAll(".token-mode-options label").forEach(l => l.classList.remove("active"));
+  document.querySelector('.token-mode-options label[data-tmode="generate"]').classList.add("active");
+  $("saveTokenBtn").style.display = "inline-block";
+  toast("🎲 Random token generated");
+};
+
+// ============ SAVE TOKEN ============
+$("saveTokenBtn").onclick = async () => {
+  const code = $("tokenText").value.trim().toUpperCase();
+  if (!code) return toast("⚠️ প্রথমে token generate করো");
+  if (code.length < 4) return toast("⚠️ Token কমপক্ষে ৪ অক্ষর");
+
+  const btn = $("saveTokenBtn");
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>Saving...';
+
+  try {
+    const checkUrl = `${BASE_URL}/tokens/${encodeURIComponent(code)}?key=${API_KEY}`;
+    const checkRes = await fetch(checkUrl);
+
+    if (checkRes.ok) {
+      showTokenStatus("⚠️ এই token আগেই database এ আছে", false);
+      return;
+    }
+
+    const createUrl = `${BASE_URL}/tokens?documentId=${encodeURIComponent(code)}&key=${API_KEY}`;
+    const body = {
+      fields: {
+        is_used: { booleanValue: false },
+        createdAt: { timestampValue: new Date().toISOString() },
+        source: { stringValue: "qr-maker" }
+      }
+    };
+
+    const createRes = await fetch(createUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body)
+    });
+
+    if (createRes.ok) {
+      showTokenStatus("✅ Token saved to database!", true);
+      toast("✅ Token saved!");
+    } else {
+      const errText = await createRes.text();
+      console.error(errText);
+      showTokenStatus("❌ Save failed: " + createRes.status, false);
+    }
+  } catch (e) {
+    console.error(e);
+    showTokenStatus("❌ Error: " + e.message, false);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = "💾 Save to Database";
+  }
+};
+
+// ============ IMAGE UPLOAD ============
+$("imgFile").onchange = e => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    const img = new Image();
+    img.onload = () => {
+      uploadedImage = img;
+      $("previewImg").src = ev.target.result;
+      $("imgPreview").style.display = "flex";
+      $("fileLabel").textContent = "✅ Image loaded (tap to change)";
+      $("fileLabel").style.borderColor = "var(--ok)";
+      $("fileLabel").style.color = "var(--ok)";
+      toast("✅ Image loaded");
+    };
+    img.onerror = () => toast("❌ Invalid image");
+    img.src = ev.target.result;
+  };
+  reader.readAsDataURL(file);
+};
+
+$("removeImgBtn").onclick = () => {
+  uploadedImage = null;
+  $("imgFile").value = "";
+  $("imgPreview").style.display = "none";
+  $("fileLabel").textContent = "📷 Tap to select image (or skip)";
+  $("fileLabel").style.borderColor = "var(--line)";
+  $("fileLabel").style.color = "var(--muted)";
+  toast("🖼️ Image removed — QR only mode");
+};
+
+// ============ QR GENERATOR ============
+async function generateQRCanvas(content, size) {
+  const canvas = document.createElement("canvas");
+  canvas.width = size;
+  canvas.height = size;
+
+  if (typeof QRCode !== "undefined" && typeof QRCode.toCanvas === "function") {
+    await new Promise((resolve, reject) => {
+      QRCode.toCanvas(canvas, content, {
+        width: size, margin: 1,
+        color: { dark: "#000000", light: "#ffffff" },
+        errorCorrectionLevel: "H"
+      }, (err) => { if (err) reject(err); else resolve(); });
+    });
+    return canvas;
+  }
+
+  if (typeof QRCode !== "undefined" && typeof QRCode === "function") {
+    const tempDiv = document.createElement("div");
+    new QRCode(tempDiv, {
+      text: content, width: size, height: size,
+      colorDark: "#000000", colorLight: "#ffffff",
+      correctLevel: QRCode.CorrectLevel ? QRCode.CorrectLevel.H : 2
+    });
+    await new Promise(r => setTimeout(r, 250));
+    const qrCanvas = tempDiv.querySelector("canvas");
+    if (qrCanvas) {
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(qrCanvas, 0, 0, size, size);
+      return canvas;
+    }
+    const img = tempDiv.querySelector("img");
+    if (img) {
+      const ctx = canvas.getContext("2d");
+      await new Promise((resolve) => {
+        if (img.complete) { ctx.drawImage(img, 0, 0, size, size); resolve(); }
+        else img.onload = () => { ctx.drawImage(img, 0, 0, size, size); resolve(); };
+      });
+      return canvas;
+    }
+  }
+  throw new Error("QR Library not loaded.");
+}
+
+// ============ MAIN GENERATE ============
+$("generateBtn").onclick = async () => {
+  const qrContent = $("qrContent").value.trim();
+  if (!qrContent) return toast("⚠️ QR Content দিন");
+  const tokenText = $("tokenText").value.trim().toUpperCase();
+  if (!tokenText) return toast("⚠️ Token code দিন / ডাটাবেজ থেকে select করো");
+  const position = document.querySelector('input[name="qrPos"]:checked').value;
+  const bannerText = $("bannerText").value.trim();
+  const hasImage = !!uploadedImage;
+
+  const btn = $("generateBtn");
+  btn.disabled = true;
+  btn.style.display = "none";
+  $("loadingQR").style.display = "block";
+  $("resultBox").style.display = "none";
+
+  try {
+    let W, H, baseImage = null;
+
+    if (hasImage) {
+      const baseW = uploadedImage.naturalWidth || uploadedImage.width;
+      const baseH = uploadedImage.naturalHeight || uploadedImage.height;
+      if (!baseW || !baseH) throw new Error("Image loading failed");
+      const maxW = 1000;
+      const scale = baseW > maxW ? maxW / baseW : 1;
+      W = Math.round(baseW * scale);
+      H = Math.round(baseH * scale);
+      baseImage = uploadedImage;
+    } else {
+      W = 800;
+      H = 300;
+    }
+
+    const qrSize = hasImage ? Math.min(Math.round(W * 0.45), 320) : 320;
+    const qrCanvas = await generateQRCanvas(qrContent, qrSize);
+
+    const bannerH = bannerText ? (hasImage ? 50 : 60) : 0;
+    const tokenH = hasImage ? 60 : 70;
+    const qrSectionHeight = bannerH + qrSize + 20 + tokenH + 40;
+
+    let topPad = 20;
+    let bottomPad = 20;
+    if (hasImage) {
+      if (position === "top") topPad = qrSectionHeight;
+      if (position === "bottom") bottomPad = qrSectionHeight;
+      if (position === "both") { topPad = qrSectionHeight; bottomPad = qrSectionHeight; }
+    }
+
+    const totalH = hasImage
+      ? topPad + H + bottomPad
+      : Math.max(700, qrSectionHeight + 120);
+
+    const canvas = document.createElement("canvas");
+    canvas.width = W;
+    canvas.height = totalH;
+    const ctx = canvas.getContext("2d");
+
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(0, 0, W, totalH);
+
+    const grad = ctx.createLinearGradient(0, 0, W, 8);
+    grad.addColorStop(0, "#ff4d6d");
+    grad.addColorStop(1, "#ff8fa3");
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, W, 8);
+
+    function drawQRSection(yStart) {
+      let y = yStart + (hasImage ? 10 : 30);
+
+      if (bannerText) {
+        ctx.fillStyle = "#1a0d1f";
+        ctx.font = `bold ${hasImage ? 26 : 30}px 'Trebuchet MS', sans-serif`;
+        ctx.textAlign = "center";
+        ctx.fillText(bannerText, W / 2, y + (hasImage ? 30 : 34));
+        y += bannerH;
+      }
+
+      const qrX = Math.round((W - qrSize) / 2);
+      const qrY = y;
+
+      ctx.fillStyle = "#ffc947";
+      ctx.fillRect(qrX - 12, qrY - 12, qrSize + 24, qrSize + 24);
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(qrX - 6, qrY - 6, qrSize + 12, qrSize + 12);
+      ctx.drawImage(qrCanvas, qrX, qrY, qrSize, qrSize);
+
+      y = qrY + qrSize + 10;
+      ctx.fillStyle = "#1a0d1f";
+      ctx.font = `bold ${hasImage ? 22 : 28}px 'Courier New', monospace`;
+      ctx.textAlign = "center";
+      ctx.fillText(tokenText, W / 2, y + (hasImage ? 22 : 28));
+
+      ctx.font = `600 ${hasImage ? 13 : 16}px 'Trebuchet MS', sans-serif`;
+      ctx.fillStyle = "#666666";
+      ctx.fillText("🎯 Redeem in Mishti Spin app", W / 2, y + (hasImage ? 42 : 54));
+    }
+
+    if (hasImage) {
+      if (position === "top") drawQRSection(0);
+      else if (position === "bottom") drawQRSection(topPad + H);
+      else if (position === "both") { drawQRSection(0); drawQRSection(topPad + H); }
+      ctx.drawImage(baseImage, 0, topPad, W, H);
+    } else {
+      const gradH = 100;
+      const grad2 = ctx.createLinearGradient(0, 0, W, gradH);
+      grad2.addColorStop(0, "#ff4d6d");
+      grad2.addColorStop(1, "#8c1d3a");
+      ctx.fillStyle = grad2;
+      ctx.fillRect(0, 0, W, gradH);
+
+      ctx.fillStyle = "#ffd76a";
+      ctx.font = "900 italic 44px 'Trebuchet MS', sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillText("Arinbex 7", W / 2, gradH / 2 + 12);
+
+      ctx.fillStyle = "#ffffff";
+      ctx.font = "600 14px 'Trebuchet MS', sans-serif";
+      ctx.fillText("Mishti Spin Event", W / 2, gradH - 8);
+
+      const qrSectionY = gradH + 30;
+      drawQRSection(qrSectionY);
+
+      const txtY = qrSectionY + qrSectionHeight + 20;
+      if (txtY + 40 < totalH) {
+        ctx.fillStyle = "#999999";
+        ctx.font = "600 14px 'Trebuchet MS', sans-serif";
+        ctx.textAlign = "center";
+        ctx.fillText("📱 Scan the QR code to enter the event", W / 2, txtY);
+      }
+    }
+
+    const gradEnd = ctx.createLinearGradient(0, totalH - 8, 0, totalH);
+    gradEnd.addColorStop(0, "#ff8fa3");
+    gradEnd.addColorStop(1, "#ff4d6d");
+    ctx.fillStyle = gradEnd;
+    ctx.fillRect(0, totalH - 8, W, 8);
+
+    ctx.fillStyle = "#999999";
+    ctx.font = "600 11px 'Trebuchet MS', sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText("Arinbex 7 · Mishti Spin", W / 2, totalH - 16);
+
+    canvas.toBlob(blob => {
+      if (!blob) {
+        toast("❌ Failed to create image");
+        btn.disabled = false;
+        btn.style.display = "block";
+        $("loadingQR").style.display = "none";
+        return;
+      }
+      finalBlob = blob;
+      $("resultImg").src = URL.createObjectURL(blob);
+      $("resultBox").style.display = "block";
+      $("resultBox").scrollIntoView({ behavior: "smooth", block: "start" });
+      toast("✅ Image generated!");
+      btn.disabled = false;
+      btn.style.display = "block";
+      $("loadingQR").style.display = "none";
+    }, "image/png", 0.95);
+
+  } catch(e) {
+    console.error(e);
+    toast("❌ Error: " + (e.message || "Unknown"));
+    btn.disabled = false;
+    btn.style.display = "block";
+    $("loadingQR").style.display = "none";
+  }
+};
+
+$("downloadBtn").onclick = () => {
+  if (!finalBlob) return;
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(finalBlob);
+  a.download = `qr-image-${Date.now()}.png`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  toast("📥 Downloaded!");
+};
+
+$("shareBtn").onclick = async () => {
+  if (!finalBlob) return;
+  const file = new File([finalBlob], `qr-image-${Date.now()}.png`, { type: "image/png" });
+  if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+    try { await navigator.share({ files: [file], title: "QR Image" }); } catch(e) {}
+  } else {
+    $("downloadBtn").click();
+    toast("📥 Downloaded (share not supported)");
+  }
+};
+
+$("resetBtn").onclick = () => {
+  uploadedImage = null;
+  finalBlob = null;
+  selectedTokenFromDB = null;
+  $("imgFile").value = "";
+  $("imgPreview").style.display = "none";
+  $("fileLabel").textContent = "📷 Tap to select image (or skip)";
+  $("fileLabel").style.borderColor = "var(--line)";
+  $("fileLabel").style.color = "var(--muted)";
+  $("resultBox").style.display = "none";
+  $("tokenText").value = "";
+  renderTokenList();
+  toast("🔄 Reset done");
+};
+</script>
+</body>
+</html>
