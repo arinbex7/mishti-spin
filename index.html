@@ -6,192 +6,315 @@
 <title>Mishti Spin – Arinbex 7</title>
 <style>
 :root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
---bg:#fff6e5;--bg2:#ffe3c2;--ink:#3b1220;--muted:#7a5a52;--card:#fff;--line:#ecd6b8;
---brand:#8c1d3a;--brand-ink:#fff;--gold:#f2a516;--err:#c0262d;--ok:#1f9d55;--purple:#5b2a86}
+--bg:#0a0612;--bg2:#1a0d1f;--ink:#f5e6d3;--muted:#a896a8;--card:#1f1225;--card2:#2a1a30;--line:#3a2540;
+--brand:#ff4d6d;--brand2:#ff8fa3;--gold:#ffc947;--gold2:#f5a623;--err:#ef4444;--ok:#10b981;--purple:#a855f7}
 html{height:100%}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1c0d13;--bg2:#3a1526;--ink:#fbeedd;--muted:#c9a99b;--card:#2a1620;--line:#4a2a37;--brand:#e0526f;--brand-ink:#1c0d13;--gold:#f6b93b;--err:#ff7b80;--ok:#2ecc71;--purple:#a06cd5}}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#fff6e5;--bg2:#ffe3c2;--ink:#3b1220;--muted:#7a5a52;--card:#fff;--card2:#fef8ef;--line:#ecd6b8;--brand:#8c1d3a;--brand2:#c2185b;--gold:#f2a516;--gold2:#e08b0a}}
 *,*::before,*::after{box-sizing:inherit}
-body{margin:0;min-height:100%;color:var(--ink);font:16px/1.55 Georgia,serif;
-background:linear-gradient(160deg,var(--bg),var(--bg2));background-attachment:fixed;overflow-x:hidden}
-h1,h2,h3,button,input,label,textarea{font-family:"Trebuchet MS",Verdana,system-ui,sans-serif}
-main{position:relative;z-index:1;max-width:520px;margin:0 auto;padding:22px 18px 90px}
-.brand{text-align:center;margin:4px 0 14px}
-.brand b{display:block;font-size:clamp(2.6rem,13vw,4.2rem);line-height:1;font-weight:900;font-style:italic;letter-spacing:-.03em;
-background:linear-gradient(180deg,#ffd76a 0%,#f2a516 45%,#c2185b 100%);
+body{margin:0;min-height:100%;color:var(--ink);font:16px/1.55 Georgia,"Iowan Old Style",serif;
+background:radial-gradient(ellipse at top,#2a1525 0%,#0a0612 60%);
+background-attachment:fixed;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]) body{background:linear-gradient(160deg,#fff6e5,#ffe3c2)}}
+h1,h2,h3,button,input,label,textarea{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Trebuchet MS",sans-serif}
+main{position:relative;z-index:1;max-width:520px;margin:0 auto;padding:16px 16px 100px}
+
+/* ===== BRAND ===== */
+.brand{text-align:center;margin:4px 0 16px;position:relative}
+.brand b{display:block;font-size:clamp(2.4rem,12vw,3.8rem);line-height:1;font-weight:900;font-style:italic;letter-spacing:-.03em;
+background:linear-gradient(180deg,#ffd76a 0%,#ff4d6d 100%);
 -webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;
-filter:drop-shadow(0 3px 0 rgba(140,29,58,.35))}
-.brand span{display:inline-block;margin-top:6px;padding:4px 14px;border-radius:99px;border:1.5px solid var(--gold);color:var(--brand);font-weight:700;font-size:.85rem;letter-spacing:.04em}
-h1{font-size:clamp(1.6rem,7vw,2.2rem);line-height:1.15;margin:0 0 10px;color:var(--brand);letter-spacing:-.02em;text-align:center}
-h3{margin:0 0 8px;color:var(--brand)}
-.lead{color:var(--muted);margin:0 0 20px;text-align:center;font-size:.95rem}
-.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 8px 24px rgba(140,29,58,.1);margin-bottom:16px}
-label{display:block;font-weight:700;font-size:.9rem;margin-bottom:6px}
-input,textarea{width:100%;font-size:1rem;padding:14px;border-radius:12px;border:2px solid var(--line);background:var(--bg);color:var(--ink);margin-bottom:12px}
-input:focus,textarea:focus,button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
-.err{color:var(--err);font-size:.88rem;min-height:1.3em;margin:0 0 10px;font-family:"Trebuchet MS",system-ui,sans-serif}
-.ok{color:var(--ok);font-size:.88rem;font-family:"Trebuchet MS",system-ui,sans-serif;margin:0 0 10px}
-.btn{width:100%;border:0;border-radius:12px;padding:15px;font-size:1rem;font-weight:700;cursor:pointer;background:var(--brand);color:var(--brand-ink);transition:transform .12s}
+filter:drop-shadow(0 3px 0 rgba(140,29,58,.35));animation:brandGlow 3s ease-in-out infinite}
+@keyframes brandGlow{0%,100%{filter:drop-shadow(0 3px 0 rgba(140,29,58,.35))}50%{filter:drop-shadow(0 3px 8px rgba(255,77,109,.5))}}
+.brand span{display:inline-block;margin-top:8px;padding:5px 16px;border-radius:99px;border:1.5px solid var(--gold);
+color:var(--gold);font-weight:700;font-size:.8rem;letter-spacing:.15em;background:rgba(255,201,71,.08)}
+
+/* ===== CARDS ===== */
+.card{background:linear-gradient(145deg,var(--card),var(--card2));
+border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:0 8px 30px rgba(0,0,0,.35);margin-bottom:16px;
+position:relative;overflow:hidden}
+.card h3{margin:0 0 10px;font-size:1.05rem;color:var(--gold);display:flex;align-items:center;gap:8px;font-weight:800}
+
+/* ===== INPUTS ===== */
+label{display:block;font-weight:700;font-size:.85rem;margin-bottom:6px;color:var(--muted);letter-spacing:.03em}
+input,textarea{width:100%;font-size:1rem;padding:14px;border-radius:14px;border:1.5px solid var(--line);
+background:rgba(0,0,0,.25);color:var(--ink);margin-bottom:12px;font-family:inherit;outline:none;transition:all .2s}
+input:focus,textarea:focus{border-color:var(--gold);background:rgba(0,0,0,.4);box-shadow:0 0 0 3px rgba(255,201,71,.1)}
+
+/* ===== BUTTONS ===== */
+.btn{width:100%;border:0;border-radius:14px;padding:15px;font-size:.95rem;font-weight:800;cursor:pointer;
+background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;font-family:inherit;
+transition:transform .15s,box-shadow .15s;letter-spacing:.03em;box-shadow:0 4px 15px rgba(255,77,109,.3)}
+.btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(255,77,109,.4)}
 .btn:active{transform:scale(.97)}
-.btn.gold{background:linear-gradient(180deg,#ffd76a,#f2a516);color:#3b1220}
-.btn.ghost{background:transparent;color:var(--ink);border:2px solid var(--line)}
-.btn.green{background:#1f9d55;color:#fff}
-.btn.purple{background:linear-gradient(180deg,#7c3aed,#5b2a86);color:#fff}
-.btn:disabled{opacity:.55;cursor:not-allowed}
-.badge{display:inline-block;background:var(--gold);color:#3b1220;font-weight:700;font-size:.75rem;padding:3px 10px;border-radius:99px;font-family:"Trebuchet MS",system-ui,sans-serif}
+.btn.gold{background:linear-gradient(135deg,#ffd76a,var(--gold2));color:#1a0d1f;
+box-shadow:0 4px 15px rgba(255,201,71,.35)}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line);box-shadow:none}
+.btn.ghost:hover{border-color:var(--gold);background:rgba(255,201,71,.05)}
+.btn.green{background:linear-gradient(135deg,#10b981,#059669);box-shadow:0 4px 15px rgba(16,185,129,.3)}
+.btn.purple{background:linear-gradient(135deg,#a855f7,#7e22ce);box-shadow:0 4px 15px rgba(168,85,247,.3)}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none!important}
+
+.err{color:var(--err);font-size:.85rem;min-height:1.3em;margin:0 0 10px;font-weight:600}
+.ok{color:var(--ok);font-size:.85rem;font-weight:600;margin:0 0 10px}
 .hidden{display:none!important}
 .center{text-align:center}
-.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
-.stat{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:12px;text-align:center}
-.stat b{display:block;font-size:1.8rem;color:var(--brand);font-family:"Trebuchet MS",system-ui,sans-serif}
-.stat small{color:var(--muted);font-size:.75rem;text-transform:uppercase;letter-spacing:.06em}
-.note{font-size:.8rem;color:var(--muted);margin-top:18px;text-align:center;font-family:"Trebuchet MS",system-ui,sans-serif}
-.spinner{display:inline-block;width:18px;height:18px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:8px}
+.lead{color:var(--muted);margin:0 0 20px;text-align:center;font-size:.92rem}
+h1{font-size:clamp(1.6rem,7vw,2.2rem);line-height:1.15;margin:0 0 10px;
+background:linear-gradient(135deg,#ffd76a,var(--brand));
+-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;
+letter-spacing:-.02em;text-align:center;font-weight:900}
+h3{margin:0 0 8px;color:var(--gold);font-weight:800}
+.note{font-size:.78rem;color:var(--muted);margin-top:16px;text-align:center;font-family:inherit}
+.spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;
+border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:8px}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* ===== Bottom navigation ===== */
-.bottom-nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);
-display:flex;justify-content:space-around;padding:8px 0 calc(8px + env(safe-area-inset-bottom,0px));z-index:40;
-font-family:"Trebuchet MS",system-ui,sans-serif}
-.bottom-nav button{background:transparent;border:0;padding:6px 4px;flex:1;cursor:pointer;color:var(--muted);
-font-size:.7rem;font-weight:700;display:flex;flex-direction:column;align-items:center;gap:2px;transition:color .15s}
-.bottom-nav button .ico{font-size:1.4rem;line-height:1}
-.bottom-nav button.active{color:var(--brand)}
+/* ===== BADGE ===== */
+.badge{display:inline-block;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#1a0d1f;
+font-weight:800;font-size:.7rem;padding:5px 14px;border-radius:99px;letter-spacing:.08em;
+text-transform:uppercase;box-shadow:0 3px 10px rgba(255,201,71,.3)}
 
-/* ===== Spin wheel ===== */
-.wheel-wrap{position:relative;width:100%;max-width:340px;margin:14px auto 22px;aspect-ratio:1}
+/* ===== STATS ===== */
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.stat{background:linear-gradient(145deg,rgba(255,77,109,.1),rgba(255,201,71,.05));
+border:1px solid var(--line);border-radius:16px;padding:16px 12px;text-align:center;
+transition:all .2s;position:relative;overflow:hidden}
+.stat::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;
+background:linear-gradient(90deg,var(--brand),var(--gold))}
+.stat:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(255,77,109,.15)}
+.stat b{display:block;font-size:2rem;font-weight:900;line-height:1.1;
+background:linear-gradient(135deg,var(--gold),var(--brand));
+-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;
+font-family:"Trebuchet MS",sans-serif}
+.stat small{color:var(--muted);font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;font-weight:700;margin-top:2px;display:block}
+
+/* ===== BOTTOM NAV ===== */
+.bottom-nav{position:fixed;left:0;right:0;bottom:0;background:linear-gradient(180deg,var(--card),#12070f);
+border-top:1px solid var(--line);display:flex;justify-content:space-around;
+padding:8px 0 calc(8px + env(safe-area-inset-bottom,0px));z-index:40;
+box-shadow:0 -4px 20px rgba(0,0,0,.3);backdrop-filter:blur(10px)}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]) .bottom-nav{background:linear-gradient(180deg,#fff,#fef8ef)}}
+.bottom-nav button{background:transparent;border:0;padding:6px 4px;flex:1;cursor:pointer;color:var(--muted);
+font-size:.68rem;font-weight:700;display:flex;flex-direction:column;align-items:center;gap:3px;
+transition:all .2s;font-family:inherit;position:relative}
+.bottom-nav button .ico{font-size:1.4rem;line-height:1;transition:transform .2s}
+.bottom-nav button.active{color:var(--brand)}
+.bottom-nav button.active .ico{transform:scale(1.15)}
+.bottom-nav button.active::after{content:"";position:absolute;bottom:0;left:50%;transform:translateX(-50%);
+width:20px;height:3px;background:linear-gradient(90deg,var(--brand),var(--gold));border-radius:3px}
+
+/* ===== WHEEL ===== */
+.wheel-wrap{position:relative;width:100%;max-width:340px;margin:16px auto 22px;aspect-ratio:1}
 .pointer{position:absolute;left:50%;top:-10px;margin-left:-15px;width:0;height:0;
 border-left:15px solid transparent;border-right:15px solid transparent;border-top:32px solid var(--gold);
-filter:drop-shadow(0 2px 2px rgba(0,0,0,.4));z-index:3;transform-origin:50% 10%;transition:transform .1s}
+filter:drop-shadow(0 3px 3px rgba(0,0,0,.5));z-index:3;transform-origin:50% 10%;transition:transform .1s}
 .wheel{position:absolute;inset:0;will-change:transform;transform:translateZ(0)}
 .wheel canvas{width:100%;height:100%;display:block}
 .hub{position:absolute;inset:0;margin:auto;width:76px;height:76px;border-radius:50%;
-border:4px solid var(--gold);background:var(--brand);color:var(--brand-ink);
-font-weight:800;font-size:.95rem;cursor:pointer;z-index:3;box-shadow:0 4px 14px rgba(0,0,0,.4);
-animation:pulse 1.6s ease-in-out infinite}
-.hub:disabled{animation:none;opacity:.6}
-@keyframes pulse{50%{transform:scale(1.08)}}
+border:4px solid var(--gold);background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;
+font-weight:900;font-size:.95rem;cursor:pointer;z-index:3;box-shadow:0 6px 20px rgba(255,77,109,.5);
+animation:pulse 1.6s ease-in-out infinite;letter-spacing:.05em}
+.hub:disabled{animation:none;opacity:.6;cursor:not-allowed}
+@keyframes pulse{0%,100%{transform:scale(1);box-shadow:0 6px 20px rgba(255,77,109,.5)}50%{transform:scale(1.08);box-shadow:0 8px 30px rgba(255,77,109,.7)}}
 .wheel-glow::before{content:"";position:absolute;inset:-6px;border-radius:50%;
-box-shadow:0 0 30px 8px rgba(242,165,22,.55);animation:glowpulse 2s ease-in-out infinite;pointer-events:none}
-@keyframes glowpulse{0%,100%{opacity:.25}50%{opacity:1}}
+box-shadow:0 0 40px 12px rgba(255,201,71,.5);animation:glowpulse 2s ease-in-out infinite;pointer-events:none}
+@keyframes glowpulse{0%,100%{opacity:.3}50%{opacity:1}}
 
-/* ===== Modals ===== */
-.overlay{position:fixed;inset:0;background:rgba(20,5,10,.72);display:none;align-items:center;justify-content:center;padding:18px;z-index:50;overflow-y:auto}
-.overlay.open{display:flex}
-.modal{width:100%;max-width:420px;background:var(--card);border-radius:18px;padding:22px;border:1px solid var(--line);margin:auto}
-.prize-big{font-size:1.5rem;font-weight:800;color:var(--brand);margin:0 0 4px;text-align:center}
-.coupon{display:inline-block;font:700 1.3rem "Courier New",monospace;border:2px dashed var(--gold);
-padding:6px 14px;border-radius:10px;margin:8px 0 14px;letter-spacing:.06em;background:var(--bg)}
+/* ===== MODALS ===== */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;
+padding:18px;z-index:50;overflow-y:auto;backdrop-filter:blur(6px)}
+.overlay.open{display:flex;animation:fadein .25s}
+@keyframes fadein{from{opacity:0}to{opacity:1}}
+.modal{width:100%;max-width:420px;background:linear-gradient(145deg,var(--card),var(--card2));
+border-radius:22px;padding:24px;border:1px solid var(--line);margin:auto;
+box-shadow:0 25px 60px rgba(0,0,0,.6);animation:pop .3s ease-out}
+@keyframes pop{from{opacity:0;transform:scale(.92) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.prize-big{font-size:1.5rem;font-weight:900;color:var(--brand);margin:0 0 4px;text-align:center}
+.coupon{display:inline-block;font:800 1.3rem "Courier New",monospace;border:2px dashed var(--gold);
+padding:8px 16px;border-radius:12px;margin:8px 0 14px;letter-spacing:.08em;background:rgba(255,201,71,.08);color:var(--gold)}
+
 .confetti{position:fixed;inset:0;pointer-events:none;z-index:60}
-
-/* Toast */
-.toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:var(--ink);color:var(--bg);
-padding:12px 20px;border-radius:12px;font-family:"Trebuchet MS",system-ui,sans-serif;font-weight:700;
-z-index:100;opacity:0;transition:opacity .25s;pointer-events:none;font-size:.9rem;max-width:90%}
-.toast.show{opacity:.95}
+.toast{position:fixed;left:50%;bottom:100px;transform:translateX(-50%);
+background:linear-gradient(135deg,var(--card),var(--card2));color:var(--ink);
+padding:14px 22px;border-radius:14px;font-family:inherit;font-weight:700;
+z-index:100;opacity:0;transition:opacity .3s,transform .3s;pointer-events:none;
+font-size:.88rem;max-width:90%;border:1px solid var(--line);box-shadow:0 10px 30px rgba(0,0,0,.5)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(-6px)}
 
 #muteBtn{position:fixed;top:calc(10px + env(safe-area-inset-top,0px));right:12px;z-index:15;
-width:40px;height:40px;border-radius:50%;border:2px solid var(--line);background:var(--card);font-size:1.1rem;cursor:pointer}
+width:42px;height:42px;border-radius:50%;border:1.5px solid var(--line);background:var(--card);
+font-size:1.15rem;cursor:pointer;color:var(--ink);box-shadow:0 4px 12px rgba(0,0,0,.3)}
 
-/* History items */
-.history-item{display:flex;justify-content:space-between;align-items:center;padding:11px 13px;
-background:var(--bg);border:1px solid var(--line);border-radius:10px;margin-bottom:6px;
-font-family:"Trebuchet MS",system-ui,sans-serif;font-size:.88rem}
+/* ===== HISTORY ===== */
+.history-item{display:flex;justify-content:space-between;align-items:center;padding:13px 14px;
+background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:12px;margin-bottom:8px;
+font-family:inherit;font-size:.88rem;transition:all .15s}
+.history-item:hover{background:rgba(255,255,255,.06)}
 .history-item .prize{font-weight:700;color:var(--brand)}
-.history-item .time{font-size:.72rem;color:var(--muted);margin-top:2px}
-.history-item .icon{font-size:1.2rem;margin-right:8px}
-.history-empty{text-align:center;color:var(--muted);padding:20px;font-size:.9rem}
+.history-item .time{font-size:.72rem;color:var(--muted);margin-top:3px}
+.history-item .icon{font-size:1.25rem;margin-right:8px}
+.history-empty{text-align:center;color:var(--muted);padding:24px 20px;font-size:.9rem}
 
-/* Wallet balance */
-.balance-big{text-align:center;padding:22px 0}
-.balance-big .taka{font-size:3rem;font-weight:900;color:var(--brand);font-family:"Trebuchet MS",system-ui,sans-serif;line-height:1}
-.balance-big .taka small{font-size:1.2rem;opacity:.6}
-.balance-big .pts{color:var(--muted);font-size:.9rem;margin-top:8px;font-family:"Trebuchet MS",system-ui,sans-serif}
+/* ===== WALLET ===== */
+.balance-big{text-align:center;padding:26px 0}
+.balance-big .taka{font-size:3.4rem;font-weight:900;line-height:1;
+background:linear-gradient(135deg,var(--gold),var(--brand));
+-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;
+font-family:"Trebuchet MS",sans-serif}
+.balance-big .taka small{font-size:1.3rem;opacity:.7}
+.balance-big .pts{color:var(--muted);font-size:.9rem;margin-top:10px;font-weight:600}
+.balance-big .pts span{color:var(--gold);font-weight:900}
 
-/* Profile */
-.profile-header{text-align:center;padding:16px 0}
-.avatar{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--brand),var(--gold));
-display:inline-flex;align-items:center;justify-content:center;font-size:2rem;font-weight:900;color:#fff;
-font-family:"Trebuchet MS",system-ui,sans-serif;margin-bottom:10px;box-shadow:0 6px 18px rgba(140,29,58,.35)}
-.profile-name{font-size:1.3rem;font-weight:800;color:var(--brand);font-family:"Trebuchet MS",system-ui,sans-serif}
-.profile-phone{color:var(--muted);font-size:.9rem;font-family:"Trebuchet MS",system-ui,sans-serif;margin-top:2px}
-.profile-row{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--line);
-font-family:"Trebuchet MS",system-ui,sans-serif;font-size:.92rem}
+/* ===== PROFILE ===== */
+.profile-header{text-align:center;padding:20px 0}
+.avatar{width:88px;height:88px;border-radius:50%;
+background:linear-gradient(135deg,var(--brand),var(--gold));
+display:inline-flex;align-items:center;justify-content:center;font-size:2.2rem;font-weight:900;color:#fff;
+font-family:"Trebuchet MS",sans-serif;margin-bottom:12px;box-shadow:0 8px 25px rgba(255,77,109,.4);
+border:3px solid rgba(255,255,255,.15)}
+.profile-name{font-size:1.35rem;font-weight:900;color:var(--ink);font-family:inherit}
+.profile-phone{color:var(--muted);font-size:.9rem;font-family:inherit;margin-top:4px}
+.profile-row{display:flex;justify-content:space-between;padding:13px 0;border-bottom:1px solid var(--line);
+font-family:inherit;font-size:.92rem}
 .profile-row:last-child{border-bottom:0}
 .profile-row .label{color:var(--muted)}
 .profile-row .value{font-weight:700;color:var(--ink)}
 
-/* Leaderboard */
-.lb-item{display:flex;align-items:center;padding:12px 14px;background:var(--bg);border:1px solid var(--line);
-border-radius:12px;margin-bottom:8px;font-family:"Trebuchet MS",system-ui,sans-serif}
-.lb-item.me{background:linear-gradient(135deg,rgba(242,165,22,.15),rgba(140,29,58,.15));border-color:var(--gold);box-shadow:0 0 0 2px var(--gold)}
-.lb-rank{font-weight:900;font-size:1.3rem;color:var(--brand);width:38px;text-align:center}
+/* ===== LEADERBOARD ===== */
+.lb-item{display:flex;align-items:center;padding:14px;background:rgba(255,255,255,.03);
+border:1px solid var(--line);border-radius:14px;margin-bottom:10px;font-family:inherit;transition:all .2s}
+.lb-item:hover{transform:translateX(3px)}
+.lb-item.me{background:linear-gradient(135deg,rgba(255,201,71,.15),rgba(255,77,109,.12));
+border-color:var(--gold);box-shadow:0 0 0 2px var(--gold),0 6px 20px rgba(255,201,71,.2)}
+.lb-rank{font-weight:900;font-size:1.4rem;color:var(--brand);width:44px;text-align:center}
 .lb-name{flex:1;font-weight:700;font-size:.95rem}
-.lb-pts{font-weight:800;color:var(--gold);font-size:1rem}
+.lb-pts{font-weight:900;color:var(--gold);font-size:1rem;font-family:"Trebuchet MS",sans-serif}
 
-/* Redeem card */
-.redeem-card{background:linear-gradient(135deg,rgba(91,42,134,.15),rgba(242,165,22,.15));
-border:2px dashed var(--purple);border-radius:16px;padding:18px;text-align:center;margin-bottom:14px}
-.redeem-card h4{margin:0 0 4px;color:var(--purple);font-size:1.05rem}
-.redeem-card p{margin:0 0 12px;color:var(--muted);font-size:.85rem}
+/* ===== REDEEM ===== */
+.redeem-card{background:linear-gradient(135deg,rgba(168,85,247,.15),rgba(255,201,71,.12));
+border:2px dashed var(--purple);border-radius:18px;padding:20px;text-align:center;margin-bottom:14px}
+.redeem-card h4{margin:0 0 6px;color:var(--purple);font-size:1.1rem;font-weight:900}
+.redeem-card p{margin:0 0 14px;color:var(--muted);font-size:.85rem}
+
+/* ===== WEEKLY TOURNAMENT ===== */
+.weekly-header{background:linear-gradient(135deg,rgba(255,201,71,.2),rgba(255,77,109,.15));
+border-radius:16px;padding:18px;text-align:center;margin-bottom:14px;border:2px solid var(--gold)}
+.weekly-header h4{margin:0 0 6px;color:var(--gold);font-size:1.1rem;font-weight:900}
+.weekly-header .timer{font:900 1.6rem "Courier New",monospace;color:var(--brand);margin:8px 0;
+text-shadow:0 2px 8px rgba(255,77,109,.4)}
+.weekly-header .timer-small{font-size:.75rem;color:var(--muted);font-family:inherit}
+.weekly-row{display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--line);
+font-family:inherit;font-size:.92rem}
+.weekly-row:last-child{border-bottom:0}
+.weekly-row .label{color:var(--muted)}
+.weekly-row .value{font-weight:800;color:var(--ink)}
+.weekly-progress{background:rgba(0,0,0,.3);border:1px solid var(--line);border-radius:12px;height:28px;
+overflow:hidden;margin-top:10px;position:relative}
+.weekly-progress-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--brand));
+transition:width .4s;display:flex;align-items:center;justify-content:center;color:#fff;
+font-weight:900;font-size:.78rem;font-family:inherit;text-shadow:0 1px 3px rgba(0,0,0,.4)}
+.weekly-lb-item{display:flex;align-items:center;padding:12px 14px;background:rgba(255,255,255,.03);
+border:1px solid var(--line);border-radius:12px;margin-bottom:8px;font-family:inherit;font-size:.88rem}
+.weekly-lb-item.me{background:linear-gradient(135deg,rgba(255,201,71,.15),rgba(255,77,109,.12));border-color:var(--gold)}
+.weekly-lb-rank{font-weight:900;font-size:1.15rem;color:var(--brand);width:36px}
+.weekly-lb-name{flex:1;font-weight:700}
+.weekly-lb-spins{font-weight:900;color:var(--gold);font-size:.9rem;font-family:"Trebuchet MS",sans-serif}
+.prize-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dashed var(--line);font-family:inherit;font-size:.85rem}
+.prize-row:last-child{border-bottom:0}
+.prize-row .rank{font-weight:700;color:var(--ink)}
+.prize-row .pts{font-weight:900;color:var(--gold);font-family:"Trebuchet MS",sans-serif}
+
+/* ===== FLOATING EMOJIS ===== */
+#floaters{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;opacity:.25}
+#floaters span{position:absolute;bottom:-60px;animation:rise linear infinite;will-change:transform}
+@keyframes rise{to{transform:translate3d(-20px,-115vh,0) rotate(360deg)}}
+
+/* ===== BLOCKED SCREEN ===== */
+#blockedScreen{position:fixed;inset:0;background:linear-gradient(145deg,#1a0d1f,#0a0612);
+display:none;align-items:center;justify-content:center;padding:24px;z-index:999}
+#blockedScreen.show{display:flex}
+#blockedScreen .blocked-card{max-width:380px;background:linear-gradient(145deg,var(--card),var(--card2));
+border:2px solid var(--err);border-radius:22px;padding:32px 24px;text-align:center;
+box-shadow:0 25px 60px rgba(0,0,0,.6)}
+#blockedScreen .blocked-icon{font-size:4rem;margin-bottom:16px}
+#blockedScreen h2{color:var(--err);font-size:1.4rem;font-weight:900;margin:0 0 12px}
+#blockedScreen p{color:var(--muted);font-size:.92rem;line-height:1.6;margin:0 0 20px}
 </style>
 </head>
 <body>
 
+<div id="floaters" aria-hidden="true"></div>
 <button id="muteBtn" aria-label="Toggle sound">🔊</button>
+
+<!-- BLOCKED SCREEN -->
+<div id="blockedScreen">
+  <div class="blocked-card">
+    <div class="blocked-icon">🚫</div>
+    <h2>Account Blocked</h2>
+    <p>আপনার অ্যাকাউন্ট অ্যাডমিন কর্তৃক ব্লক করা হয়েছে। বিস্তারিত জানতে যোগাযোগ করুন।</p>
+    <button class="btn ghost" onclick="localStorage.clear();location.reload()">Logout</button>
+  </div>
+</div>
 
 <main>
   <div class="brand"><b>Arinbex 7</b><span>Mishti Spin Event</span></div>
 
-  <!-- ============ LOGIN ============ -->
+  <!-- LOGIN -->
   <section id="viewLogin">
-    <h1>Welcome! 🍬</h1>
-    <p class="lead">Enter your name and WhatsApp number to start spinning.</p>
-
+    <h1>Welcome 🍬</h1>
+    <p class="lead">Enter your name &amp; WhatsApp number to start spinning.</p>
     <div class="card">
       <label for="loginName">Your name</label>
       <input id="loginName" placeholder="e.g. Rafi Ahmed" maxlength="60" autocomplete="name">
-
       <label for="loginPhone">WhatsApp number</label>
       <input id="loginPhone" type="tel" inputmode="numeric" maxlength="11" placeholder="01XXXXXXXXX">
       <div class="err" id="loginErr" role="alert"></div>
-
       <button class="btn gold" id="loginBtn">Start Spinning 🎯</button>
     </div>
+    <p class="note">By continuing you agree to our terms. Your data is safe with us.</p>
   </section>
 
-  <!-- ============ MAIN APP ============ -->
+  <!-- MAIN APP -->
   <section id="viewApp" class="hidden">
 
-    <!-- ===== HOME TAB ===== -->
+    <!-- HOME -->
     <div id="tabHome" class="tab-panel">
-      <div class="center" style="margin-bottom:10px">
-        <span class="badge" id="adminBadge" style="display:none">ADMIN</span>
+      <div class="center" style="margin-bottom:12px">
+        <span class="badge" id="adminBadge" style="display:none">⭐ ADMIN</span>
       </div>
-      <h1 id="welcome">Hi!</h1>
+      <h1 id="welcome">Hi! 👋</h1>
       <p class="lead">Welcome to Mishti Spin 🎉</p>
 
       <div class="card">
-        <h3>Your Stats</h3>
+        <h3>📊 Your Stats</h3>
         <div class="stats">
           <div class="stat"><b id="sPoints">0</b><small>Points</small></div>
           <div class="stat"><b id="sSpins">0</b><small>Spins Left</small></div>
         </div>
-        <p class="note" style="margin-top:10px;font-size:.75rem">100 points = 1 taka • Redeem token to earn spins</p>
+        <p class="note" style="margin-top:12px;font-size:.75rem">💡 100 points = 1 taka</p>
       </div>
 
       <div class="card">
-        <h3 style="text-align:center">🎡 Spin the Wheel</h3>
+        <h3 style="text-align:center;justify-content:center">🎡 Spin the Wheel</h3>
         <div class="wheel-wrap wheel-glow" id="wheelWrap">
           <div class="pointer" id="pointer"></div>
           <div class="wheel" id="wheelEl"><canvas id="wheel" width="700" height="700"></canvas></div>
           <button class="hub" id="spinBtn">SPIN</button>
         </div>
-        <p class="note" style="margin-top:0">Each spin costs 1 spin credit</p>
+        <p class="note" style="margin-top:0">Each spin costs 1 credit</p>
+      </div>
+
+      <!-- WEEKLY TOURNAMENT (DYNAMIC FROM ADMIN) -->
+      <div class="card" id="weeklyCard">
+        <h3>🏆 Tournament</h3>
+        <div id="tournamentContent">
+          <div class="history-empty">Loading tournament...</div>
+        </div>
       </div>
 
       <div class="card">
         <h3>🎫 Enter Token</h3>
-        <p class="lead" style="text-align:left;margin-bottom:12px;font-size:.85rem">Find the token code inside your chocolate packet.</p>
+        <p class="lead" style="text-align:left;margin-bottom:12px;font-size:.85rem">Find the token inside your chocolate packet.</p>
         <label for="tokenInput">Token code</label>
         <input id="tokenInput" placeholder="ARNX-XXXX-XXXX" maxlength="20" autocomplete="off" style="text-transform:uppercase">
         <div class="err" id="tokenErr" role="alert"></div>
@@ -200,11 +323,10 @@ border:2px dashed var(--purple);border-radius:16px;padding:18px;text-align:cente
       </div>
     </div>
 
-    <!-- ===== WALLET TAB ===== -->
+    <!-- WALLET -->
     <div id="tabWallet" class="tab-panel hidden">
       <h1>💰 Wallet</h1>
       <p class="lead">Your balance &amp; redeem options</p>
-
       <div class="card">
         <div class="balance-big">
           <div class="taka" id="walletTaka">0<small>.00</small></div>
@@ -212,13 +334,11 @@ border:2px dashed var(--purple);border-radius:16px;padding:18px;text-align:cente
         </div>
         <p class="note" style="margin:0;font-size:.75rem">100 points = 1 taka</p>
       </div>
-
       <div class="redeem-card">
         <h4>💸 Redeem Points</h4>
-        <p>Minimum 1000 points (10 taka) needed to redeem. Send request on WhatsApp, we'll process it.</p>
+        <p>Minimum 1000 points (10 taka) needed to redeem.</p>
         <button class="btn purple" id="redeemPointsBtn">Request Redeem</button>
       </div>
-
       <div class="card">
         <h3>📊 Summary</h3>
         <div class="profile-row"><span class="label">Total Points</span><span class="value" id="wTotalPts">0</span></div>
@@ -227,27 +347,24 @@ border:2px dashed var(--purple);border-radius:16px;padding:18px;text-align:cente
       </div>
     </div>
 
-    <!-- ===== HISTORY TAB ===== -->
+    <!-- HISTORY -->
     <div id="tabHistory" class="tab-panel hidden">
       <h1>📜 History</h1>
       <p class="lead">All your spins &amp; rewards</p>
-
       <div class="card">
         <h3>🎯 Spin History</h3>
         <div id="spinHistoryList"><div class="history-empty">No spins yet</div></div>
       </div>
-
       <div class="card">
         <h3>🎫 Token Redeems</h3>
         <div id="tokenHistoryList"><div class="history-empty">No tokens redeemed yet</div></div>
       </div>
     </div>
 
-    <!-- ===== PROFILE TAB ===== -->
+    <!-- PROFILE -->
     <div id="tabProfile" class="tab-panel hidden">
       <h1>👤 Profile</h1>
       <p class="lead">Your account details</p>
-
       <div class="card">
         <div class="profile-header">
           <div class="avatar" id="avatarInitial">?</div>
@@ -255,26 +372,28 @@ border:2px dashed var(--purple);border-radius:16px;padding:18px;text-align:cente
           <div class="profile-phone" id="pPhone">-</div>
         </div>
       </div>
-
       <div class="card">
-        <h3>Account Details</h3>
+        <h3>📋 Account Details</h3>
         <div class="profile-row"><span class="label">Member Since</span><span class="value" id="pJoined">-</span></div>
         <div class="profile-row"><span class="label">Total Points</span><span class="value" id="pPoints">0</span></div>
         <div class="profile-row"><span class="label">Total Spins</span><span class="value" id="pSpins">0</span></div>
         <div class="profile-row"><span class="label">Tokens Used</span><span class="value" id="pTokens">0</span></div>
         <div class="profile-row"><span class="label">Role</span><span class="value" id="pRole">User</span></div>
       </div>
-
-      <button class="btn ghost" id="logoutBtn">Logout</button>
+      <button class="btn ghost" id="logoutBtn">🚪 Logout</button>
     </div>
 
-    <!-- ===== LEADERBOARD TAB ===== -->
+    <!-- LEADERBOARD -->
     <div id="tabLB" class="tab-panel hidden">
       <h1>🏆 Leaderboard</h1>
       <p class="lead">Top spin masters</p>
-
+      <div class="card" id="weeklyLBCard">
+        <h3 id="weeklyLBTitle">🏆 Tournament Leaderboard</h3>
+        <p class="note" style="margin:0 0 10px;font-size:.75rem" id="weeklyLBSubtitle">Loading...</p>
+        <div id="weeklyLB"><div class="history-empty">Loading...</div></div>
+      </div>
       <div class="card">
-        <h3>Top 10 Players</h3>
+        <h3>👑 All-Time Top 10</h3>
         <div id="lbList"><div class="history-empty">Loading...</div></div>
       </div>
     </div>
@@ -282,12 +401,10 @@ border:2px dashed var(--purple);border-radius:16px;padding:18px;text-align:cente
   </section>
 
   <p class="note" id="loadingNote" style="display:none">
-    <span class="spinner" style="border-color:rgba(140,29,58,.3);border-top-color:var(--brand)"></span>
-    Loading...
+    <span class="spinner"></span> Loading...
   </p>
 </main>
 
-<!-- ============ BOTTOM NAV ============ -->
 <nav class="bottom-nav hidden" id="bottomNav">
   <button data-tab="tabHome" class="active"><span class="ico">🏠</span>Home</button>
   <button data-tab="tabWallet"><span class="ico">💰</span>Wallet</button>
@@ -296,10 +413,10 @@ border:2px dashed var(--purple);border-radius:16px;padding:18px;text-align:cente
   <button data-tab="tabLB"><span class="ico">🏆</span>Top</button>
 </nav>
 
-<!-- ============ PRIZE MODAL ============ -->
+<!-- PRIZE MODAL -->
 <div class="overlay" id="prizeOv">
   <div class="modal">
-    <h2 id="prizeTitle" style="text-align:center;margin:0 0 8px;color:var(--brand)">🎉 Congratulations!</h2>
+    <h2 id="prizeTitle" style="text-align:center;margin:0 0 8px;color:var(--brand);font-weight:900">🎉 Congratulations!</h2>
     <p class="prize-big" id="prizeText">You won!</p>
     <div class="center" id="prizeCouponWrap" style="display:none">
       <p style="color:var(--muted);font-size:.9rem;margin-bottom:4px">Your coupon code:</p>
@@ -312,11 +429,11 @@ border:2px dashed var(--purple);border-radius:16px;padding:18px;text-align:cente
   </div>
 </div>
 
-<!-- ============ SWEET BOX MODAL ============ -->
+<!-- SWEET BOX MODAL -->
 <div class="overlay" id="boxOv">
   <div class="modal">
-    <h2 style="margin:0 0 6px">🎁 Sweet Box Claim</h2>
-    <p style="color:var(--muted);font-size:.9rem">Please enter your delivery details. We'll contact you on WhatsApp.</p>
+    <h2 style="margin:0 0 6px;color:var(--gold);font-weight:900">🎁 Sweet Box Claim</h2>
+    <p style="color:var(--muted);font-size:.9rem;margin-bottom:14px">Enter delivery details. We'll contact you on WhatsApp.</p>
     <label for="boxName">Full name</label>
     <input id="boxName" maxlength="60">
     <label for="boxPhone">WhatsApp number</label>
@@ -329,13 +446,13 @@ border:2px dashed var(--purple);border-radius:16px;padding:18px;text-align:cente
   </div>
 </div>
 
-<!-- ============ REDEEM MODAL ============ -->
+<!-- REDEEM MODAL -->
 <div class="overlay" id="redeemOv">
   <div class="modal">
-    <h2 style="margin:0 0 6px">💸 Redeem Request</h2>
+    <h2 style="margin:0 0 6px;color:var(--purple);font-weight:900">💸 Redeem Request</h2>
     <p style="color:var(--muted);font-size:.9rem">We'll process your request within 24 hours on WhatsApp.</p>
-    <div style="background:var(--bg);padding:14px;border-radius:12px;text-align:center;margin-bottom:14px">
-      <div style="font-size:1.5rem;font-weight:800;color:var(--brand)" id="redeemAmount">0 taka</div>
+    <div style="background:rgba(168,85,247,.1);padding:16px;border-radius:14px;text-align:center;margin-bottom:14px;border:1px solid rgba(168,85,247,.3)">
+      <div style="font-size:1.6rem;font-weight:900;color:var(--purple)" id="redeemAmount">0 taka</div>
       <div style="color:var(--muted);font-size:.85rem" id="redeemPts">from 0 points</div>
     </div>
     <label for="redeemMethod">Preferred method</label>
@@ -351,7 +468,7 @@ border:2px dashed var(--purple);border-radius:16px;padding:18px;text-align:cente
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getAuth, signInAnonymously, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getAuth, signInAnonymously, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import {
   getFirestore, doc, getDoc, setDoc, updateDoc, collection, addDoc,
   query, where, getDocs, orderBy, limit, serverTimestamp, increment
@@ -369,14 +486,19 @@ const firebaseConfig = {
 
 const ADMIN_PHONES = ["01612929333"];
 const ADMIN_WHATSAPP = "8801612929333";
+const POINTS_PER_TAKA = 100;
+const MIN_REDEEM = 1000;
 
-const FREE_DELIVERY_EVERY = 50;
-const SWEET_BOX_EVERY     = 300;
-const POINTS_PER_TAKA     = 100;
-const MIN_REDEEM          = 1000;
+const DEFAULT_SETTINGS = {
+  p100: 35, p0: 30, p200: 20, p300: 10,
+  p400: 3, p500: 1, p600: 0.5,
+  pFree: 0.4, pBox: 0.1,
+  freeEvery: 100, boxEvery: 500
+};
 
 const SEGMENTS = [
   { label: "100 Points",    type: "points", value: 100, color: "#8c1d3a" },
+  { label: "0 Points",      type: "zero",   value: 0,   color: "#4a2a37" },
   { label: "Free Delivery", type: "free",   value: 0,   color: "#1f7a6d" },
   { label: "200 Points",    type: "points", value: 200, color: "#d9822b" },
   { label: "Sweet Box",     type: "box",    value: 0,   color: "#c2185b" },
@@ -388,22 +510,18 @@ const SEGMENTS = [
 const N = SEGMENTS.length;
 const SEG = (Math.PI * 2) / N;
 
-// ============== INIT ==============
 const app  = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db   = getFirestore(app);
 
-// ============== STATE ==============
 let currentUser = null;
-let userName    = "";
-let userPhone   = "";
-let userData    = null;
-let spinning    = false;
-let rot         = 0;
-let muted       = localStorage.getItem("mishti_muted") === "1";
-let activeTab   = "tabHome";
+let userName = "", userPhone = "", userData = null;
+let spinning = false, rot = 0;
+let muted = localStorage.getItem("mishti_muted") === "1";
+let PRIZE_SETTINGS = { ...DEFAULT_SETTINGS };
+let CURRENT_TOURNAMENT = null;
+let blockCheckInterval = null;
 
-// ============== HELPERS ==============
 const $ = id => document.getElementById(id);
 const setErr = (id, msg) => { $(id).textContent = msg || ""; };
 
@@ -425,6 +543,77 @@ const fmtShortDate = ts => {
   const d = ts.toDate ? ts.toDate() : new Date(ts);
   return d.toLocaleString("en-GB", { timeZone: "Asia/Dhaka", day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit" });
 };
+
+// ============== BLOCKED SCREEN ==============
+function showBlockedScreen() {
+  $("blockedScreen").classList.add("show");
+  $("bottomNav").classList.add("hidden");
+  $("viewApp").classList.add("hidden");
+  $("viewLogin").classList.add("hidden");
+}
+
+// ============== LOAD PRIZE SETTINGS FROM ADMIN ==============
+async function loadPrizeSettings() {
+  try {
+    const snap = await getDoc(doc(db, "settings", "prize_probability"));
+    if (snap.exists()) {
+      PRIZE_SETTINGS = { ...DEFAULT_SETTINGS, ...snap.data() };
+      console.log("✅ Loaded admin prize settings:", PRIZE_SETTINGS);
+    } else {
+      PRIZE_SETTINGS = { ...DEFAULT_SETTINGS };
+    }
+  } catch(e) {
+    console.log("Using default prize settings:", e);
+    PRIZE_SETTINGS = { ...DEFAULT_SETTINGS };
+  }
+}
+
+// ============== LOAD TOURNAMENT FROM ADMIN ==============
+async function loadTournament() {
+  try {
+    const snap = await getDoc(doc(db, "settings", "current_tournament"));
+    if (snap.exists()) {
+      CURRENT_TOURNAMENT = snap.data();
+      console.log("✅ Loaded tournament:", CURRENT_TOURNAMENT);
+    } else {
+      CURRENT_TOURNAMENT = null;
+    }
+  } catch(e) {
+    console.error("Tournament load error:", e);
+    CURRENT_TOURNAMENT = null;
+  }
+}
+
+// ============== FLOATING EMOJIS ==============
+(function() {
+  const emojis = ["🍮", "🍬", "🍩", "🧁", "🍯", "🍡", "🍪", "🍭"];
+  const box = $("floaters");
+  for (let i = 0; i < 8; i++) {
+    const s = document.createElement("span");
+    s.textContent = emojis[i];
+    s.style.cssText = `left:${6 + i * 12}%;font-size:${24 + (i * 7) % 20}px;animation-duration:${18 + (i * 5) % 12}s;animation-delay:${-i * 3}s`;
+    box.appendChild(s);
+  }
+})();
+
+// ============== WEEK HELPERS ==============
+function getWeekId(date = new Date()) {
+  const d = new Date(date);
+  d.setHours(0, 0, 0, 0);
+  d.setDate(d.getDate() + 3 - (d.getDay() + 6) % 7);
+  const week1 = new Date(d.getFullYear(), 0, 4);
+  const weekNo = 1 + Math.round(((d - week1) / 86400000 - 3 + (week1.getDay() + 6) % 7) / 7);
+  return `${d.getFullYear()}-W${String(weekNo).padStart(2, "0")}`;
+}
+function getWeekEnd(date = new Date()) {
+  const d = new Date(date);
+  d.setHours(0, 0, 0, 0);
+  const day = d.getDay();
+  const daysUntilNextSunday = day === 0 ? 7 : 7 - day;
+  d.setDate(d.getDate() + daysUntilNextSunday);
+  d.setHours(23, 59, 59, 999);
+  return d;
+}
 
 // ============== SOUND ==============
 let ac;
@@ -453,25 +642,25 @@ $("muteBtn").onclick = () => {
 function confetti(count = 120) {
   const cv = $("confetti"), x = cv.getContext("2d");
   cv.width = innerWidth; cv.height = innerHeight;
-  const cols = ["#f2a516", "#e0526f", "#2f7d5b", "#5b2a86", "#ffffff", "#ff7a00"];
+  const cols = ["#ffc947", "#ff4d6d", "#10b981", "#a855f7", "#ffffff", "#ff7a00"];
   const ps = Array.from({ length: count }, () => ({
     x: innerWidth / 2, y: innerHeight * 0.4,
-    vx: (Math.random() - 0.5) * 18, vy: Math.random() * -15 - 3,
-    s: 5 + Math.random() * 7, c: cols[Math.random() * cols.length | 0],
-    r: Math.random() * 6, vr: (Math.random() - 0.5) * 0.4
+    vx: (Math.random() - 0.5) * 20, vy: Math.random() * -18 - 3,
+    s: 5 + Math.random() * 8, c: cols[Math.random() * cols.length | 0],
+    r: Math.random() * 6, vr: (Math.random() - 0.5) * 0.5
   }));
   let f = 0;
   (function tick() {
     x.clearRect(0, 0, cv.width, cv.height);
     ps.forEach(p => {
-      p.vy += 0.35; p.vx *= 0.995;
+      p.vy += 0.4; p.vx *= 0.995;
       p.x += p.vx; p.y += p.vy; p.r += p.vr;
       x.save(); x.translate(p.x, p.y); x.rotate(p.r);
       x.fillStyle = p.c;
       x.fillRect(-p.s / 2, -p.s / 2, p.s, p.s * 0.6);
       x.restore();
     });
-    if (++f < 150) requestAnimationFrame(tick);
+    if (++f < 160) requestAnimationFrame(tick);
     else x.clearRect(0, 0, cv.width, cv.height);
   })();
 }
@@ -508,17 +697,17 @@ function confetti(count = 120) {
     ctx.textAlign = "right";
     ctx.fillStyle = "#fff";
     ctx.shadowColor = "rgba(0,0,0,.55)"; ctx.shadowBlur = 5;
-    ctx.font = '800 30px "Trebuchet MS",sans-serif';
-    ctx.fillText(s.label, r - 24, 10);
-    ctx.font = "32px system-ui,sans-serif";
+    ctx.font = '800 26px "Trebuchet MS",sans-serif';
+    ctx.fillText(s.label, r - 22, 10);
+    ctx.font = "28px system-ui,sans-serif";
     ctx.textAlign = "center";
-    const emoji = s.type === "box" ? "🎁" : s.type === "free" ? "🚚" : "🍬";
-    ctx.fillText(emoji, r * 0.32, 10);
+    const emoji = s.type === "box" ? "🎁" : s.type === "free" ? "🚚" : s.type === "zero" ? "💀" : "🍬";
+    ctx.fillText(emoji, r * 0.3, 10);
     ctx.restore();
   });
 
-  for (let i = 0; i < 28; i++) {
-    const a = (i / 28) * Math.PI * 2;
+  for (let i = 0; i < 30; i++) {
+    const a = (i / 30) * Math.PI * 2;
     ctx.beginPath();
     ctx.arc(Math.cos(a) * (r + 8), Math.sin(a) * (r + 8), 5, 0, Math.PI * 2);
     ctx.fillStyle = i % 2 ? "#fffbe0" : "#e6b04a";
@@ -529,10 +718,10 @@ function confetti(count = 120) {
 // ============== LOGIN ==============
 $("loginBtn").onclick = async () => {
   setErr("loginErr", "");
-  const name  = $("loginName").value.trim();
+  const name = $("loginName").value.trim();
   const phone = $("loginPhone").value.replace(/\D/g, "").slice(0, 11);
 
-  if (name.length < 2)  return setErr("loginErr", "Enter your name (at least 2 letters).");
+  if (name.length < 2) return setErr("loginErr", "Enter your name (at least 2 letters).");
   if (!/^01[3-9]\d{8}$/.test(phone)) return setErr("loginErr", "Enter a valid 11-digit number.");
 
   userName = name;
@@ -546,6 +735,13 @@ $("loginBtn").onclick = async () => {
     const existing = await findUserByPhone(phone);
 
     if (existing) {
+      // Check if blocked
+      if (existing.blocked) {
+        showBlockedScreen();
+        btn.disabled = false;
+        btn.textContent = "Start Spinning 🎯";
+        return;
+      }
       await setDoc(doc(db, "users", existing.id), {
         name, phone,
         isAdmin: ADMIN_PHONES.includes(phone),
@@ -562,6 +758,7 @@ $("loginBtn").onclick = async () => {
         points: 0, spins: 0,
         tokensUsed: [],
         totalRedeemed: 0,
+        blocked: false,
         createdAt: serverTimestamp(),
         lastLogin: serverTimestamp()
       });
@@ -572,6 +769,8 @@ $("loginBtn").onclick = async () => {
     localStorage.setItem("mishti_phone", phone);
     await loadDashboard(currentUser.uid);
     showApp();
+    startBlockCheck();
+    toast("Welcome " + name + "! 🎉");
   } catch (err) {
     console.error("LOGIN ERROR:", err);
     setErr("loginErr", "Login failed. Try again.");
@@ -596,6 +795,9 @@ async function findUserByPhone(phone) {
 
 // ============== AUTO LOGIN ==============
 window.addEventListener("load", async () => {
+  await loadPrizeSettings();
+  await loadTournament();
+
   const savedUid = localStorage.getItem("mishti_uid");
   const savedName = localStorage.getItem("mishti_name");
   const savedPhone = localStorage.getItem("mishti_phone");
@@ -604,21 +806,64 @@ window.addEventListener("load", async () => {
     userName = savedName;
     userPhone = savedPhone;
     currentUser = { uid: savedUid };
+
+    // Check if user exists & not blocked
+    try {
+      const snap = await getDoc(doc(db, "users", savedUid));
+      if (!snap.exists()) {
+        // User was deleted — logout
+        localStorage.removeItem("mishti_uid");
+        localStorage.removeItem("mishti_name");
+        localStorage.removeItem("mishti_phone");
+        $("viewLogin").classList.remove("hidden");
+        return;
+      }
+      const d = snap.data();
+      if (d.blocked) {
+        showBlockedScreen();
+        return;
+      }
+    } catch(e) {
+      console.error("Auto login check failed:", e);
+    }
+
     await loadDashboard(savedUid);
     showApp();
+    startBlockCheck();
   } else {
     $("viewLogin").classList.remove("hidden");
   }
 });
+
+// ============== BLOCK CHECK (every 30s) ==============
+function startBlockCheck() {
+  if (blockCheckInterval) clearInterval(blockCheckInterval);
+  blockCheckInterval = setInterval(async () => {
+    if (!currentUser?.uid) return;
+    try {
+      const snap = await getDoc(doc(db, "users", currentUser.uid));
+      if (!snap.exists()) {
+        // User deleted
+        localStorage.clear();
+        location.reload();
+        return;
+      }
+      if (snap.data().blocked) {
+        showBlockedScreen();
+        clearInterval(blockCheckInterval);
+      }
+    } catch(e) {}
+  }, 30000);
+}
 
 function showApp() {
   $("viewLogin").classList.add("hidden");
   $("viewApp").classList.remove("hidden");
   $("bottomNav").classList.remove("hidden");
   switchTab("tabHome");
+  renderTournamentCard();
 }
 
-// ============== TAB SWITCHING ==============
 document.querySelectorAll(".bottom-nav button").forEach(btn => {
   btn.onclick = () => {
     const tabId = btn.dataset.tab;
@@ -629,50 +874,119 @@ document.querySelectorAll(".bottom-nav button").forEach(btn => {
 });
 
 function switchTab(tabId) {
-  activeTab = tabId;
   ["tabHome","tabWallet","tabHistory","tabProfile","tabLB"].forEach(t => {
     $(t).classList.toggle("hidden", t !== tabId);
   });
   if (tabId === "tabWallet") renderWallet();
   if (tabId === "tabHistory") renderHistory();
   if (tabId === "tabProfile") renderProfile();
-  if (tabId === "tabLB") renderLeaderboard();
+  if (tabId === "tabLB") { renderLeaderboard(); renderWeeklyLB(); }
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-// ============== LOAD DASHBOARD ==============
 async function loadDashboard(uid) {
   $("loadingNote").style.display = "block";
   try {
     const snap = await getDoc(doc(db, "users", uid));
+    if (!snap.exists()) {
+      localStorage.clear();
+      location.reload();
+      return;
+    }
     userData = snap.data() || {};
-    $("welcome").textContent = "Hi, " + (userData.name || "Friend") + "!";
+    if (userData.blocked) {
+      showBlockedScreen();
+      return;
+    }
+    $("welcome").textContent = "Hi, " + (userData.name || "Friend") + "! 👋";
     $("sPoints").textContent = userData.points || 0;
-    $("sSpins").textContent  = userData.spins  || 0;
+    $("sSpins").textContent = userData.spins || 0;
     $("adminBadge").style.display = userData.isAdmin ? "inline-block" : "none";
     $("spinBtn").disabled = !(userData.spins > 0);
+    // Refresh tournament (admin may have changed)
+    await loadTournament();
+    await renderTournamentCard();
   } finally {
     $("loadingNote").style.display = "none";
   }
 }
 
-// ============== WALLET ==============
+// ============== TOURNAMENT CARD (DYNAMIC) ==============
+async function renderTournamentCard() {
+  const el = $("tournamentContent");
+  if (!el) return;
+
+  if (!CURRENT_TOURNAMENT) {
+    el.innerHTML = '<div class="history-empty">🎯 No active tournament right now. Stay tuned!</div>';
+    return;
+  }
+
+  const t = CURRENT_TOURNAMENT;
+  const endDate = t.endDate?.toDate ? t.endDate.toDate() : (t.endDate ? new Date(t.endDate) : null);
+  const now = Date.now();
+  const left = endDate ? endDate.getTime() - now : 0;
+
+  // Get user's weekly spins
+  let mySpins = 0;
+  try {
+    const weekId = getWeekId();
+    const statSnap = await getDoc(doc(db, "weekly_stats", `${weekId}_${currentUser.uid}`));
+    if (statSnap.exists()) mySpins = statSnap.data().spins || 0;
+  } catch(e) {}
+
+  const progress = Math.min(100, (mySpins / (t.minSpins || 50)) * 100);
+
+  const prizesHTML = (t.prizes || []).slice(0, 5).map((p, i) => {
+    const medal = i === 0 ? "🥇" : i === 1 ? "🥈" : i === 2 ? "🥉" : `#${i+1}`;
+    return `<div class="prize-row"><span class="rank">${medal} Rank ${i+1}</span><span class="pts">${p} pts</span></div>`;
+  }).join("");
+
+  el.innerHTML = `
+    <div class="weekly-header">
+      <h4>🔥 ${t.name}</h4>
+      <div class="timer" id="tournTimer">--:--:--</div>
+      <div class="timer-small">Min ${t.minSpins} spins required</div>
+    </div>
+    <div class="weekly-row"><span class="label">Your Spins</span><span class="value">${mySpins}</span></div>
+    <div class="weekly-progress">
+      <div class="weekly-progress-fill" style="width:${progress}%">${mySpins}/${t.minSpins}</div>
+    </div>
+    <h4 style="color:var(--gold);font-size:.9rem;margin:14px 0 8px">🎁 Prizes:</h4>
+    ${prizesHTML || '<div class="note" style="margin:0">No prizes configured</div>'}
+  `;
+
+  // Start timer
+  clearInterval(window._tournTimer);
+  const updateTimer = () => {
+    const end = t.endDate?.toDate ? t.endDate.toDate() : (t.endDate ? new Date(t.endDate) : null);
+    if (!end) return;
+    const l = end.getTime() - Date.now();
+    const el2 = $("tournTimer");
+    if (!el2) { clearInterval(window._tournTimer); return; }
+    if (l <= 0) { el2.textContent = "⏰ Ended!"; return; }
+    const d = Math.floor(l / 86400000);
+    const h = Math.floor((l % 86400000) / 3600000);
+    const m = Math.floor((l % 3600000) / 60000);
+    const s = Math.floor((l % 60000) / 1000);
+    el2.textContent = `${d}d ${String(h).padStart(2,"0")}:${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
+  };
+  updateTimer();
+  window._tournTimer = setInterval(updateTimer, 1000);
+}
+
 function renderWallet() {
   if (!userData) return;
   const pts = userData.points || 0;
   const redeemed = userData.totalRedeemed || 0;
-  const avail = pts;
-  const taka = (avail / POINTS_PER_TAKA).toFixed(2);
-
+  const taka = (pts / POINTS_PER_TAKA).toFixed(2);
   $("walletTaka").innerHTML = taka.split(".")[0] + "<small>." + taka.split(".")[1] + "</small>";
-  $("walletPts").textContent = avail;
+  $("walletPts").textContent = pts;
   $("wTotalPts").textContent = pts;
   $("wTotalRedeemed").textContent = redeemed + " pts";
-  $("wAvail").textContent = avail + " pts";
-
-  const redeemable = avail >= MIN_REDEEM;
+  $("wAvail").textContent = pts + " pts";
+  const redeemable = pts >= MIN_REDEEM;
   $("redeemPointsBtn").disabled = !redeemable;
-  $("redeemPointsBtn").textContent = redeemable ? "Request Redeem" : `Need ${MIN_REDEEM - avail} more points`;
+  $("redeemPointsBtn").textContent = redeemable ? "Request Redeem" : `Need ${MIN_REDEEM - pts} more points`;
 }
 
 $("redeemPointsBtn").onclick = () => {
@@ -690,27 +1004,18 @@ $("redeemSubmitBtn").onclick = async () => {
   if (!uid || !userData) return;
   const pts = userData.points || 0;
   if (pts < MIN_REDEEM) return;
-
   const taka = (pts / POINTS_PER_TAKA).toFixed(2);
   const btn = $("redeemSubmitBtn");
   btn.disabled = true; btn.innerHTML = '<span class="spinner"></span>Sending...';
-
   try {
     await addDoc(collection(db, "redeem_requests"), {
-      uid,
-      name: userData.name || "",
-      phone: userData.phone || "",
-      points: pts,
-      taka: parseFloat(taka),
-      status: "pending",
-      createdAt: serverTimestamp()
+      uid, name: userData.name || "", phone: userData.phone || "",
+      points: pts, taka: parseFloat(taka), status: "pending", createdAt: serverTimestamp()
     });
-
-    const waText = `💸 POINTS REDEEM REQUEST\n\nName: ${userData.name}\nPhone: ${userData.phone}\nPoints: ${pts}\nTaka: ${taka}\n\nPlease process this request.`;
+    const waText = `💸 POINTS REDEEM REQUEST\n\nName: ${userData.name}\nPhone: ${userData.phone}\nPoints: ${pts}\nTaka: ${taka}`;
     window.open(`https://wa.me/${ADMIN_WHATSAPP}?text=${encodeURIComponent(waText)}`, "_blank");
-
     $("redeemOv").classList.remove("open");
-    toast("Request sent! We'll process it soon.");
+    toast("Request sent! ✅");
   } catch (e) {
     console.error(e);
     $("redeemErr").textContent = "Could not send. Try again.";
@@ -719,58 +1024,57 @@ $("redeemSubmitBtn").onclick = async () => {
   }
 };
 
-// ============== HISTORY ==============
 async function renderHistory() {
   const uid = currentUser?.uid;
   if (!uid) return;
-
-  // Spins
   try {
-    const q = query(collection(db, "spins"), where("uid", "==", uid), orderBy("createdAt", "desc"), limit(50));
+    const q = query(collection(db, "spins"), where("uid", "==", uid));
     const snap = await getDocs(q);
     const el = $("spinHistoryList");
-    if (snap.empty) {
-      el.innerHTML = '<div class="history-empty">No spins yet</div>';
-    } else {
+    if (snap.empty) { el.innerHTML = '<div class="history-empty">No spins yet</div>'; }
+    else {
+      const items = [];
+      snap.forEach(d => items.push({ id: d.id, ...d.data() }));
+      items.sort((a, b) => {
+        const at = a.createdAt?.toDate?.()?.getTime() || 0;
+        const bt = b.createdAt?.toDate?.()?.getTime() || 0;
+        return bt - at;
+      });
       el.innerHTML = "";
-      snap.forEach(d => {
-        const s = d.data();
-        const icon = s.prizeType === "box" ? "🎁" : s.prizeType === "free" ? "🚚" : "🎯";
+      items.slice(0, 50).forEach(s => {
+        const icon = s.prizeType === "box" ? "🎁" : s.prizeType === "free" ? "🚚" : s.prizeType === "zero" ? "💀" : "🎯";
         const div = document.createElement("div");
         div.className = "history-item";
         div.innerHTML = `<div><span class="icon">${icon}</span><span class="prize">${s.prizeLabel || "Prize"}</span><div class="time">${fmtShortDate(s.createdAt)}</div></div>`;
         el.appendChild(div);
       });
     }
-  } catch (e) {
-    console.error("SPIN HISTORY ERROR:", e);
-    $("spinHistoryList").innerHTML = '<div class="history-empty">Could not load</div>';
-  }
+  } catch (e) { console.error(e); $("spinHistoryList").innerHTML = '<div class="history-empty">Could not load</div>'; }
 
-  // Token redeems
   try {
-    const q = query(collection(db, "token_logs"), where("uid", "==", uid), orderBy("redeemedAt", "desc"), limit(50));
+    const q = query(collection(db, "token_logs"), where("uid", "==", uid));
     const snap = await getDocs(q);
     const el = $("tokenHistoryList");
-    if (snap.empty) {
-      el.innerHTML = '<div class="history-empty">No tokens redeemed yet</div>';
-    } else {
+    if (snap.empty) { el.innerHTML = '<div class="history-empty">No tokens redeemed yet</div>'; }
+    else {
+      const items = [];
+      snap.forEach(d => items.push({ id: d.id, ...d.data() }));
+      items.sort((a, b) => {
+        const at = a.redeemedAt?.toDate?.()?.getTime() || 0;
+        const bt = b.redeemedAt?.toDate?.()?.getTime() || 0;
+        return bt - at;
+      });
       el.innerHTML = "";
-      snap.forEach(d => {
-        const s = d.data();
+      items.slice(0, 50).forEach(s => {
         const div = document.createElement("div");
         div.className = "history-item";
         div.innerHTML = `<div><span class="icon">🎫</span><span class="prize">${s.token}</span><div class="time">${fmtShortDate(s.redeemedAt)}</div></div>`;
         el.appendChild(div);
       });
     }
-  } catch (e) {
-    console.error("TOKEN HISTORY ERROR:", e);
-    $("tokenHistoryList").innerHTML = '<div class="history-empty">Could not load</div>';
-  }
+  } catch (e) { console.error(e); $("tokenHistoryList").innerHTML = '<div class="history-empty">Could not load</div>'; }
 }
 
-// ============== PROFILE ==============
 function renderProfile() {
   if (!userData) return;
   const name = userData.name || "-";
@@ -784,17 +1088,13 @@ function renderProfile() {
   $("pRole").textContent = userData.isAdmin ? "⭐ Admin" : "User";
 }
 
-// ============== LEADERBOARD ==============
 async function renderLeaderboard() {
   const el = $("lbList");
   el.innerHTML = '<div class="history-empty">Loading...</div>';
   try {
     const q = query(collection(db, "users"), orderBy("points", "desc"), limit(10));
     const snap = await getDocs(q);
-    if (snap.empty) {
-      el.innerHTML = '<div class="history-empty">No data yet</div>';
-      return;
-    }
+    if (snap.empty) { el.innerHTML = '<div class="history-empty">No data yet</div>'; return; }
     el.innerHTML = "";
     const myUid = currentUser?.uid;
     let rank = 0;
@@ -805,80 +1105,122 @@ async function renderLeaderboard() {
       const medal = rank === 1 ? "🥇" : rank === 2 ? "🥈" : rank === 3 ? "🥉" : `#${rank}`;
       const div = document.createElement("div");
       div.className = "lb-item" + (isMe ? " me" : "");
-      div.innerHTML = `<div class="lb-rank">${medal}</div><div class="lb-name">${u.name || "User"}${isMe ? " (You)" : ""}</div><div class="lb-pts">${u.points || 0} pts</div>`;
+      div.innerHTML = `<div class="lb-rank">${medal}</div><div class="lb-name">${u.name || "User"}${isMe ? " (You)" : ""}</div><div class="lb-pts">${u.points || 0}</div>`;
       el.appendChild(div);
     });
-  } catch (e) {
-    console.error("LB ERROR:", e);
-    el.innerHTML = '<div class="history-empty">Could not load</div>';
-  }
+  } catch (e) { console.error(e); el.innerHTML = '<div class="history-empty">Could not load</div>'; }
 }
 
-// ============== REDEEM TOKEN ==============
+async function renderWeeklyLB() {
+  const el = $("weeklyLB");
+  const title = $("weeklyLBTitle");
+  const sub = $("weeklyLBSubtitle");
+  el.innerHTML = '<div class="history-empty">Loading...</div>';
+
+  if (!CURRENT_TOURNAMENT) {
+    if (title) title.textContent = "🏆 Tournament Leaderboard";
+    if (sub) sub.textContent = "No active tournament";
+    el.innerHTML = '<div class="history-empty">No tournament running</div>';
+    return;
+  }
+
+  const t = CURRENT_TOURNAMENT;
+  if (title) title.textContent = "🏆 " + t.name;
+  if (sub) sub.textContent = `Min ${t.minSpins} spins required`;
+
+  try {
+    const weekId = getWeekId();
+    const q = query(collection(db, "weekly_stats"), where("weekId", "==", weekId));
+    const snap = await getDocs(q);
+    const items = [];
+    snap.forEach(d => items.push({ id: d.id, ...d.data() }));
+    items.sort((a, b) => (b.spins || 0) - (a.spins || 0));
+    const eligible = items.filter(s => (s.spins || 0) >= (t.minSpins || 50));
+    if (!eligible.length) { el.innerHTML = '<div class="history-empty">No one reached the minimum yet</div>'; return; }
+    el.innerHTML = "";
+    const myUid = currentUser?.uid;
+    eligible.slice(0, 10).forEach((s, i) => {
+      const rank = i + 1;
+      const medal = rank === 1 ? "🥇" : rank === 2 ? "🥈" : rank === 3 ? "🥉" : `#${rank}`;
+      const isMe = s.uid === myUid;
+      const prize = (t.prizes && t.prizes[i]) || 0;
+      const div = document.createElement("div");
+      div.className = "weekly-lb-item" + (isMe ? " me" : "");
+      div.innerHTML = `<div class="weekly-lb-rank">${medal}</div><div class="weekly-lb-name">${s.name || "User"}${isMe ? " (You)" : ""}${prize > 0 ? ` · 🎁 ${prize}pts` : ""}</div><div class="weekly-lb-spins">${s.spins}</div>`;
+      el.appendChild(div);
+    });
+  } catch (e) { console.error(e); el.innerHTML = '<div class="history-empty">Could not load</div>'; }
+}
+
 $("redeemBtn").onclick = async () => {
   setErr("tokenErr", ""); $("tokenOk").textContent = "";
   const raw = $("tokenInput").value.trim().toUpperCase();
   if (!raw) return setErr("tokenErr", "Enter a token code.");
-
   const uid = currentUser?.uid;
   if (!uid) return setErr("tokenErr", "Please login again.");
+
+  // Check blocked
+  try {
+    const uSnap = await getDoc(doc(db, "users", uid));
+    if (!uSnap.exists() || uSnap.data().blocked) {
+      showBlockedScreen();
+      return;
+    }
+  } catch(e) {}
 
   const btn = $("redeemBtn");
   btn.disabled = true;
   btn.innerHTML = '<span class="spinner"></span>Checking...';
-
   try {
-    const tokenRef  = doc(db, "tokens", raw);
+    const tokenRef = doc(db, "tokens", raw);
     const tokenSnap = await getDoc(tokenRef);
-
-    if (!tokenSnap.exists()) { setErr("tokenErr", "❌ Invalid token. Check the code."); return; }
+    if (!tokenSnap.exists()) { setErr("tokenErr", "❌ Invalid token."); return; }
     const t = tokenSnap.data();
-    if (t.is_used) { setErr("tokenErr", "⚠️ This token is already used."); return; }
-
+    if (t.is_used) { setErr("tokenErr", "⚠️ Token already used."); return; }
     await updateDoc(tokenRef, { is_used: true, used_by: uid, used_at: serverTimestamp() });
-
     const userRef = doc(db, "users", uid);
     const userSnap = await getDoc(userRef);
     const u = userSnap.data() || {};
     const usedList = u.tokensUsed || [];
     usedList.push(raw);
-
-    await updateDoc(userRef, {
-      spins: (u.spins || 0) + 1,
-      tokensUsed: usedList
-    });
-
+    await updateDoc(userRef, { spins: (u.spins || 0) + 1, tokensUsed: usedList });
     await addDoc(collection(db, "token_logs"), {
-      uid, token: raw, name: u.name || "", phone: u.phone || "",
-      redeemedAt: serverTimestamp()
+      uid, token: raw, name: u.name || "", phone: u.phone || "", redeemedAt: serverTimestamp()
     });
-
-    $("tokenOk").textContent = "✅ Token accepted! You got 1 spin.";
+    $("tokenOk").textContent = "✅ Token accepted! +1 spin.";
     $("tokenInput").value = "";
-    toast("+1 Spin added");
+    toast("+1 Spin added 🎯");
     await loadDashboard(uid);
   } catch (err) {
-    console.error("TOKEN ERROR:", err);
-    setErr("tokenErr", "Something went wrong. Try again.");
+    console.error(err);
+    setErr("tokenErr", "Something went wrong.");
   } finally {
-    btn.disabled = false;
-    btn.textContent = "Redeem Token";
+    btn.disabled = false; btn.textContent = "Redeem Token";
   }
 };
 
 // ============== SPIN LOGIC ==============
 function pickPrizeSegment(globalSpinNo) {
-  if (globalSpinNo > 0 && globalSpinNo % SWEET_BOX_EVERY === 0) return SEGMENTS.findIndex(s => s.type === "box");
-  if (globalSpinNo > 0 && globalSpinNo % FREE_DELIVERY_EVERY === 0) return SEGMENTS.findIndex(s => s.type === "free");
+  const S = PRIZE_SETTINGS;
+
+  if (globalSpinNo > 0 && S.boxEvery > 0 && globalSpinNo % S.boxEvery === 0) {
+    return SEGMENTS.findIndex(s => s.type === "box");
+  }
+  if (globalSpinNo > 0 && S.freeEvery > 0 && globalSpinNo % S.freeEvery === 0) {
+    return SEGMENTS.findIndex(s => s.type === "free");
+  }
+
   const r = Math.random() * 100;
-  if (r < 40) return 0;
-  if (r < 65) return 2;
-  if (r < 83) return 4;
-  if (r < 91) return 5;
-  if (r < 96) return 6;
-  if (r < 98) return 7;
-  if (r < 99.5) return 1;
-  return 3;
+  let cum = 0;
+  cum += (S.p100 || 0); if (r < cum) return 0;
+  cum += (S.p0 || 0);   if (r < cum) return 1;
+  cum += (S.p200 || 0); if (r < cum) return 3;
+  cum += (S.p300 || 0); if (r < cum) return 5;
+  cum += (S.p400 || 0); if (r < cum) return 6;
+  cum += (S.p500 || 0); if (r < cum) return 7;
+  cum += (S.p600 || 0); if (r < cum) return 8;
+  cum += (S.pFree || 0); if (r < cum) return 2;
+  return 4;
 }
 
 async function getGlobalSpinNo() {
@@ -887,36 +1229,56 @@ async function getGlobalSpinNo() {
   return snap.data().count || 0;
 }
 
+async function updateWeeklyStats(uid, name, phone) {
+  try {
+    const weekId = getWeekId();
+    const ref = doc(db, "weekly_stats", `${weekId}_${uid}`);
+    const snap = await getDoc(ref);
+    if (snap.exists()) {
+      await updateDoc(ref, { spins: increment(1), lastSpin: serverTimestamp() });
+    } else {
+      await setDoc(ref, {
+        weekId, uid, name, phone,
+        spins: 1,
+        firstSpin: serverTimestamp(),
+        lastSpin: serverTimestamp()
+      });
+    }
+  } catch (e) { console.error("WEEKLY UPDATE ERROR:", e); }
+}
+
 $("spinBtn").onclick = async () => {
   if (spinning) return;
   const uid = currentUser?.uid;
   if (!uid) return toast("Please login");
 
   const userSnap = await getDoc(doc(db, "users", uid));
+  if (!userSnap.exists() || userSnap.data().blocked) {
+    showBlockedScreen();
+    return;
+  }
   const u = userSnap.data() || {};
-  if (!u.spins || u.spins < 1) return toast("No spins left. Redeem a token!");
-
+  if (!u.spins || u.spins < 1) return toast("No spins left! 🎫");
   spinning = true;
   $("spinBtn").disabled = true;
-
   try {
     await updateDoc(doc(db, "users", uid), { spins: (u.spins || 0) - 1 });
     const prevNo = await getGlobalSpinNo();
     const spinNo = prevNo + 1;
     await setDoc(doc(db, "settings", "spin_counter"), { count: spinNo }, { merge: true });
+    await updateWeeklyStats(uid, u.name || "", u.phone || "");
 
     const idx = pickPrizeSegment(spinNo);
     const seg = SEGMENTS[idx];
     const jitter = (Math.random() - 0.5) * SEG * 0.6;
     const target = (-Math.PI / 2) - (idx + 0.5) * SEG - jitter;
     const delta = ((((target - rot) % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2)) + Math.PI * 2 * 6;
-
     animateWheel(rot, delta, 5200, () => handleWin(uid, seg, spinNo, u));
   } catch (err) {
-    console.error("SPIN ERROR:", err);
+    console.error(err);
     spinning = false;
     $("spinBtn").disabled = false;
-    toast("Spin failed. Try again.");
+    toast("Spin failed.");
   }
 };
 
@@ -941,9 +1303,9 @@ function animateWheel(startRot, delta, duration, onDone) {
 
 async function handleWin(uid, seg, spinNo, u) {
   spinning = false;
-  winSound();
+  if (seg.type !== "zero") { winSound(); confetti(seg.type === "points" ? 60 : 130); }
+  else { tone(200, 0.4, "sawtooth", 0.2); }
   if (navigator.vibrate) try { navigator.vibrate([80, 60, 160]); } catch(e){}
-  confetti(seg.type === "points" ? 80 : 150);
 
   try {
     const userRef = doc(db, "users", uid);
@@ -956,7 +1318,14 @@ async function handleWin(uid, seg, spinNo, u) {
         spinNo, createdAt: serverTimestamp()
       });
       showPrizeModal({ title: "🎉 Congratulations!", text: `You won ${seg.label}!`, coupon: null, whatsapp: null });
-      toast(`+${seg.value} points`);
+      toast(`+${seg.value} points ✨`);
+    } else if (seg.type === "zero") {
+      await addDoc(collection(db, "spins"), {
+        uid, name: u.name || "", phone: u.phone || "",
+        prizeLabel: "0 Points (Bad Luck)", prizeType: "zero", prizeValue: 0,
+        spinNo, createdAt: serverTimestamp()
+      });
+      showPrizeModal({ title: "😅 Bad Luck!", text: "0 points this time. Try again!", coupon: null, whatsapp: null });
     } else if (seg.type === "free") {
       const code = "FREEDEL-" + (1000 + Math.floor(Math.random() * 9000));
       await updateDoc(userRef, { lastVoucher: code });
@@ -965,7 +1334,7 @@ async function handleWin(uid, seg, spinNo, u) {
         prizeLabel: "Free Delivery 🚚", prizeType: "free", prizeValue: 0,
         coupon: code, spinNo, createdAt: serverTimestamp()
       });
-      const waText = `Hi, I won FREE DELIVERY at Arinbex 7!\n\nName: ${u.name}\nPhone: ${u.phone}\nVoucher: ${code}`;
+      const waText = `Hi, I won FREE DELIVERY!\nName: ${u.name}\nPhone: ${u.phone}\nVoucher: ${code}`;
       showPrizeModal({ title: "🚚 Free Delivery!", text: "You won Free Delivery!", coupon: code, whatsapp: waText });
     } else if (seg.type === "box") {
       await addDoc(collection(db, "spins"), {
@@ -977,13 +1346,9 @@ async function handleWin(uid, seg, spinNo, u) {
       setTimeout(() => openBoxModal(), 800);
     }
     await loadDashboard(uid);
-  } catch (err) {
-    console.error("HANDLE WIN ERROR:", err);
-    toast("Could not save prize.");
-  }
+  } catch (err) { console.error(err); toast("Could not save prize."); }
 }
 
-// ============== PRIZE MODAL ==============
 function showPrizeModal({ title, text, coupon, whatsapp }) {
   $("prizeTitle").textContent = title;
   $("prizeText").textContent = text;
@@ -992,14 +1357,11 @@ function showPrizeModal({ title, text, coupon, whatsapp }) {
   if (whatsapp) {
     $("prizeWhatsBtn").onclick = () => window.open(`https://wa.me/${ADMIN_WHATSAPP}?text=${encodeURIComponent(whatsapp)}`, "_blank");
     $("prizeWhatsWrap").style.display = "block";
-  } else {
-    $("prizeWhatsWrap").style.display = "none";
-  }
+  } else { $("prizeWhatsWrap").style.display = "none"; }
   $("prizeOv").classList.add("open");
 }
 $("prizeCloseBtn").onclick = () => $("prizeOv").classList.remove("open");
 
-// ============== SWEET BOX MODAL ==============
 function openBoxModal() {
   $("boxName").value = userData?.name || "";
   $("boxPhone").value = userData?.phone || "";
@@ -1012,32 +1374,28 @@ $("boxSubmitBtn").onclick = async () => {
   const name = $("boxName").value.trim();
   const addr = $("boxAddr").value.trim();
   if (name.length < 2) return $("boxErr").textContent = "Enter your name.";
-  if (addr.length < 8) return $("boxErr").textContent = "Enter a complete address.";
-
+  if (addr.length < 8) return $("boxErr").textContent = "Enter address.";
   const uid = currentUser?.uid;
   const phone = userData?.phone || "";
   const btn = $("boxSubmitBtn");
   btn.disabled = true; btn.innerHTML = '<span class="spinner"></span>Saving...';
-
   try {
     await addDoc(collection(db, "box_claims"), { uid, name, phone, address: addr, createdAt: serverTimestamp() });
-    const waText = `🎁 SWEET BOX CLAIM\n\nName: ${name}\nPhone: ${phone}\nAddress: ${addr}`;
+    const waText = `🎁 SWEET BOX CLAIM\nName: ${name}\nPhone: ${phone}\nAddress: ${addr}`;
     window.open(`https://wa.me/${ADMIN_WHATSAPP}?text=${encodeURIComponent(waText)}`, "_blank");
     $("boxOv").classList.remove("open");
-    toast("Claim saved!");
+    toast("Claim saved! 🎁");
   } catch (e) {
     console.error(e);
-    $("boxErr").textContent = "Could not save. Try again.";
+    $("boxErr").textContent = "Could not save.";
   } finally {
     btn.disabled = false; btn.textContent = "Claim Sweet Box";
   }
 };
 
-// ============== INPUT FIXES ==============
 $("tokenInput").addEventListener("input", e => { e.target.value = e.target.value.toUpperCase().replace(/[^A-Z0-9-]/g, ""); });
 $("loginPhone").addEventListener("input", e => { e.target.value = e.target.value.replace(/\D/g, "").slice(0, 11); });
 
-// ============== LOGOUT ==============
 $("logoutBtn").onclick = async () => {
   try { await signOut(auth); } catch(e){}
   localStorage.removeItem("mishti_uid");
@@ -1046,7 +1404,16 @@ $("logoutBtn").onclick = async () => {
   location.reload();
 };
 
-window.__MISHTI__ = { ADMIN_PHONES, ADMIN_WHATSAPP, db, auth };
+// Reload prize & tournament settings on app resume
+document.addEventListener("visibilitychange", async () => {
+  if (document.visibilityState === "visible" && currentUser) {
+    await loadPrizeSettings();
+    await loadTournament();
+    await loadDashboard(currentUser.uid);
+  }
+});
+
+window.__MISHTI__ = { ADMIN_PHONES, ADMIN_WHATSAPP, db, auth, getWeekId, PRIZE_SETTINGS, CURRENT_TOURNAMENT };
 </script>
 
 </body>
