@@ -6,177 +6,464 @@
 <title>Admin – Mishti Spin</title>
 <style>
 :root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
---bg:#0f0710;--bg2:#1c0d13;--ink:#fbeedd;--muted:#c9a99b;--card:#2a1620;--line:#4a2a37;
---brand:#e0526f;--brand-ink:#fff;--gold:#f6b93b;--err:#ff7b80;--ok:#2ecc71;--blue:#4aa8e0}
+--bg:#0a0612;--card:#1f1225;--card2:#2a1a30;--line:#3a2540;
+--ink:#f5e6d3;--muted:#a896a8;--brand:#ff4d6d;--brand2:#ff8fa3;--gold:#ffc947;--gold2:#f5a623;
+--ok:#10b981;--err:#ef4444;--blue:#3b82f6;--purple:#a855f7;--teal:#14b8a6}
 html{height:100%}
 *,*::before,*::after{box-sizing:inherit}
-body{margin:0;min-height:100%;color:var(--ink);font:15px/1.5 "Trebuchet MS",Verdana,system-ui,sans-serif;
-background:linear-gradient(160deg,var(--bg),var(--bg2));background-attachment:fixed;overflow-x:hidden}
-main{max-width:900px;margin:0 auto;padding:20px 16px 80px}
-h1,h2,h3{font-family:"Trebuchet MS",Verdana,system-ui,sans-serif;margin:0 0 8px}
-h1{font-size:1.6rem;color:var(--brand);text-align:center}
-h2{font-size:1.3rem;color:var(--brand)}
-h3{font-size:1.05rem;color:var(--gold)}
-.header{text-align:center;margin-bottom:20px}
-.header .logo{display:inline-block;padding:6px 16px;border:2px solid var(--gold);border-radius:99px;color:var(--gold);font-weight:700;font-size:.85rem;letter-spacing:.06em}
-.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:14px}
-label{display:block;font-weight:700;font-size:.9rem;margin-bottom:6px;color:var(--muted)}
-input,select,textarea{width:100%;font-size:1rem;padding:12px;border-radius:10px;border:2px solid var(--line);
-background:var(--bg);color:var(--ink);margin-bottom:12px;font-family:inherit}
-input:focus,textarea:focus,select:focus{outline:3px solid var(--gold);outline-offset:2px}
-.btn{width:100%;border:0;border-radius:10px;padding:13px;font-size:.95rem;font-weight:700;cursor:pointer;
-background:var(--brand);color:#fff;transition:transform .12s;font-family:inherit}
-.btn:active{transform:scale(.97)}
-.btn.gold{background:linear-gradient(180deg,#ffd76a,#f2a516);color:#3b1220}
-.btn.green{background:#1f9d55}
-.btn.blue{background:#2a7ab8}
-.btn.ghost{background:transparent;color:var(--ink);border:2px solid var(--line)}
-.btn.small{width:auto;padding:7px 14px;font-size:.82rem}
-.btn:disabled{opacity:.55;cursor:not-allowed}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-top:10px}
-.stat{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:14px;text-align:center}
-.stat b{display:block;font-size:1.7rem;color:var(--brand);font-family:"Trebuchet MS",system-ui,sans-serif}
-.stat small{color:var(--muted);font-size:.72rem;text-transform:uppercase;letter-spacing:.05em}
-.err{color:var(--err);font-size:.88rem;min-height:1.2em;margin:0 0 10px}
-.ok{color:var(--ok);font-size:.88rem;margin:0 0 10px}
-.note{font-size:.78rem;color:var(--muted);margin-top:10px}
-.hidden{display:none!important}
-.list-item{display:flex;justify-content:space-between;align-items:center;gap:8px;
-padding:12px;background:var(--bg);border:1px solid var(--line);border-radius:10px;margin-bottom:6px;flex-wrap:wrap}
-.list-item .info{flex:1;min-width:180px}
-.list-item .name{font-weight:700;color:var(--ink)}
-.list-item .sub{font-size:.78rem;color:var(--muted);margin-top:2px}
-.list-item .pts{color:var(--gold);font-weight:800;font-size:1rem}
-.tabs{display:flex;gap:6px;overflow-x:auto;margin-bottom:14px;padding-bottom:4px}
-.tabs button{white-space:nowrap;background:var(--bg);color:var(--muted);border:2px solid var(--line);
-border-radius:99px;padding:8px 14px;font-weight:700;font-size:.85rem;cursor:pointer;font-family:inherit}
-.tabs button.active{background:var(--brand);color:#fff;border-color:var(--brand)}
-.spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,.3);
-border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:6px}
+body{margin:0;min-height:100%;color:var(--ink);
+font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI","Trebuchet MS",sans-serif;
+background:radial-gradient(ellipse at top,#2a1525 0%,#0a0612 60%);background-attachment:fixed;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+main{max-width:920px;margin:0 auto;padding:20px 14px 100px}
+.header{text-align:center;margin-bottom:22px}
+.header .badge-logo{display:inline-block;padding:5px 14px;border:1.5px solid var(--gold);border-radius:99px;color:var(--gold);font-weight:700;font-size:.72rem;letter-spacing:.15em;background:rgba(255,201,71,.08)}
+.header h1{font-size:clamp(1.4rem,5vw,1.8rem);font-weight:900;margin:12px 0 4px;
+background:linear-gradient(135deg,#ffd76a 0%,#ff4d6d 100%);
+-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;letter-spacing:-.02em}
+.header .subtitle{color:var(--muted);font-size:.82rem}
+.admin-bar{display:flex;justify-content:center;align-items:center;gap:10px;margin-bottom:16px;padding:10px 16px;background:var(--card);border:1px solid var(--line);border-radius:99px;max-width:340px;margin-left:auto;margin-right:auto}
+.admin-bar .avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--brand));display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.85rem;color:#fff}
+.admin-bar .name{flex:1;font-weight:700;font-size:.88rem;color:var(--gold)}
+.admin-bar .logout-btn{background:transparent;border:1px solid var(--line);color:var(--muted);padding:5px 12px;border-radius:99px;font-size:.75rem;font-weight:700;cursor:pointer;font-family:inherit}
+.tabs{display:flex;gap:6px;overflow-x:auto;margin-bottom:18px;padding-bottom:6px;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{white-space:nowrap;background:var(--card);color:var(--muted);border:1.5px solid var(--line);border-radius:99px;padding:9px 15px;font-weight:700;font-size:.82rem;cursor:pointer;font-family:inherit;transition:all .2s}
+.tabs button.active{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;border-color:transparent;box-shadow:0 4px 14px rgba(255,77,109,.35);transform:translateY(-1px)}
+.card{background:linear-gradient(145deg,var(--card),var(--card2));border:1px solid var(--line);border-radius:18px;padding:20px;margin-bottom:14px;box-shadow:0 4px 20px rgba(0,0,0,.25)}
+.card h3{margin:0 0 14px;font-size:1.02rem;color:var(--gold);display:flex;align-items:center;gap:8px;font-weight:800}
+.card h3 .icon{font-size:1.15rem}
+.card p.note{margin:8px 0;font-size:.78rem;color:var(--muted);line-height:1.5}
+label{display:block;font-weight:700;font-size:.82rem;margin-bottom:6px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+input,select,textarea{width:100%;font-size:1rem;padding:12px 14px;border-radius:11px;border:1.5px solid var(--line);background:rgba(0,0,0,.25);color:var(--ink);margin-bottom:12px;font-family:inherit;transition:all .2s;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--gold);background:rgba(0,0,0,.4)}
+.btn{width:100%;border:0;border-radius:11px;padding:13px;font-size:.92rem;font-weight:700;cursor:pointer;background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;transition:all .15s;font-family:inherit;letter-spacing:.02em;box-shadow:0 3px 10px rgba(255,77,109,.25)}
+.btn:hover{transform:translateY(-1px)}
+.btn:active{transform:scale(.98)}
+.btn.gold{background:linear-gradient(135deg,#ffd76a,var(--gold2));color:#1a0d1f}
+.btn.green{background:linear-gradient(135deg,#10b981,#059669)}
+.btn.blue{background:linear-gradient(135deg,#3b82f6,#2563eb)}
+.btn.red{background:linear-gradient(135deg,#ef4444,#dc2626)}
+.btn.purple{background:linear-gradient(135deg,#a855f7,#7e22ce)}
+.btn.teal{background:linear-gradient(135deg,#14b8a6,#0d9488)}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line);box-shadow:none}
+.btn.small{width:auto;padding:7px 14px;font-size:.78rem;border-radius:99px}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none!important}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-top:12px}
+.stat-card{background:linear-gradient(145deg,rgba(255,77,109,.08),rgba(255,201,71,.05));border:1px solid var(--line);border-radius:14px;padding:14px 10px;text-align:center;position:relative;overflow:hidden}
+.stat-card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--brand),var(--gold))}
+.stat-card .stat-num{display:block;font-size:1.7rem;font-weight:900;background:linear-gradient(135deg,var(--gold),var(--brand));-webkit-background-clip:text;background-clip:text;color:transparent;font-family:"Trebuchet MS",sans-serif;line-height:1.1}
+.stat-card .stat-label{color:var(--muted);font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;margin-top:4px;font-weight:700}
+.list-item{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:13px 14px;background:rgba(255,255,255,.025);border:1px solid var(--line);border-radius:12px;margin-bottom:8px;flex-wrap:wrap}
+.list-item.blocked{background:linear-gradient(145deg,rgba(239,68,68,.08),rgba(239,68,68,.02));border-color:rgba(239,68,68,.3)}
+.list-item.winner{background:linear-gradient(145deg,rgba(255,201,71,.15),rgba(255,77,109,.1));border-color:var(--gold)}
+.list-item .info{flex:1;min-width:200px}
+.list-item .name{font-weight:800;color:var(--ink);font-size:.92rem}
+.list-item .sub{font-size:.76rem;color:var(--muted);margin-top:3px}
+.list-item .pts-big{color:var(--gold);font-weight:900;font-size:1.05rem;font-family:"Trebuchet MS",sans-serif}
+.badge{display:inline-block;padding:3px 10px;border-radius:99px;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em}
+.badge.pending{background:rgba(255,201,71,.2);color:var(--gold)}
+.badge.approved{background:rgba(16,185,129,.2);color:#34d399}
+.badge.used{background:rgba(239,68,68,.2);color:#f87171}
+.badge.unused{background:rgba(16,185,129,.2);color:#34d399}
+.badge.rejected{background:rgba(239,68,68,.2);color:#f87171}
+.badge.blocked{background:rgba(239,68,68,.3);color:#fca5a5}
+.badge.active{background:rgba(16,185,129,.2);color:#34d399}
+.badge.inactive{background:rgba(156,163,175,.2);color:#d1d5db}
+.badge.ended{background:rgba(107,114,128,.25);color:#d1d5db}
+.badge.winner{background:linear-gradient(135deg,#ffd76a,var(--gold2));color:#1a0d1f}
+.token-row{background:rgba(255,255,255,.025);border:1px solid var(--line);border-radius:11px;padding:11px 13px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.token-code{font-family:"Courier New",monospace;font-weight:800;font-size:.88rem;color:var(--gold);letter-spacing:.04em}
+.token-info{font-size:.7rem;color:var(--muted);margin-top:3px}
+.copy-pre{background:rgba(0,0,0,.35);border:1px solid var(--line);border-radius:10px;padding:12px;font-family:"Courier New",monospace;font-size:.72rem;max-height:180px;overflow-y:auto;white-space:pre-wrap;word-break:break-all;margin-top:10px;color:var(--muted)}
+.filter-tabs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
+.filter-tabs button{flex:1;min-width:80px;background:rgba(255,255,255,.03);color:var(--muted);border:1.5px solid var(--line);border-radius:10px;padding:8px;font-weight:700;font-size:.78rem;cursor:pointer;font-family:inherit}
+.filter-tabs button.active{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#1a0d1f;border-color:transparent}
+.slider-row{display:flex;align-items:center;gap:10px;margin-bottom:14px;padding:12px;background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:12px}
+.slider-row .slider-info{flex:1;min-width:0}
+.slider-row .slider-label{font-weight:700;font-size:.85rem;color:var(--ink);display:flex;align-items:center;gap:6px}
+.slider-row .slider-label .dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.slider-row input[type="range"]{width:100%;margin:6px 0 0;padding:0;background:transparent;border:0;-webkit-appearance:none;height:6px;border-radius:3px;outline:none}
+.slider-row input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold2));cursor:pointer}
+.slider-row .pct-input{width:70px!important;padding:6px 8px!important;text-align:center;font-family:"Courier New",monospace;font-weight:800;font-size:.9rem;color:var(--gold);background:rgba(0,0,0,.3)!important;border:1.5px solid var(--line)!important}
+.total-display{text-align:center;padding:14px;background:rgba(0,0,0,.25);border-radius:12px;margin-bottom:14px;font-weight:700;border:1.5px dashed var(--line)}
+.total-display .total-num{font-size:1.5rem;font-weight:900;font-family:"Courier New",monospace}
+.total-display.ok .total-num{color:var(--ok)}
+.total-display.bad .total-num{color:var(--err)}
+.total-display .total-label{display:block;color:var(--muted);font-size:.75rem;text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;padding:18px;z-index:100;backdrop-filter:blur(6px)}
+.overlay.open{display:flex}
+.modal{width:100%;max-width:440px;background:linear-gradient(145deg,var(--card),var(--card2));border:1px solid var(--line);border-radius:20px;padding:24px;box-shadow:0 20px 60px rgba(0,0,0,.5);animation:pop .25s ease-out;max-height:90vh;overflow-y:auto}
+@keyframes pop{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
+.modal h2{margin:0 0 10px;font-size:1.15rem;color:var(--brand);font-weight:900;display:flex;align-items:center;gap:8px}
+.modal p{color:var(--muted);font-size:.88rem;line-height:1.6;margin:0 0 16px}
+.modal .modal-actions{display:flex;gap:8px;margin-top:16px}
+.modal .modal-actions .btn{flex:1}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:linear-gradient(135deg,var(--card),var(--card2));color:var(--ink);padding:13px 22px;border-radius:12px;font-weight:700;z-index:200;border:1px solid var(--line);box-shadow:0 10px 30px rgba(0,0,0,.5);opacity:0;transition:opacity .3s,transform .3s;pointer-events:none;font-size:.85rem;max-width:90%}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(-4px)}
+.spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:6px}
 @keyframes spin{to{transform:rotate(360deg)}}
-.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:var(--bg);
-padding:12px 20px;border-radius:12px;font-weight:700;z-index:100;opacity:0;transition:opacity .25s;
-pointer-events:none;font-size:.88rem;max-width:90%}
-.toast.show{opacity:.95}
-.badge{display:inline-block;padding:3px 9px;border-radius:99px;font-size:.72rem;font-weight:700}
-.badge.pending{background:#f6b93b;color:#3b1220}
-.badge.approved{background:#2ecc71;color:#0a3d1e}
-.badge.paid{background:#4aa8e0;color:#0b2740}
-.badge.rejected{background:#e0526f;color:#fff}
-textarea{min-height:80px;font-family:"Courier New",monospace;font-size:.85rem}
-.copy-pre{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px;
-font-family:"Courier New",monospace;font-size:.75rem;max-height:180px;overflow-y:auto;
-white-space:pre-wrap;word-break:break-all;margin-top:10px;color:var(--muted)}
+.hidden{display:none!important}
+.center{text-align:center}
+.note{font-size:.78rem;color:var(--muted);margin-top:8px}
+.danger-zone{background:linear-gradient(145deg,rgba(239,68,68,.08),rgba(239,68,68,.02));border:1.5px solid rgba(239,68,68,.3);border-radius:16px;padding:18px;margin-top:14px}
+.danger-zone h3{color:var(--err);margin-bottom:8px}
+.danger-zone p{color:var(--muted);font-size:.8rem;margin:0 0 12px}
+.err{color:var(--err);font-size:.82rem;min-height:1.2em;margin:0 0 10px;font-weight:600}
+.ok{color:var(--ok);font-size:.82rem;margin:0 0 10px;font-weight:600}
+.info-box{background:linear-gradient(145deg,rgba(59,130,246,.1),rgba(59,130,246,.02));border:1.5px solid rgba(59,130,246,.3);border-radius:14px;padding:14px;margin-bottom:14px}
+.info-box h4{margin:0 0 6px;color:var(--blue);font-size:.92rem}
+.info-box p{margin:0;color:var(--muted);font-size:.82rem;line-height:1.5}
+.info-box.green{background:linear-gradient(145deg,rgba(16,185,129,.1),rgba(16,185,129,.02));border-color:rgba(16,185,129,.3)}
+.info-box.green h4{color:#34d399}
+.info-box.gold{background:linear-gradient(145deg,rgba(255,201,71,.1),rgba(255,201,71,.02));border-color:rgba(255,201,71,.3)}
+.info-box.gold h4{color:var(--gold)}
+.info-box.red{background:linear-gradient(145deg,rgba(239,68,68,.1),rgba(239,68,68,.02));border-color:rgba(239,68,68,.3)}
+.info-box.red h4{color:#f87171}
+.tournament-status-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:99px;font-weight:800;font-size:.78rem;margin-bottom:12px}
+.tournament-status-badge.active{background:linear-gradient(135deg,rgba(16,185,129,.2),rgba(16,185,129,.1));color:#34d399;border:1.5px solid rgba(16,185,129,.4)}
+.tournament-status-badge.ended{background:rgba(107,114,128,.2);color:#d1d5db;border:1.5px solid rgba(107,114,128,.4)}
+.tournament-status-badge.draft{background:rgba(255,201,71,.15);color:var(--gold);border:1.5px solid rgba(255,201,71,.4)}
+.timer-display{text-align:center;padding:16px;background:rgba(0,0,0,.3);border-radius:14px;margin-bottom:14px;border:1px solid var(--line)}
+.timer-display .timer-value{font-family:"Courier New",monospace;font-size:1.8rem;font-weight:900;color:var(--brand);text-shadow:0 2px 8px rgba(255,77,109,.4)}
+.timer-display .timer-label{color:var(--muted);font-size:.75rem;text-transform:uppercase;letter-spacing:.1em;margin-top:4px;font-weight:700}
+.prize-config-row{display:flex;gap:8px;margin-bottom:8px;align-items:center}
+.prize-config-row .rank-badge{width:44px;text-align:center;font-weight:900;font-size:1.2rem;flex-shrink:0}
+.prize-config-row input{flex:1;margin-bottom:0!important}
+.prize-config-row .remove-prize-btn{background:rgba(239,68,68,.2);color:#f87171;border:1px solid rgba(239,68,68,.4);border-radius:8px;padding:8px 12px;font-weight:900;cursor:pointer;flex-shrink:0;font-family:inherit;font-size:1rem}
+.add-prize-btn{background:rgba(16,185,129,.1);color:#34d399;border:1.5px dashed rgba(16,185,129,.5);border-radius:10px;padding:10px;font-weight:700;cursor:pointer;width:100%;margin-top:6px;font-family:inherit;font-size:.85rem}
+.add-prize-btn:hover{background:rgba(16,185,129,.15)}
+.history-card{background:rgba(255,255,255,.02);border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:10px}
+.history-card .history-header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.history-card .history-name{font-weight:800;color:var(--gold);font-size:.95rem}
+.history-card .history-meta{font-size:.76rem;color:var(--muted);margin-bottom:6px}
+.history-winners{display:flex;flex-wrap:wrap;gap:6px}
+.history-winner-chip{background:rgba(255,201,71,.15);border:1px solid rgba(255,201,71,.4);border-radius:99px;padding:4px 10px;font-size:.72rem;font-weight:700;color:var(--gold)}
+.event-token-card{background:linear-gradient(145deg,rgba(20,184,166,.1),rgba(168,85,247,.05));border:1.5px solid rgba(20,184,166,.3);border-radius:14px;padding:14px;margin-bottom:10px}
+.event-token-card.inactive{opacity:.55;background:rgba(255,255,255,.02);border-color:var(--line)}
+.event-token-card .event-name{font-weight:900;font-size:1rem;color:var(--teal);margin-bottom:4px}
+.event-token-card .event-code{font-family:"Courier New",monospace;color:var(--gold);font-weight:800;font-size:.9rem;margin-bottom:6px}
+.event-token-card .event-meta{font-size:.78rem;color:var(--muted);margin-bottom:8px}
+
+/* Modal specific */
+.delete-list{background:rgba(0,0,0,.3);border-radius:12px;padding:14px;margin:14px 0;font-size:.85rem;line-height:1.8}
+.delete-list .item-delete{color:#f87171}
+.delete-list .item-keep{color:#34d399}
+.delete-list .item-reset{color:#fbbf24}
+.delete-list .item-title{font-weight:800;color:var(--ink);display:block;margin-bottom:6px;font-size:.9rem}
+.warn-box{background:rgba(239,68,68,.15);border:1.5px solid rgba(239,68,68,.4);border-radius:12px;padding:12px;margin:12px 0;font-size:.82rem;color:#fca5a5;font-weight:700;display:flex;align-items:flex-start;gap:8px;line-height:1.5}
+.warn-box .warn-icon{font-size:1.3rem;flex-shrink:0}
+.warn-box.info{background:rgba(59,130,246,.12);border-color:rgba(59,130,246,.4);color:#93c5fd}
+.modal .danger-title{color:var(--err);font-size:1.15rem;font-weight:900;display:flex;align-items:center;gap:8px}
+
+.action-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-top:12px}
+.action-row .btn{margin:0}
+
+.admin-info-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--line);font-size:.88rem}
+.admin-info-row:last-child{border-bottom:0}
+.admin-info-row .label{color:var(--muted);font-weight:700}
+.admin-info-row .value{color:var(--gold);font-weight:800}
+
+.data-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-top:12px}
+.data-stat-item{background:rgba(0,0,0,.25);border:1px solid var(--line);border-radius:10px;padding:10px 12px;display:flex;justify-content:space-between;align-items:center}
+.data-stat-item .label{font-size:.78rem;color:var(--muted);font-weight:700}
+.data-stat-item .num{font-size:1.05rem;color:var(--gold);font-weight:900;font-family:"Trebuchet MS",sans-serif}
+
+.search-results-box{margin-top:12px;max-height:400px;overflow-y:auto}
+.search-result-item{background:rgba(255,255,255,.025);border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-bottom:6px;font-size:.85rem}
+.search-result-item .sr-type{font-size:.68rem;color:var(--muted);text-transform:uppercase;font-weight:800;letter-spacing:.06em;margin-bottom:4px}
+.search-result-item .sr-value{color:var(--ink);font-weight:700}
+.search-result-item.user .sr-type{color:#34d399}
+.search-result-item.token .sr-type{color:var(--gold)}
+.search-result-item.event .sr-type{color:var(--teal)}
+.search-result-item.spin .sr-type{color:#f87171}
+
+/* User Detail Modal */
+.user-detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}
+.user-detail-item{background:rgba(0,0,0,.3);border:1px solid var(--line);border-radius:10px;padding:10px}
+.user-detail-item .ud-label{font-size:.7rem;color:var(--muted);text-transform:uppercase;font-weight:700;letter-spacing:.05em}
+.user-detail-item .ud-value{font-size:1.05rem;color:var(--gold);font-weight:900;margin-top:4px}
+
+/* User buttons row */
+.user-btn-row{display:flex;gap:6px;flex-wrap:wrap;width:100%;margin-top:8px}
+.user-btn-row .btn{flex:1;min-width:70px}
 </style>
 </head>
 <body>
 
 <main>
   <div class="header">
-    <div class="logo">ADMIN PANEL</div>
-    <h1 style="margin-top:12px">Arinbex 7 · Mishti Spin</h1>
+    <div class="badge-logo">ADMIN PANEL</div>
+    <h1>Arinbex 7 · Mishti Spin</h1>
+    <div class="subtitle">Full Control Center v10</div>
   </div>
 
-  <!-- ============ LOGIN ============ -->
   <section id="viewLogin">
     <div class="card">
-      <h3>Admin Login</h3>
+      <h3><span class="icon">🔐</span> Admin Login</h3>
       <p class="note" style="margin-bottom:14px">Only admin phone allowed (01612929333)</p>
-
-      <label for="adminPhone">Your admin phone</label>
+      <label for="adminPhone">Admin phone</label>
       <input id="adminPhone" type="tel" inputmode="numeric" maxlength="11" placeholder="01XXXXXXXXX">
-
       <label for="adminName">Your name</label>
-      <input id="adminName" placeholder="Your name" maxlength="60">
-
+      <input id="adminName" placeholder="e.g. Arinbex Admin" maxlength="60">
       <div class="err" id="loginErr"></div>
-      <button class="btn gold" id="loginBtn">Login as Admin 🔐</button>
+      <button class="btn gold" id="loginBtn">Login 🔓</button>
     </div>
   </section>
 
-  <!-- ============ ADMIN APP ============ -->
   <section id="viewApp" class="hidden">
-
-    <div style="text-align:center;margin-bottom:14px">
-      <span id="adminNameLabel" style="color:var(--gold);font-weight:700"></span>
-      <button class="btn ghost small" id="logoutBtn" style="margin-left:8px">Logout</button>
+    <div class="admin-bar">
+      <div class="avatar" id="adminAvatar">A</div>
+      <div class="name" id="adminNameLabel">Admin</div>
+      <button class="logout-btn" id="logoutBtn">Logout</button>
     </div>
 
-    <!-- Tabs -->
     <div class="tabs" id="tabs">
       <button data-tab="tabDash" class="active">📊 Dashboard</button>
+      <button data-tab="tabTournament">🏆 Tournament</button>
+      <button data-tab="tabEvents">🎁 Event Tokens</button>
+      <button data-tab="tabHistory">📜 History</button>
       <button data-tab="tabUsers">👥 Users</button>
       <button data-tab="tabTokens">🎫 Tokens</button>
-      <button data-tab="tabWinners">🏆 Winners</button>
+      <button data-tab="tabWinners">🎯 Winners</button>
       <button data-tab="tabRedeem">💸 Redeem</button>
+      <button data-tab="tabSettings">🎛️ Prize %</button>
+      <button data-tab="tabTools">🛠️ Tools</button>
     </div>
 
-    <!-- ===== DASHBOARD ===== -->
+    <!-- DASHBOARD -->
     <div id="tabDash" class="tab-panel">
       <div class="card">
-        <h3>📊 Overview</h3>
-        <div class="grid">
-          <div class="stat"><b id="stUsers">-</b><small>Users</small></div>
-          <div class="stat"><b id="stSpins">-</b><small>Total Spins</small></div>
-          <div class="stat"><b id="stPoints">-</b><small>Points Given</small></div>
-          <div class="stat"><b id="stTokens">-</b><small>Tokens Used</small></div>
-          <div class="stat"><b id="stBoxes">-</b><small>Sweet Boxes</small></div>
-          <div class="stat"><b id="stFree">-</b><small>Free Deliv.</small></div>
-          <div class="stat"><b id="stCounter">-</b><small>Global Spin #</small></div>
-          <div class="stat"><b id="stRedeem">-</b><small>Pending Redeem</small></div>
+        <h3><span class="icon">📊</span> Overview</h3>
+        <div class="stats-grid">
+          <div class="stat-card"><span class="stat-num" id="stUsers">-</span><span class="stat-label">Users</span></div>
+          <div class="stat-card"><span class="stat-num" id="stSpins">-</span><span class="stat-label">Total Spins</span></div>
+          <div class="stat-card"><span class="stat-num" id="stPoints">-</span><span class="stat-label">Points Given</span></div>
+          <div class="stat-card"><span class="stat-num" id="stTokens">-</span><span class="stat-label">Tokens Used</span></div>
+          <div class="stat-card"><span class="stat-num" id="stBoxes">-</span><span class="stat-label">Sweet Boxes</span></div>
+          <div class="stat-card"><span class="stat-num" id="stFree">-</span><span class="stat-label">Free Deliv.</span></div>
+          <div class="stat-card"><span class="stat-num" id="stCounter">-</span><span class="stat-label">Global Spin #</span></div>
+          <div class="stat-card"><span class="stat-num" id="stRedeem">-</span><span class="stat-label">Pending</span></div>
+          <div class="stat-card"><span class="stat-num" id="stBlocked">-</span><span class="stat-label">Blocked</span></div>
+          <div class="stat-card"><span class="stat-num" id="stTournaments">-</span><span class="stat-label">Tournaments</span></div>
+          <div class="stat-card"><span class="stat-num" id="stEventTokens">-</span><span class="stat-label">Event Tokens</span></div>
+          <div class="stat-card"><span class="stat-num" id="stUnusedTokens">-</span><span class="stat-label">Unused Tokens</span></div>
         </div>
-        <button class="btn ghost" id="refreshDashBtn" style="margin-top:14px">🔄 Refresh</button>
+        <div class="action-row">
+          <button class="btn ghost" id="refreshDashBtn">🔄 Refresh</button>
+          <button class="btn blue" id="openQRMakerBtn">🎨 QR Maker</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3><span class="icon">📈</span> Data Overview</h3>
+        <div class="data-stats" id="dataStats">
+          <div class="data-stat-item"><span class="label">🎫 Total Tokens</span><span class="num" id="dsTotalTokens">-</span></div>
+          <div class="data-stat-item"><span class="label">✅ Unused Tokens</span><span class="num" id="dsUnusedTokens">-</span></div>
+          <div class="data-stat-item"><span class="label">❌ Used Tokens</span><span class="num" id="dsUsedTokens">-</span></div>
+          <div class="data-stat-item"><span class="label">👥 Total Users</span><span class="num" id="dsUsers">-</span></div>
+          <div class="data-stat-item"><span class="label">🎡 Total Spins</span><span class="num" id="dsSpins">-</span></div>
+          <div class="data-stat-item"><span class="label">💸 Redeem Requests</span><span class="num" id="dsRedeems">-</span></div>
+          <div class="data-stat-item"><span class="label">🏆 Tournaments</span><span class="num" id="dsTourn">-</span></div>
+          <div class="data-stat-item"><span class="label">🎁 Event Tokens</span><span class="num" id="dsEvents">-</span></div>
+        </div>
+        <button class="btn ghost" id="refreshDataStatsBtn" style="margin-top:12px">🔄 Refresh Data Stats</button>
+      </div>
+
+      <div class="danger-zone">
+        <h3><span class="icon">⚠️</span> Danger Zone</h3>
+        <p style="font-size:.85rem;line-height:1.6">
+          নিচের অপশনগুলো সাবধানে ব্যবহার করো। <b style="color:var(--err)">Undo করা যাবে না!</b>
+        </p>
+        <button class="btn red" id="openRestartBtn" style="margin-bottom:8px">🔄 Restart (Stats Reset)</button>
+        <button class="btn ghost" id="openHardResetBtn">💀 Hard Reset (Everything)</button>
       </div>
     </div>
 
-    <!-- ===== USERS ===== -->
+    <!-- TOURNAMENT -->
+    <div id="tabTournament" class="tab-panel hidden">
+      <div class="card">
+        <h3><span class="icon">🏆</span> Current Tournament</h3>
+        <div id="currentTournamentBox">
+          <div class="note">Loading...</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3><span class="icon">✨</span> Create / Update Tournament</h3>
+        <p class="note" style="margin-bottom:14px">নতুন tournament setup করো। Prize, entry requirement, duration — সব customize করা যাবে।</p>
+
+        <label for="tournName">Tournament Name</label>
+        <input id="tournName" placeholder="e.g. Weekly Champion 2025" maxlength="60">
+
+        <label for="tournMinSpins">Minimum Spins for Entry (Eligibility)</label>
+        <input id="tournMinSpins" type="number" value="50" min="1" max="1000">
+
+        <label for="tournDurationDays">Duration (Days)</label>
+        <input id="tournDurationDays" type="number" value="7" min="1" max="30">
+
+        <label>Prizes (Points) — যত ইচ্ছা rank যোগ করা যাবে</label>
+        <div id="prizeConfigContainer">
+          <div class="prize-config-row">
+            <span class="rank-badge">🥇</span>
+            <input type="number" value="1000" min="0" max="100000" data-rank="1" placeholder="Rank 1 Points">
+          </div>
+          <div class="prize-config-row">
+            <span class="rank-badge">🥈</span>
+            <input type="number" value="700" min="0" max="100000" data-rank="2" placeholder="Rank 2 Points">
+          </div>
+          <div class="prize-config-row">
+            <span class="rank-badge">🥉</span>
+            <input type="number" value="500" min="0" max="100000" data-rank="3" placeholder="Rank 3 Points">
+          </div>
+        </div>
+        <button class="add-prize-btn" id="addPrizeRowBtn">+ Add Another Prize Rank</button>
+
+        <div class="err" id="tournErr"></div>
+        <button class="btn gold" id="createTournamentBtn" style="margin-top:14px">🚀 Create Tournament</button>
+      </div>
+
+      <div class="card">
+        <h3><span class="icon">🎯</span> Leaderboard</h3>
+        <button class="btn blue" id="loadLeaderboardBtn">🔄 Load Leaderboard</button>
+        <div id="tournamentLeaderboard" style="margin-top:12px">
+          <div class="note">Click "Load Leaderboard" first</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3><span class="icon">🎁</span> Declare Winners</h3>
+        <p class="note" style="margin-bottom:12px">
+          Top rank winners এ points add করবে (based on your prize config)।
+          Only eligible users (min spins reached) reward পাবে।
+        </p>
+        <button class="btn green" id="declareWinnersBtn">🏆 Declare Winners & Give Prizes</button>
+      </div>
+
+      <div class="card">
+        <h3><span class="icon">⏸️</span> End / Reset Tournament</h3>
+        <p class="note" style="margin-bottom:12px">
+          Tournament শেষ করলে সেটা History তে save হবে এবং নতুন tournament শুরু করা যাবে।
+        </p>
+        <button class="btn red" id="endTournamentBtn">🔚 End Tournament & Save History</button>
+      </div>
+    </div>
+
+    <!-- EVENT TOKENS -->
+    <div id="tabEvents" class="tab-panel hidden">
+      <div class="info-box">
+        <h4>💡 Special Event Tokens</h4>
+        <p>Special event এর জন্য token যেটা user কে extra spin দিবে একসাথে। Regular token থেকে আলাদা।</p>
+      </div>
+
+      <div class="card">
+        <h3><span class="icon">✨</span> Create Event Token</h3>
+        <label for="evtName">Event Name</label>
+        <input id="evtName" placeholder="e.g. Eid Special 2025" maxlength="60">
+        <label for="evtCode">Token Code (custom)</label>
+        <input id="evtCode" placeholder="e.g. EID5SPIN" maxlength="30" style="text-transform:uppercase">
+        <label for="evtSpins">Extra Spins</label>
+        <input id="evtSpins" type="number" value="5" min="1" max="100">
+        <label for="evtLimit">Max Uses</label>
+        <input id="evtLimit" type="number" value="100" min="1" max="10000">
+        <label for="evtMsg">Custom Message (optional)</label>
+        <input id="evtMsg" placeholder="e.g. Eid Mubarak!" maxlength="100">
+        <div class="err" id="evtErr"></div>
+        <button class="btn teal" id="createEventBtn">🚀 Create Event Token</button>
+      </div>
+
+      <div class="card">
+        <h3><span class="icon">📋</span> Active Event Tokens</h3>
+        <button class="btn ghost" id="loadEventsBtn">🔄 Load Events</button>
+        <div id="eventList" style="margin-top:12px"><div class="note">Click "Load Events"</div></div>
+      </div>
+    </div>
+
+    <!-- HISTORY -->
+    <div id="tabHistory" class="tab-panel hidden">
+      <div class="info-box">
+        <h4>📜 Tournament History</h4>
+        <p>আগের সব tournament, winners, এবং prizes এখানে save থাকবে।</p>
+      </div>
+
+      <div class="card">
+        <h3><span class="icon">🔍</span> Past Tournaments</h3>
+        <button class="btn blue" id="loadHistoryBtn">🔄 Load History</button>
+        <div id="historyList" style="margin-top:12px">
+          <div class="note">Click "Load History"</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- USERS -->
     <div id="tabUsers" class="tab-panel hidden">
       <div class="card">
-        <h3>👥 Search User</h3>
-        <input id="userSearch" placeholder="Search by name or phone" maxlength="60">
-        <button class="btn blue" id="searchUserBtn">🔍 Search</button>
+        <h3><span class="icon">🔍</span> Search User</h3>
+        <input id="userSearch" placeholder="Name or phone number" maxlength="60">
+        <button class="btn blue" id="searchUserBtn">Search</button>
         <button class="btn ghost" id="loadAllUsersBtn" style="margin-top:8px">📋 Load All Users</button>
         <div class="err" id="userSearchErr"></div>
       </div>
       <div class="card" id="userResultCard" style="display:none">
-        <h3>🔍 Result</h3>
+        <h3><span class="icon">🎯</span> Search Result</h3>
         <div id="userResult"></div>
       </div>
       <div class="card" id="userListCard" style="display:none">
-        <h3>📋 All Users <span id="userCount" style="color:var(--muted);font-size:.85rem"></span></h3>
+        <h3><span class="icon">📋</span> All Users <span id="userCount" style="color:var(--muted);font-size:.85rem"></span></h3>
         <div id="userList"></div>
       </div>
     </div>
 
-    <!-- ===== TOKENS ===== -->
+    <!-- TOKENS -->
     <div id="tabTokens" class="tab-panel hidden">
       <div class="card">
-        <h3>🎫 Generate Tokens</h3>
+        <h3><span class="icon">⚡</span> Generate Tokens</h3>
         <label for="genCount">How many?</label>
         <input id="genCount" type="number" value="100" min="1" max="1000">
-
         <label for="genPrefix">Prefix</label>
         <input id="genPrefix" value="ARNX" maxlength="10" style="text-transform:uppercase">
-
         <div class="err" id="genErr"></div>
         <button class="btn gold" id="genBtn">⚡ Generate</button>
         <div id="genOutput" style="display:none">
-          <p class="note">✅ Tokens generated. Copy below:</p>
+          <p class="note" style="margin-top:14px">✅ Generated tokens. Download or copy:</p>
           <div class="copy-pre" id="genList"></div>
-          <button class="btn blue" id="copyTokensBtn" style="margin-top:8px">📋 Copy All</button>
+          <div style="display:flex;gap:6px;margin-top:10px">
+            <button class="btn blue" id="copyTokensBtn" style="flex:1">📋 Copy</button>
+            <button class="btn green" id="downloadTokensBtn" style="flex:1">📥 Download CSV</button>
+          </div>
         </div>
       </div>
+
       <div class="card">
-        <h3>📊 Token Stats</h3>
-        <button class="btn ghost" id="loadTokenStatsBtn">Load Stats</button>
+        <h3><span class="icon">📊</span> Token Stats</h3>
+        <button class="btn ghost" id="loadTokenStatsBtn">Refresh Stats</button>
         <div id="tokenStats" style="margin-top:12px"></div>
+      </div>
+
+      <div class="card">
+        <h3><span class="icon">🔍</span> Manage Tokens</h3>
+        <div class="filter-tabs" id="tokenFilterTabs">
+          <button data-filter="all" class="active">📋 All</button>
+          <button data-filter="unused">✅ Unused</button>
+          <button data-filter="used">❌ Used</button>
+        </div>
+        <input id="tokenSearchInput" placeholder="🔍 Search token code..." maxlength="20" style="text-transform:uppercase">
+        <div style="display:flex;gap:6px;margin-bottom:8px">
+          <button class="btn blue" id="loadTokensBtn" style="flex:1">🔄 Load</button>
+          <button class="btn green" id="exportTokensBtn" style="flex:1">📥 CSV</button>
+        </div>
+        <div style="display:flex;gap:6px;margin-bottom:10px">
+          <button class="btn red" id="deleteUsedBtn" style="flex:1">🗑️ Delete All Used</button>
+          <button class="btn red" id="deleteUnusedBtn" style="flex:1">🗑️ Delete All Unused</button>
+        </div>
+        <div class="note" style="margin-bottom:10px" id="tokenCountLabel"></div>
+        <div id="tokensList"><div class="note">Click "Load" to see list</div></div>
       </div>
     </div>
 
-    <!-- ===== WINNERS ===== -->
+    <!-- WINNERS -->
     <div id="tabWinners" class="tab-panel hidden">
       <div class="card">
-        <h3>🏆 Recent Winners</h3>
+        <h3><span class="icon">🏆</span> Recent Winners</h3>
         <div class="tabs" style="margin-bottom:10px">
           <button data-winner="all" class="active">All</button>
           <button data-winner="box">🎁 Sweet Box</button>
@@ -187,21 +474,214 @@ white-space:pre-wrap;word-break:break-all;margin-top:10px;color:var(--muted)}
       </div>
     </div>
 
-    <!-- ===== REDEEM ===== -->
+    <!-- REDEEM -->
     <div id="tabRedeem" class="tab-panel hidden">
       <div class="card">
-        <h3>💸 Redeem Requests</h3>
+        <h3><span class="icon">💸</span> Redeem Requests</h3>
         <button class="btn blue" id="loadRedeemBtn">🔄 Load Requests</button>
         <div id="redeemList" style="margin-top:12px"></div>
       </div>
     </div>
 
+    <!-- SETTINGS -->
+    <div id="tabSettings" class="tab-panel hidden">
+      <div class="card">
+        <h3><span class="icon">🎛️</span> Prize Probability</h3>
+        <div class="total-display" id="totalDisplay">
+          <span class="total-label">Total Percentage</span>
+          <span class="total-num" id="totalNum">100.0%</span>
+        </div>
+        <div id="slidersContainer"></div>
+        <button class="btn green" id="saveSettingsBtn" style="margin-top:8px">💾 Save Settings</button>
+        <button class="btn ghost" id="resetSettingsBtn" style="margin-top:8px">↺ Reset to Default</button>
+      </div>
+
+      <div class="card">
+        <h3><span class="icon">🎯</span> Guaranteed Prizes</h3>
+        <label for="freeEveryInput">Free Delivery every X spins</label>
+        <input id="freeEveryInput" type="number" min="1" value="100">
+        <label for="boxEveryInput">Sweet Box every X spins</label>
+        <input id="boxEveryInput" type="number" min="1" value="500">
+        <button class="btn green" id="saveCountersBtn">💾 Save Counters</button>
+      </div>
+
+      <div class="card">
+        <h3><span class="icon">🔧</span> Quick Presets</h3>
+        <button class="btn purple" onclick="applyPreset('generous')" style="margin-bottom:8px">🎁 Generous</button>
+        <button class="btn ghost" onclick="applyPreset('balanced')" style="margin-bottom:8px">⚖️ Balanced</button>
+        <button class="btn ghost" onclick="applyPreset('stingy')">💰 Stingy</button>
+      </div>
+    </div>
+
+    <!-- TOOLS -->
+    <div id="tabTools" class="tab-panel hidden">
+      <div class="card">
+        <h3><span class="icon">🔍</span> Global Search</h3>
+        <p class="note" style="margin-bottom:10px">সব ডাটা (Users, Tokens, Events) একসাথে সার্চ করো</p>
+        <input id="globalSearchInput" placeholder="Search anything..." maxlength="60">
+        <div class="filter-tabs">
+          <button data-gsearch="all" class="active">সব</button>
+          <button data-gsearch="users">👥 Users</button>
+          <button data-gsearch="tokens">🎫 Tokens</button>
+          <button data-gsearch="events">🎁 Events</button>
+        </div>
+        <button class="btn blue" id="globalSearchBtn">🔍 Search</button>
+        <div class="search-results-box" id="globalSearchResults"></div>
+      </div>
+
+      <div class="card">
+        <h3><span class="icon">💾</span> Backup & Export</h3>
+        <p class="note" style="margin-bottom:10px">সব ডাটা JSON/CSV আকারে ডাউনলোড করো</p>
+        <button class="btn green" id="backupJsonBtn" style="margin-bottom:8px">💾 Download Full Backup (JSON)</button>
+        <div class="action-row">
+          <button class="btn blue" id="exportUsersCsvBtn">📥 Users CSV</button>
+          <button class="btn blue" id="exportTokensCsvBtn">📥 Tokens CSV</button>
+          <button class="btn blue" id="exportSpinsCsvBtn">📥 Spins CSV</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3><span class="icon">⚙️</span> Admin Info</h3>
+        <div class="admin-info-row">
+          <span class="label">Admin Phone</span>
+          <span class="value" id="infoAdminPhone">-</span>
+        </div>
+        <div class="admin-info-row">
+          <span class="label">Admin Name</span>
+          <span class="value" id="infoAdminName">-</span>
+        </div>
+        <div class="admin-info-row">
+          <span class="label">Login Time</span>
+          <span class="value" id="infoLoginTime">-</span>
+        </div>
+        <div class="admin-info-row">
+          <span class="label">Session</span>
+          <span class="value" id="infoSession">-</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3><span class="icon">🔗</span> Quick Links</h3>
+        <button class="btn teal" id="openQRMakerBtn2" style="margin-bottom:8px">🎨 Open QR Maker</button>
+        <button class="btn blue" id="copyAppUrlBtn" style="margin-bottom:8px">📋 Copy App URL</button>
+        <button class="btn ghost" id="copyAdminUrlBtn">📋 Copy Admin URL</button>
+      </div>
+
+      <div class="card">
+        <h3><span class="icon">🧹</span> Cleanup</h3>
+        <p class="note" style="margin-bottom:10px">ডুপ্লিকেট বা পুরনো ডাটা ক্লিন করো</p>
+        <button class="btn ghost" id="cleanupOldSpinsBtn" style="margin-bottom:8px">🧹 Delete Spins Older Than 30 Days</button>
+        <button class="btn ghost" id="cleanupRejectedBtn">🧹 Delete Rejected Redeem Requests</button>
+      </div>
+    </div>
   </section>
 
-  <p class="note" id="loadingNote" style="display:none;text-align:center">
-    <span class="spinner"></span> Loading...
-  </p>
+  <p class="note" id="loadingNote" style="display:none;text-align:center"><span class="spinner"></span> Loading...</p>
 </main>
+
+<!-- RESTART MODAL -->
+<div class="overlay" id="restartOv">
+  <div class="modal">
+    <h2>🔄 Restart – Stats Reset</h2>
+    <p style="font-size:.85rem">এই অপশনে সব <b>Spins, Points, Tournaments, Tokens</b> মুছে যাবে এবং প্রতিটি ইউজারের Points ও Spins <b>শূন্য</b> হয়ে যাবে। কিন্তু <b style="color:#34d399">User Account (নাম, ফোন) থাকবে।</b></p>
+
+    <div class="delete-list">
+      <span class="item-title">❌ যা ডিলিট হবে:</span>
+      <span class="item-delete">🎫 সব Tokens (Used + Unused)</span><br>
+      <span class="item-delete">🎁 সব Event Tokens</span><br>
+      <span class="item-delete">🎡 সব Spin History</span><br>
+      <span class="item-delete">💸 সব Redeem Requests</span><br>
+      <span class="item-delete">🏆 সব Tournaments + History</span><br>
+      <span class="item-delete">📊 Spin Counter Reset হবে</span><br>
+      <span class="item-delete">⚙️ Prize Settings Default হবে</span>
+    </div>
+
+    <div class="delete-list">
+      <span class="item-title">🔄 যা Reset হবে (ডিলিট হবে না):</span>
+      <span class="item-reset">👥 সব User এর Points = 0</span><br>
+      <span class="item-reset">🎯 সব User এর Spins = 0</span><br>
+      <span class="item-reset">📋 Tokens Used list খালি হবে</span>
+    </div>
+
+    <div class="delete-list">
+      <span class="item-title">✅ যা সম্পূর্ণ থাকবে:</span>
+      <span class="item-keep">⭐ সব User Account (নাম, ফোন, আইডি)</span><br>
+      <span class="item-keep">👤 সব User এর Login Info</span><br>
+      <span class="item-keep">🔐 Admin Profile + Session</span>
+    </div>
+
+    <div class="warn-box">
+      <span class="warn-icon">⚠️</span>
+      <span>এই অপশনটি undo করা যাবে না। নিশ্চিত হলে Confirm এ ক্লিক করো।</span>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn ghost" onclick="closeModal('restartOv')">Cancel</button>
+      <button class="btn red" id="confirmRestartBtn">Confirm Reset</button>
+    </div>
+  </div>
+</div>
+
+<!-- HARD RESET MODAL -->
+<div class="overlay" id="hardResetOv">
+  <div class="modal">
+    <h2 class="danger-title">💀 Hard Reset – Everything</h2>
+    <p style="font-size:.85rem">এই অপশনে <b style="color:var(--err)">Firestore এর সব collection সম্পূর্ণ খালি</b> হয়ে যাবে। এমনকি User Account এবং Admin profile ও ডিলিট হবে।</p>
+
+    <div class="delete-list">
+      <span class="item-title">❌ যা ডিলিট হবে:</span>
+      <span class="item-delete">👥 সব Users (User Account সহ)</span><br>
+      <span class="item-delete">🎫 সব Tokens</span><br>
+      <span class="item-delete">🎁 সব Event Tokens</span><br>
+      <span class="item-delete">🎡 সব Spins + Token Logs</span><br>
+      <span class="item-delete">💸 সব Redeem Requests</span><br>
+      <span class="item-delete">📦 সব Box Claims</span><br>
+      <span class="item-delete">🏆 সব Tournaments</span><br>
+      <span class="item-delete">⚙️ সব Settings (Prize, QR, Counter)</span>
+    </div>
+
+    <div class="delete-list">
+      <span class="item-title">✅ যা থাকবে:</span>
+      <span class="item-keep">কিছুই না — সম্পূর্ণ ফ্রেশ!</span>
+    </div>
+
+    <div class="warn-box">
+      <span class="warn-icon">💀</span>
+      <span>এটি সবচেয়ে বিপজ্জনক অপশন। সম্পূর্ণ ডাটাবেজ ফ্রেশ হবে। ভুল করে ক্লিক করলে সব হারাবেন!</span>
+    </div>
+
+    <p style="font-size:.82rem;margin-bottom:8px;font-weight:700">নিশ্চিত করতে নিচে <b style="color:var(--err)">DELETE</b> লিখো:</p>
+    <input id="hardResetConfirm" placeholder="Type DELETE here" style="text-transform:uppercase;font-weight:800;text-align:center;letter-spacing:.1em">
+
+    <div class="modal-actions">
+      <button class="btn ghost" onclick="closeModal('hardResetOv')">Cancel</button>
+      <button class="btn red" id="confirmHardResetBtn" disabled>💀 Delete Everything</button>
+    </div>
+  </div>
+</div>
+
+<!-- CONFIRM MODAL (generic) -->
+<div class="overlay" id="confirmOv">
+  <div class="modal">
+    <h2 id="confirmTitle">Confirm?</h2>
+    <p id="confirmMessage">Are you sure?</p>
+    <div class="modal-actions">
+      <button class="btn ghost" onclick="closeModal('confirmOv')">Cancel</button>
+      <button class="btn red" id="confirmYesBtn">Yes, Confirm</button>
+    </div>
+  </div>
+</div>
+
+<!-- USER DETAIL MODAL -->
+<div class="overlay" id="userDetailOv">
+  <div class="modal">
+    <h2>👤 User Details</h2>
+    <div id="userDetailContent"></div>
+    <div class="modal-actions">
+      <button class="btn ghost" onclick="closeModal('userDetailOv')">Close</button>
+    </div>
+  </div>
+</div>
 
 <div class="toast" id="toast"></div>
 
@@ -209,11 +689,10 @@ white-space:pre-wrap;word-break:break-all;margin-top:10px;color:var(--muted)}
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getAuth, signInAnonymously, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import {
-  getFirestore, doc, getDoc, setDoc, updateDoc, collection, addDoc,
-  query, where, getDocs, orderBy, limit, serverTimestamp, increment
+  getFirestore, doc, getDoc, setDoc, updateDoc, deleteDoc, collection, addDoc, getDocs,
+  query, where, orderBy, limit, serverTimestamp, increment
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-// ============== CONFIG ==============
 const firebaseConfig = {
   apiKey: "AIzaSyAv15cvIVjO4R7KokvcoykuCH_21iD5ETU",
   authDomain: "arambex-7.firebaseapp.com",
@@ -223,21 +702,39 @@ const firebaseConfig = {
   appId: "1:132079784610:web:6850f5516dac44695d7dfb"
 };
 const ADMIN_PHONES = ["01612929333"];
-
-const app  = initializeApp(firebaseConfig);
+const APP_URL = "https://arinbex7.github.io/mishti-spin/";
+const DEFAULT_SETTINGS = {
+  p100: 35, p0: 30, p200: 20, p300: 10,
+  p400: 3, p500: 1, p600: 0.5,
+  pFree: 0.4, pBox: 0.1,
+  freeEvery: 100, boxEvery: 500
+};
+const PRIZE_LIST = [
+  { key: "p100",  label: "100 Points",    color: "#8c1d3a" },
+  { key: "p0",    label: "0 Points",      color: "#4a2a37" },
+  { key: "p200",  label: "200 Points",    color: "#d9822b" },
+  { key: "p300",  label: "300 Points",    color: "#2f7d5b" },
+  { key: "p400",  label: "400 Points",    color: "#5b2a86" },
+  { key: "p500",  label: "500 Points",    color: "#0e7c86" },
+  { key: "p600",  label: "600 Points",    color: "#a8620a" },
+  { key: "pFree", label: "Free Delivery", color: "#1f7a6d" },
+  { key: "pBox",  label: "Sweet Box",     color: "#c2185b" }
+];
+const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const db   = getFirestore(app);
+const db = getFirestore(app);
 
-// ============== STATE ==============
-let adminUser = null;
-let adminPhone = "";
-let adminName = "";
-let winnerFilter = "all";
+let adminUser = null, adminPhone = "", adminName = "";
+let winnerFilter = "all", tokenFilter = "all", tokenSearch = "";
+let globalSearchFilter = "all";
+let allTokensCache = [];
+let currentSettings = { ...DEFAULT_SETTINGS };
+let lastGeneratedTokens = [];
+let currentTournament = null;
+let loginTime = null;
 
-// ============== HELPERS ==============
 const $ = id => document.getElementById(id);
 const setErr = (id, msg) => { $(id).textContent = msg || ""; };
-
 function toast(msg) {
   const t = $("toast");
   t.textContent = msg;
@@ -245,88 +742,105 @@ function toast(msg) {
   clearTimeout(t._tid);
   t._tid = setTimeout(() => t.classList.remove("show"), 2400);
 }
-
 const fmtDate = ts => {
   if (!ts) return "-";
   const d = ts.toDate ? ts.toDate() : new Date(ts);
   return d.toLocaleString("en-GB", { timeZone: "Asia/Dhaka", day: "2-digit", month: "short", year: "2-digit", hour: "2-digit", minute: "2-digit" });
 };
+const fmtDateOnly = ts => {
+  if (!ts) return "-";
+  const d = ts.toDate ? ts.toDate() : new Date(ts);
+  return d.toLocaleString("en-GB", { timeZone: "Asia/Dhaka", day: "2-digit", month: "short", year: "2-digit" });
+};
+window.closeModal = id => $(id).classList.remove("open");
+
+function showConfirm(title, msg, onYes) {
+  $("confirmTitle").textContent = title;
+  $("confirmMessage").innerHTML = msg;
+  $("confirmOv").classList.add("open");
+  const yesBtn = $("confirmYesBtn");
+  const newBtn = yesBtn.cloneNode(true);
+  yesBtn.parentNode.replaceChild(newBtn, yesBtn);
+  newBtn.onclick = () => {
+    closeModal("confirmOv");
+    onYes();
+  };
+}
 
 // ============== LOGIN ==============
 $("loginBtn").onclick = async () => {
   setErr("loginErr", "");
   const phone = $("adminPhone").value.replace(/\D/g, "").slice(0, 11);
-  const name  = $("adminName").value.trim() || "Admin";
-
-  if (!ADMIN_PHONES.includes(phone)) {
-    return setErr("loginErr", "❌ This phone is not an admin.");
-  }
+  const name = $("adminName").value.trim() || "Admin";
+  if (!ADMIN_PHONES.includes(phone)) return setErr("loginErr", "❌ This phone is not admin.");
   if (name.length < 2) return setErr("loginErr", "Enter your name.");
-
   const btn = $("loginBtn");
   btn.disabled = true;
   btn.innerHTML = '<span class="spinner"></span>Logging in...';
-
   try {
     let cred;
     try { cred = await signInAnonymously(auth); } catch(e){}
-
     const adminUid = cred?.user?.uid || "admin_" + phone;
     const ref = doc(db, "users", adminUid);
     const snap = await getDoc(ref);
     if (!snap.exists()) {
-      await setDoc(ref, {
-        name, phone,
-        isAdmin: true,
-        points: 0, spins: 0,
-        tokensUsed: [],
-        createdAt: serverTimestamp()
-      });
+      await setDoc(ref, { name, phone, isAdmin: true, points: 0, spins: 0, tokensUsed: [], createdAt: serverTimestamp() });
     } else {
       await setDoc(ref, { name, isAdmin: true, lastLogin: serverTimestamp() }, { merge: true });
     }
-
     adminUser = { uid: adminUid };
     adminPhone = phone;
     adminName = name;
+    loginTime = new Date();
     localStorage.setItem("mishti_admin_uid", adminUid);
     localStorage.setItem("mishti_admin_phone", phone);
     localStorage.setItem("mishti_admin_name", name);
-
     showApp();
     loadDashboard();
+    loadSettings();
+    loadCurrentTournament();
+    loadDataStats();
+    renderAdminInfo();
+    setTimeout(loadEvents, 500);
   } catch (err) {
-    console.error(err);
-    setErr("loginErr", "Login failed. Try again.");
+    setErr("loginErr", "Login failed.");
   } finally {
     btn.disabled = false;
-    btn.textContent = "Login as Admin 🔐";
+    btn.textContent = "Login 🔓";
   }
 };
-
-// ============== AUTO LOGIN ==============
 window.addEventListener("load", async () => {
   const savedUid = localStorage.getItem("mishti_admin_uid");
   const savedPhone = localStorage.getItem("mishti_admin_phone");
   const savedName = localStorage.getItem("mishti_admin_name");
-
   if (savedUid && ADMIN_PHONES.includes(savedPhone)) {
     adminUser = { uid: savedUid };
     adminPhone = savedPhone;
     adminName = savedName;
+    loginTime = new Date();
     showApp();
     loadDashboard();
+    loadSettings();
+    loadCurrentTournament();
+    loadDataStats();
+    renderAdminInfo();
+    setTimeout(loadEvents, 500);
   } else {
     $("viewLogin").classList.remove("hidden");
   }
 });
-
 function showApp() {
   $("viewLogin").classList.add("hidden");
   $("viewApp").classList.remove("hidden");
-  $("adminNameLabel").textContent = "👋 " + adminName;
+  $("adminNameLabel").textContent = adminName;
+  $("adminAvatar").textContent = (adminName || "A").charAt(0).toUpperCase();
 }
-
+function renderAdminInfo() {
+  $("infoAdminPhone").textContent = adminPhone || "-";
+  $("infoAdminName").textContent = adminName || "-";
+  $("infoLoginTime").textContent = loginTime ? loginTime.toLocaleString("en-GB", { timeZone: "Asia/Dhaka" }) : "-";
+  $("infoSession").textContent = adminUser?.uid ? adminUser.uid.slice(0, 12) + "..." : "-";
+}
 $("logoutBtn").onclick = async () => {
   try { await signOut(auth); } catch(e){}
   localStorage.removeItem("mishti_admin_uid");
@@ -334,13 +848,11 @@ $("logoutBtn").onclick = async () => {
   localStorage.removeItem("mishti_admin_name");
   location.reload();
 };
-
-// ============== TABS ==============
 document.querySelectorAll("#tabs button").forEach(btn => {
   btn.onclick = () => {
     document.querySelectorAll("#tabs button").forEach(b => b.classList.remove("active"));
     btn.classList.add("active");
-    ["tabDash","tabUsers","tabTokens","tabWinners","tabRedeem"].forEach(t => {
+    ["tabDash","tabTournament","tabEvents","tabHistory","tabUsers","tabTokens","tabWinners","tabRedeem","tabSettings","tabTools"].forEach(t => {
       $(t).classList.toggle("hidden", t !== btn.dataset.tab);
     });
   };
@@ -352,18 +864,16 @@ async function loadDashboard() {
   try {
     const usersSnap = await getDocs(collection(db, "users"));
     $("stUsers").textContent = usersSnap.size;
-
-    let totalPoints = 0, totalSpins = 0, totalTokens = 0;
+    let totalPoints = 0, totalTokens = 0, blockedCount = 0;
     usersSnap.forEach(d => {
       const u = d.data();
       totalPoints += u.points || 0;
-      totalSpins += (u.tokensUsed || []).length;
       totalTokens += (u.tokensUsed || []).length;
+      if (u.blocked) blockedCount++;
     });
     $("stPoints").textContent = totalPoints.toLocaleString();
-    $("stSpins").textContent = totalSpins;
     $("stTokens").textContent = totalTokens;
-
+    $("stBlocked").textContent = blockedCount;
     try {
       const spinsSnap = await getDocs(collection(db, "spins"));
       let boxes = 0, free = 0;
@@ -374,39 +884,675 @@ async function loadDashboard() {
       });
       $("stBoxes").textContent = boxes;
       $("stFree").textContent = free;
-    } catch(e) { console.error(e); }
-
+      $("stSpins").textContent = spinsSnap.size;
+    } catch(e) {}
     try {
       const counterSnap = await getDoc(doc(db, "settings", "spin_counter"));
       $("stCounter").textContent = counterSnap.exists() ? (counterSnap.data().count || 0) : 0;
     } catch(e) {}
-
     try {
       const q = query(collection(db, "redeem_requests"), where("status", "==", "pending"));
       const rSnap = await getDocs(q);
       $("stRedeem").textContent = rSnap.size;
-    } catch(e) { $("stRedeem").textContent = 0; }
+    } catch(e) {}
+    try {
+      const tournSnap = await getDocs(collection(db, "tournaments"));
+      $("stTournaments").textContent = tournSnap.size;
+    } catch(e) {}
+    try {
+      const evtSnap = await getDocs(collection(db, "event_tokens"));
+      $("stEventTokens").textContent = evtSnap.size;
+    } catch(e) {}
+    try {
+      const tokensSnap = await getDocs(collection(db, "tokens"));
+      let unused = 0;
+      tokensSnap.forEach(d => { if (!d.data().is_used) unused++; });
+      $("stUnusedTokens").textContent = unused;
+    } catch(e) {}
+  } finally { $("loadingNote").style.display = "none"; }
+}
+$("refreshDashBtn").onclick = loadDashboard;
+$("openQRMakerBtn").onclick = () => window.open("qr-maker.html", "_blank");
+$("openQRMakerBtn2").onclick = () => window.open("qr-maker.html", "_blank");
 
+// ============== DATA STATS ==============
+async function loadDataStats() {
+  try {
+    const [usersSnap, tokensSnap, spinsSnap, redeemsSnap, tournSnap, eventsSnap] = await Promise.all([
+      getDocs(collection(db, "users")),
+      getDocs(collection(db, "tokens")),
+      getDocs(collection(db, "spins")),
+      getDocs(collection(db, "redeem_requests")),
+      getDocs(collection(db, "tournaments")),
+      getDocs(collection(db, "event_tokens"))
+    ]);
+    $("dsUsers").textContent = usersSnap.size;
+    $("dsSpins").textContent = spinsSnap.size;
+    $("dsRedeems").textContent = redeemsSnap.size;
+    $("dsTourn").textContent = tournSnap.size;
+    $("dsEvents").textContent = eventsSnap.size;
+    $("dsTotalTokens").textContent = tokensSnap.size;
+    let unused = 0, used = 0;
+    tokensSnap.forEach(d => d.data().is_used ? used++ : unused++);
+    $("dsUnusedTokens").textContent = unused;
+    $("dsUsedTokens").textContent = used;
+  } catch(e) { console.error(e); }
+}
+$("refreshDataStatsBtn").onclick = loadDataStats;
+
+// ============== SETTINGS ==============
+async function loadSettings() {
+  try {
+    const snap = await getDoc(doc(db, "settings", "prize_probability"));
+    if (snap.exists()) currentSettings = { ...DEFAULT_SETTINGS, ...snap.data() };
+    else currentSettings = { ...DEFAULT_SETTINGS };
+  } catch(e) { currentSettings = { ...DEFAULT_SETTINGS }; }
+  renderSliders();
+  $("freeEveryInput").value = currentSettings.freeEvery;
+  $("boxEveryInput").value = currentSettings.boxEvery;
+}
+function renderSliders() {
+  const container = $("slidersContainer");
+  container.innerHTML = "";
+  PRIZE_LIST.forEach(p => {
+    const val = currentSettings[p.key] ?? 0;
+    const row = document.createElement("div");
+    row.className = "slider-row";
+    row.innerHTML = `
+      <div class="slider-info">
+        <div class="slider-label"><span class="dot" style="background:${p.color}"></span>${p.label}</div>
+        <input type="range" min="0" max="100" step="0.1" value="${val}" data-key="${p.key}">
+      </div>
+      <input type="number" class="pct-input" min="0" max="100" step="0.1" value="${val}" data-key="${p.key}">
+    `;
+    container.appendChild(row);
+  });
+  container.querySelectorAll("input[type=range]").forEach(sl => {
+    sl.oninput = () => {
+      currentSettings[sl.dataset.key] = parseFloat(sl.value);
+      const n = container.querySelector(`input.pct-input[data-key="${sl.dataset.key}"]`);
+      if (n) n.value = sl.value;
+      updateTotal();
+    };
+  });
+  container.querySelectorAll("input.pct-input").forEach(inp => {
+    inp.oninput = () => {
+      currentSettings[inp.dataset.key] = parseFloat(inp.value) || 0;
+      const sl = container.querySelector(`input[type=range][data-key="${inp.dataset.key}"]`);
+      if (sl) sl.value = inp.value;
+      updateTotal();
+    };
+  });
+  updateTotal();
+}
+function updateTotal() {
+  let total = 0;
+  PRIZE_LIST.forEach(p => { total += currentSettings[p.key] || 0; });
+  $("totalNum").textContent = total.toFixed(1) + "%";
+  const display = $("totalDisplay");
+  display.classList.remove("ok", "bad");
+  if (Math.abs(total - 100) < 0.1) display.classList.add("ok");
+  else display.classList.add("bad");
+  $("saveSettingsBtn").disabled = Math.abs(total - 100) >= 0.1;
+}
+$("saveSettingsBtn").onclick = async () => {
+  let total = 0;
+  PRIZE_LIST.forEach(p => { total += currentSettings[p.key] || 0; });
+  if (Math.abs(total - 100) >= 0.1) return toast("⚠️ Total 100% হতে হবে");
+  const btn = $("saveSettingsBtn");
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>Saving...';
+  try {
+    await setDoc(doc(db, "settings", "prize_probability"), { ...currentSettings, updatedAt: serverTimestamp(), updatedBy: adminPhone }, { merge: true });
+    toast("✅ Saved!");
+  } catch(e) { toast("Error"); }
+  finally { btn.disabled = false; btn.textContent = "💾 Save Settings"; }
+};
+$("resetSettingsBtn").onclick = () => {
+  currentSettings = { ...DEFAULT_SETTINGS };
+  renderSliders();
+  $("freeEveryInput").value = DEFAULT_SETTINGS.freeEvery;
+  $("boxEveryInput").value = DEFAULT_SETTINGS.boxEvery;
+  toast("↺ Reset to default");
+};
+$("saveCountersBtn").onclick = async () => {
+  const freeEvery = parseInt($("freeEveryInput").value) || 100;
+  const boxEvery = parseInt($("boxEveryInput").value) || 500;
+  if (freeEvery < 1 || boxEvery < 1) return toast("Invalid");
+  const btn = $("saveCountersBtn");
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>Saving...';
+  try {
+    await setDoc(doc(db, "settings", "prize_probability"), { freeEvery, boxEvery, updatedAt: serverTimestamp() }, { merge: true });
+    currentSettings.freeEvery = freeEvery;
+    currentSettings.boxEvery = boxEvery;
+    toast("✅ Counters saved!");
+  } catch(e) { toast("Error"); }
+  finally { btn.disabled = false; btn.textContent = "💾 Save Counters"; }
+};
+window.applyPreset = function(type) {
+  if (type === "generous") currentSettings = { p100: 30, p0: 20, p200: 20, p300: 12, p400: 8, p500: 4, p600: 2, pFree: 3, pBox: 1, freeEvery: 80, boxEvery: 400 };
+  else if (type === "balanced") currentSettings = { ...DEFAULT_SETTINGS };
+  else if (type === "stingy") currentSettings = { p100: 40, p0: 40, p200: 15, p300: 4, p400: 0.6, p500: 0.2, p600: 0.1, pFree: 0.05, pBox: 0.05, freeEvery: 150, boxEvery: 700 };
+  renderSliders();
+  $("freeEveryInput").value = currentSettings.freeEvery;
+  $("boxEveryInput").value = currentSettings.boxEvery;
+  toast("✅ Preset applied! Save করো");
+};
+
+// ============== TOURNAMENT ==============
+async function loadCurrentTournament() {
+  try {
+    const snap = await getDoc(doc(db, "settings", "current_tournament"));
+    if (snap.exists()) {
+      currentTournament = { id: snap.id, ...snap.data() };
+      renderCurrentTournament();
+    } else {
+      currentTournament = null;
+      $("currentTournamentBox").innerHTML = '<div class="note">No active tournament. Create one below!</div>';
+    }
+  } catch(e) {
+    $("currentTournamentBox").innerHTML = '<div class="note">Error loading</div>';
+  }
+}
+
+function renderCurrentTournament() {
+  if (!currentTournament) {
+    $("currentTournamentBox").innerHTML = '<div class="note">No active tournament.</div>';
+    return;
+  }
+  const t = currentTournament;
+  const statusMap = { active: "🟢 ACTIVE", ended: "⚫ ENDED", draft: "🟡 DRAFT" };
+  const statusClass = t.status || "active";
+  const endDate = t.endDate?.toDate ? t.endDate.toDate() : (t.endDate ? new Date(t.endDate) : null);
+  const now = Date.now();
+  const left = endDate ? endDate.getTime() - now : 0;
+  const daysLeft = Math.floor(left / 86400000);
+  const hoursLeft = Math.floor((left % 86400000) / 3600000);
+  const minLeft = Math.floor((left % 3600000) / 60000);
+
+  let timerHTML = "";
+  if (statusClass === "active" && endDate && left > 0) {
+    timerHTML = `
+      <div class="timer-display">
+        <div class="timer-value">${daysLeft}d ${String(hoursLeft).padStart(2,'0')}h ${String(minLeft).padStart(2,'0')}m</div>
+        <div class="timer-label">Time Remaining</div>
+      </div>
+    `;
+  }
+
+  const prizesHTML = (t.prizes || []).map((p, i) => {
+    const medal = i === 0 ? "🥇" : i === 1 ? "🥈" : i === 2 ? "🥉" : `#${i + 1}`;
+    return `<div class="list-item"><div class="info"><div class="name">${medal} Rank ${i + 1}</div></div><div class="pts-big">${p} pts</div></div>`;
+  }).join("");
+
+  $("currentTournamentBox").innerHTML = `
+    <span class="tournament-status-badge ${statusClass}">${statusMap[statusClass] || "🟢 ACTIVE"}</span>
+    <div style="font-size:1.15rem;font-weight:900;color:var(--gold);margin-bottom:8px">🏆 ${t.name}</div>
+    <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line);font-size:.88rem">
+      <span style="color:var(--muted)">Min Spins (Eligibility)</span><span style="font-weight:800">${t.minSpins} spins</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line);font-size:.88rem">
+      <span style="color:var(--muted)">Start Date</span><span style="font-weight:800">${fmtDateOnly(t.startDate)}</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line);font-size:.88rem">
+      <span style="color:var(--muted)">End Date</span><span style="font-weight:800">${fmtDateOnly(t.endDate)}</span>
+    </div>
+    ${timerHTML}
+    <h4 style="color:var(--gold);font-size:.9rem;margin:14px 0 8px">🎁 Prizes:</h4>
+    ${prizesHTML}
+  `;
+}
+
+$("addPrizeRowBtn").onclick = () => {
+  const container = $("prizeConfigContainer");
+  const rank = container.querySelectorAll(".prize-config-row").length + 1;
+  const medal = rank === 1 ? "🥇" : rank === 2 ? "🥈" : rank === 3 ? "🥉" : `#${rank}`;
+  const row = document.createElement("div");
+  row.className = "prize-config-row";
+  row.innerHTML = `
+    <span class="rank-badge">${medal}</span>
+    <input type="number" value="100" min="0" max="100000" data-rank="${rank}" placeholder="Rank ${rank} Points">
+    <button class="remove-prize-btn" data-remove="1" title="Remove">✕</button>
+  `;
+  container.appendChild(row);
+  row.querySelector("[data-remove]").onclick = () => {
+    row.remove();
+    container.querySelectorAll(".prize-config-row").forEach((r, i) => {
+      const rank = i + 1;
+      const medal = rank === 1 ? "🥇" : rank === 2 ? "🥈" : rank === 3 ? "🥉" : `#${rank}`;
+      r.querySelector(".rank-badge").textContent = medal;
+      r.querySelector("input").dataset.rank = rank;
+      r.querySelector("input").placeholder = `Rank ${rank} Points`;
+    });
+  };
+};
+
+$("createTournamentBtn").onclick = async () => {
+  setErr("tournErr", "");
+  const name = $("tournName").value.trim();
+  const minSpins = parseInt($("tournMinSpins").value) || 50;
+  const durationDays = parseInt($("tournDurationDays").value) || 7;
+  if (name.length < 3) return setErr("tournErr", "Tournament name কমপক্ষে ৩ অক্ষর।");
+  if (minSpins < 1 || minSpins > 1000) return setErr("tournErr", "Min spins 1-1000.");
+  if (durationDays < 1 || durationDays > 30) return setErr("tournErr", "Duration 1-30 days.");
+
+  const prizes = [];
+  $("prizeConfigContainer").querySelectorAll("input[type=number]").forEach(inp => {
+    prizes.push(parseInt(inp.value) || 0);
+  });
+  if (prizes.length < 1) return setErr("tournErr", "অন্তত ১টা prize যোগ করো।");
+  if (prizes.some(p => p < 0)) return setErr("tournErr", "Prize numbers সঠিক দাও।");
+
+  const btn = $("createTournamentBtn");
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>Creating...';
+
+  try {
+    const now = new Date();
+    const endDate = new Date(now.getTime() + durationDays * 86400000);
+
+    const tournamentData = {
+      name, minSpins, prizes, durationDays,
+      startDate: now, endDate,
+      status: "active",
+      createdAt: serverTimestamp(),
+      createdBy: adminPhone,
+      winners: null
+    };
+
+    await setDoc(doc(db, "settings", "current_tournament"), tournamentData);
+    const tournRef = await addDoc(collection(db, "tournaments"), {
+      ...tournamentData, createdAt: serverTimestamp()
+    });
+    await updateDoc(doc(db, "settings", "current_tournament"), { tournId: tournRef.id });
+
+    toast("✅ Tournament created!");
+    currentTournament = { ...tournamentData, tournId: tournRef.id };
+    renderCurrentTournament();
+    loadDashboard();
+    $("tournName").value = "";
+  } catch(e) {
+    console.error(e);
+    setErr("tournErr", "Error: " + e.message);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = "🚀 Create Tournament";
+  }
+};
+
+$("loadLeaderboardBtn").onclick = async () => {
+  if (!currentTournament) return toast("⚠️ আগে tournament create করো");
+  $("loadingNote").style.display = "block";
+  try {
+    const usersSnap = await getDocs(collection(db, "users"));
+    const users = [];
+    usersSnap.forEach(d => {
+      const u = d.data();
+      if (u.isAdmin) return;
+      users.push({
+        id: d.id,
+        name: u.name || "Unknown",
+        phone: u.phone || "-",
+        spins: u.spins || 0,
+        points: u.points || 0
+      });
+    });
+    users.sort((a, b) => b.spins - a.spins);
+    const eligible = users.filter(u => u.spins >= currentTournament.minSpins);
+    const container = $("tournamentLeaderboard");
+    container.innerHTML = "";
+    if (eligible.length === 0) {
+      container.innerHTML = `<div class="note">No eligible users yet. Need ${currentTournament.minSpins}+ spins.</div>`;
+      return;
+    }
+    eligible.slice(0, 20).forEach((u, idx) => {
+      const rank = idx + 1;
+      const medal = rank === 1 ? "🥇" : rank === 2 ? "🥈" : rank === 3 ? "🥉" : `#${rank}`;
+      const prizeForThisRank = currentTournament.prizes[rank - 1] || 0;
+      const div = document.createElement("div");
+      div.className = "list-item" + (rank <= currentTournament.prizes.length ? " winner" : "");
+      div.innerHTML = `
+        <div class="info">
+          <div class="name">${medal} ${u.name} ${rank <= currentTournament.prizes.length ? '<span class="badge winner">WINNER</span>' : ''}</div>
+          <div class="sub">📱 ${u.phone}</div>
+        </div>
+        <div style="text-align:right">
+          <div class="pts-big">${u.spins} spins</div>
+          ${prizeForThisRank > 0 ? `<div class="sub" style="color:var(--gold)">🎁 ${prizeForThisRank} pts</div>` : ""}
+        </div>
+      `;
+      container.appendChild(div);
+    });
+  } catch(e) {
+    console.error(e);
+    toast("Error: " + e.message);
   } finally {
     $("loadingNote").style.display = "none";
   }
-}
-$("refreshDashBtn").onclick = loadDashboard;
+};
 
-// ============== USER SEARCH ==============
+$("declareWinnersBtn").onclick = async () => {
+  if (!currentTournament) return toast("⚠️ No tournament");
+  showConfirm("🏆 Declare Winners?", `Top ${currentTournament.prizes.length} eligible users will get prizes for <b>${currentTournament.name}</b>.`, async () => {
+    const btn = $("declareWinnersBtn");
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span>Declaring...';
+
+    try {
+      const usersSnap = await getDocs(collection(db, "users"));
+      const users = [];
+      usersSnap.forEach(d => {
+        const u = d.data();
+        if (u.isAdmin) return;
+        users.push({
+          id: d.id,
+          name: u.name || "Unknown",
+          phone: u.phone || "-",
+          spins: u.spins || 0
+        });
+      });
+      users.sort((a, b) => b.spins - a.spins);
+      const eligible = users.filter(u => u.spins >= currentTournament.minSpins);
+      const winnerCount = currentTournament.prizes.length;
+      const winners = [];
+
+      for (let i = 0; i < Math.min(winnerCount, eligible.length); i++) {
+        const w = eligible[i];
+        const prize = currentTournament.prizes[i];
+        await updateDoc(doc(db, "users", w.id), { points: increment(prize) });
+        winners.push({ rank: i + 1, uid: w.id, name: w.name, phone: w.phone, spins: w.spins, prize });
+      }
+
+      await updateDoc(doc(db, "settings", "current_tournament"), {
+        winners, winnersDeclaredAt: serverTimestamp(), status: "ended"
+      });
+      if (currentTournament.tournId) {
+        await updateDoc(doc(db, "tournaments", currentTournament.tournId), {
+          winners, winnersDeclaredAt: serverTimestamp(), status: "ended"
+        });
+      }
+
+      currentTournament.winners = winners;
+      currentTournament.status = "ended";
+      renderCurrentTournament();
+
+      toast(`✅ ${winners.length} winners declared!`);
+      loadDashboard();
+    } catch(e) {
+      console.error(e);
+      toast("Error: " + e.message);
+    } finally {
+      btn.disabled = false;
+      btn.textContent = "🏆 Declare Winners & Give Prizes";
+    }
+  });
+};
+
+$("endTournamentBtn").onclick = async () => {
+  if (!currentTournament) return toast("⚠️ No tournament");
+  showConfirm("🔚 End Tournament?", `End <b>${currentTournament.name}</b>? It will be saved to History.`, async () => {
+    const btn = $("endTournamentBtn");
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span>Ending...';
+    try {
+      if (currentTournament.tournId) {
+        await updateDoc(doc(db, "tournaments", currentTournament.tournId), {
+          status: "ended", endedAt: serverTimestamp(), endedBy: adminPhone
+        });
+      }
+      await deleteDoc(doc(db, "settings", "current_tournament"));
+      currentTournament = null;
+      $("currentTournamentBox").innerHTML = '<div class="note">Tournament ended. Create new one above!</div>';
+      $("tournamentLeaderboard").innerHTML = '<div class="note">Click "Load Leaderboard" first</div>';
+      toast("🔚 Tournament ended & saved");
+      loadDashboard();
+    } catch(e) {
+      console.error(e);
+      toast("Error: " + e.message);
+    } finally {
+      btn.disabled = false;
+      btn.textContent = "🔚 End Tournament & Save History";
+    }
+  });
+};
+
+// ============== EVENT TOKENS ==============
+$("createEventBtn").onclick = async () => {
+  setErr("evtErr", "");
+  const name = $("evtName").value.trim();
+  const code = $("evtCode").value.trim().toUpperCase().replace(/[^A-Z0-9-]/g, "");
+  const spins = parseInt($("evtSpins").value) || 5;
+  const maxUses = parseInt($("evtLimit").value) || 100;
+  const message = $("evtMsg").value.trim();
+  if (name.length < 3) return setErr("evtErr", "Name at least 3 chars.");
+  if (code.length < 4) return setErr("evtErr", "Code at least 4 chars.");
+  try {
+    const regCheck = await getDoc(doc(db, "tokens", code));
+    const evtCheck = await getDoc(doc(db, "event_tokens", code));
+    if (regCheck.exists() || evtCheck.exists()) return setErr("evtErr", "❌ Code exists.");
+  } catch(e) {}
+  const btn = $("createEventBtn");
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>...';
+  try {
+    await setDoc(doc(db, "event_tokens", code), {
+      name, code, spins, maxUses, usedCount: 0,
+      message: message || `${name}! ${spins} free spins 🎉`,
+      active: true, createdAt: serverTimestamp(), createdBy: adminPhone
+    });
+    toast(`✅ Created "${code}"`);
+    $("evtName").value = ""; $("evtCode").value = "";
+    $("evtSpins").value = "5"; $("evtLimit").value = "100"; $("evtMsg").value = "";
+    loadEvents(); loadDashboard();
+  } catch (err) { setErr("evtErr", "Error: " + err.message); }
+  finally { btn.disabled = false; btn.textContent = "🚀 Create Event Token"; }
+};
+$("loadEventsBtn").onclick = loadEvents;
+async function loadEvents() {
+  const container = $("eventList");
+  if (!container) return;
+  container.innerHTML = '<div class="note">Loading...</div>';
+  try {
+    const snap = await getDocs(collection(db, "event_tokens"));
+    container.innerHTML = "";
+    if (snap.empty) { container.innerHTML = '<div class="note">No events.</div>'; return; }
+    const events = [];
+    snap.forEach(d => events.push({ id: d.id, ...d.data() }));
+    events.sort((a, b) => {
+      const at = a.createdAt?.toDate?.()?.getTime() || 0;
+      const bt = b.createdAt?.toDate?.()?.getTime() || 0;
+      return bt - at;
+    });
+    events.forEach(e => {
+      const div = document.createElement("div");
+      div.className = "event-token-card" + (e.active ? "" : " inactive");
+      const progress = Math.min(100, ((e.usedCount || 0) / (e.maxUses || 1)) * 100);
+      div.innerHTML = `
+        <div style="display:flex;justify-content:space-between;align-items:start;gap:8px;flex-wrap:wrap">
+          <div style="flex:1;min-width:180px">
+            <div class="event-name">🎁 ${e.name}</div>
+            <div class="event-code">${e.code}</div>
+            <div class="event-meta">
+              ⚡ ${e.spins} spins<br>
+              📊 Used: ${e.usedCount || 0}/${e.maxUses}<br>
+              <span class="badge ${e.active ? 'active' : 'inactive'}">${e.active ? 'ACTIVE' : 'INACTIVE'}</span>
+            </div>
+            <div style="background:rgba(0,0,0,.4);height:6px;border-radius:3px;overflow:hidden;margin-top:6px">
+              <div style="height:100%;width:${progress}%;background:linear-gradient(90deg,#14b8a6,#a855f7)"></div>
+            </div>
+          </div>
+          <div style="display:flex;gap:6px;flex-direction:column">
+            <button class="btn ${e.active ? 'ghost' : 'green'} small" data-toggle="${e.id}">${e.active ? '⏸️' : '▶️'}</button>
+            <button class="btn red small" data-remove="${e.id}">🗑️</button>
+          </div>
+        </div>
+      `;
+      container.appendChild(div);
+      div.querySelector("[data-toggle]").onclick = () => toggleEvent(e.id, !e.active);
+      div.querySelector("[data-remove]").onclick = () => deleteEvent(e.id, e.name);
+    });
+  } catch (e) { container.innerHTML = '<div class="note">Error</div>'; }
+}
+async function toggleEvent(code, active) {
+  try {
+    await updateDoc(doc(db, "event_tokens", code), { active });
+    toast(active ? "▶️ Activated" : "⏸️ Deactivated");
+    loadEvents();
+  } catch(e) { toast("Error"); }
+}
+async function deleteEvent(code, name) {
+  showConfirm("🗑️ Delete Event?", `Delete <b>${name}</b>?`, async () => {
+    try {
+      await deleteDoc(doc(db, "event_tokens", code));
+      toast("🗑️ Deleted");
+      loadEvents(); loadDashboard();
+    } catch(e) { toast("Error"); }
+  });
+}
+
+// ============== HISTORY ==============
+$("loadHistoryBtn").onclick = async () => {
+  $("loadingNote").style.display = "block";
+  try {
+    const q = query(collection(db, "tournaments"), orderBy("createdAt", "desc"), limit(30));
+    const snap = await getDocs(q);
+    const list = $("historyList");
+    list.innerHTML = "";
+    if (snap.empty) { list.innerHTML = '<div class="note">No tournament history yet.</div>'; return; }
+    snap.forEach(d => {
+      const t = d.data();
+      const status = t.status || "active";
+      const statusBadge = status === "ended" ? '<span class="badge ended">ENDED</span>' :
+                          status === "active" ? '<span class="badge active">ACTIVE</span>' :
+                          '<span class="badge pending">DRAFT</span>';
+      const winnersHTML = (t.winners || []).map(w => {
+        const medal = w.rank === 1 ? "🥇" : w.rank === 2 ? "🥈" : w.rank === 3 ? "🥉" : `#${w.rank}`;
+        return `<span class="history-winner-chip">${medal} ${w.name} (${w.prize}pts)</span>`;
+      }).join("");
+      const div = document.createElement("div");
+      div.className = "history-card";
+      div.innerHTML = `
+        <div class="history-header">
+          <div class="history-name">🏆 ${t.name}</div>
+          ${statusBadge}
+        </div>
+        <div class="history-meta">
+          📅 ${fmtDateOnly(t.startDate)} → ${fmtDateOnly(t.endDate)}<br>
+          🎯 Min ${t.minSpins} spins · 🎁 ${t.prizes?.length || 0} prizes
+        </div>
+        ${winnersHTML ? `<div class="history-winners">${winnersHTML}</div>` : '<div class="note" style="margin:0">No winners declared</div>'}
+      `;
+      list.appendChild(div);
+    });
+  } catch(e) {
+    console.error(e);
+    $("historyList").innerHTML = '<div class="note">Error loading history</div>';
+  } finally { $("loadingNote").style.display = "none"; }
+};
+
+// ============== RESTART (RESET - Keep Users) ==============
+$("openRestartBtn").onclick = () => $("restartOv").classList.add("open");
+$("openHardResetBtn").onclick = () => {
+  $("hardResetConfirm").value = "";
+  $("confirmHardResetBtn").disabled = true;
+  $("hardResetOv").classList.add("open");
+};
+$("hardResetConfirm").addEventListener("input", e => {
+  $("confirmHardResetBtn").disabled = e.target.value.trim().toUpperCase() !== "DELETE";
+});
+
+// RESTART - Reset everything BUT keep user accounts
+$("confirmRestartBtn").onclick = async () => {
+  const btn = $("confirmRestartBtn");
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>Resetting...';
+  try {
+    let totalDeleted = 0;
+    // Delete tokens, events, spins, redeems, tournaments
+    const collections = ["tokens", "event_tokens", "spins", "token_logs", "redeem_requests", "box_claims", "tournaments"];
+    for (const colName of collections) {
+      const snap = await getDocs(collection(db, colName));
+      for (const d of snap.docs) {
+        await deleteDoc(doc(db, colName, d.id));
+        totalDeleted++;
+      }
+    }
+    // Reset all users (keep account, reset points/spins/tokensUsed)
+    const usersSnap = await getDocs(collection(db, "users"));
+    let usersReset = 0;
+    for (const d of usersSnap.docs) {
+      const u = d.data();
+      // Admin এর কাছেও reset হবে না
+      if (u.isAdmin) continue;
+      await updateDoc(doc(db, "users", d.id), {
+        points: 0,
+        spins: 0,
+        tokensUsed: []
+      });
+      usersReset++;
+    }
+    // Reset spin counter
+    await setDoc(doc(db, "settings", "spin_counter"), { count: 0 });
+    // Reset prize settings to default
+    await setDoc(doc(db, "settings", "prize_probability"), { ...DEFAULT_SETTINGS, updatedAt: serverTimestamp() }, { merge: true });
+    // Delete current tournament
+    try { await deleteDoc(doc(db, "settings", "current_tournament")); } catch(e) {}
+    // Delete QR config
+    try { await deleteDoc(doc(db, "settings", "qr_config")); } catch(e) {}
+
+    toast(`🔄 Reset done! ${usersReset} users reset, ${totalDeleted} items deleted`);
+    closeModal("restartOv");
+    loadDashboard();
+    loadDataStats();
+    loadCurrentTournament();
+    loadSettings();
+  } catch(e) {
+    console.error(e);
+    toast("Error: " + e.message);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = "Confirm Reset";
+  }
+};
+
+// HARD RESET - Delete absolutely everything
+$("confirmHardResetBtn").onclick = async () => {
+  const btn = $("confirmHardResetBtn");
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>Destroying...';
+  try {
+    const collections = ["users","tokens","event_tokens","spins","token_logs","redeem_requests","box_claims","tournaments","settings"];
+    let total = 0;
+    for (const colName of collections) {
+      const snap = await getDocs(collection(db, colName));
+      for (const d of snap.docs) {
+        await deleteDoc(doc(db, colName, d.id));
+        total++;
+      }
+    }
+    toast(`💀 Hard Reset! Deleted ${total} items`);
+    closeModal("hardResetOv");
+    setTimeout(() => {
+      localStorage.clear();
+      location.reload();
+    }, 1500);
+  } catch(e) { toast("Error: " + e.message); }
+  finally { btn.disabled = false; btn.textContent = "💀 Delete Everything"; }
+};
+
+// ============== USERS ==============
 $("searchUserBtn").onclick = async () => {
   const q = $("userSearch").value.trim().toLowerCase();
   if (!q) return setErr("userSearchErr", "Enter name or phone.");
   setErr("userSearchErr", "");
   $("userResultCard").style.display = "none";
   $("loadingNote").style.display = "block";
-
   try {
     const results = [];
     const q1 = query(collection(db, "users"), where("phone", "==", q));
     const s1 = await getDocs(q1);
     s1.forEach(d => results.push({ id: d.id, ...d.data() }));
-
     if (results.length === 0) {
       const allSnap = await getDocs(collection(db, "users"));
       allSnap.forEach(d => {
@@ -414,19 +1560,14 @@ $("searchUserBtn").onclick = async () => {
         if ((u.name || "").toLowerCase().includes(q)) results.push({ id: d.id, ...u });
       });
     }
-
-    if (results.length === 0) {
-      $("userResult").innerHTML = '<div class="note">No user found.</div>';
-    } else {
+    if (results.length === 0) $("userResult").innerHTML = '<div class="note">No user.</div>';
+    else {
       $("userResult").innerHTML = "";
       results.slice(0, 20).forEach(u => renderUserCard(u, $("userResult")));
     }
     $("userResultCard").style.display = "block";
-  } finally {
-    $("loadingNote").style.display = "none";
-  }
+  } finally { $("loadingNote").style.display = "none"; }
 };
-
 $("loadAllUsersBtn").onclick = async () => {
   $("loadingNote").style.display = "block";
   try {
@@ -438,102 +1579,212 @@ $("loadAllUsersBtn").onclick = async () => {
     users.sort((a, b) => (b.points || 0) - (a.points || 0));
     users.forEach(u => renderUserCard(u, $("userList")));
     $("userListCard").style.display = "block";
-  } finally {
-    $("loadingNote").style.display = "none";
-  }
+  } finally { $("loadingNote").style.display = "none"; }
 };
-
 function renderUserCard(u, container) {
+  const isBlocked = u.blocked === true;
   const div = document.createElement("div");
-  div.className = "list-item";
+  div.className = "list-item" + (isBlocked ? " blocked" : "");
   div.innerHTML = `
     <div class="info">
-      <div class="name">${u.name || "Unknown"} ${u.isAdmin ? "⭐" : ""}</div>
+      <div class="name">${u.name || "Unknown"} ${u.isAdmin ? "⭐" : ""} ${isBlocked ? '<span class="badge blocked">BLOCKED</span>' : ""}</div>
       <div class="sub">📱 ${u.phone || "-"} · Spins: ${u.spins || 0} · Tokens: ${(u.tokensUsed || []).length}</div>
       <div class="sub">Joined: ${fmtDate(u.createdAt)}</div>
     </div>
-    <div class="pts">${u.points || 0} pts</div>
-    <div style="display:flex;gap:6px;flex-wrap:wrap">
+    <div class="pts-big">${u.points || 0} pts</div>
+    <div class="user-btn-row">
       <button class="btn gold small" data-add="${u.id}">+100</button>
       <button class="btn ghost small" data-rem="${u.id}">-100</button>
+      <button class="btn blue small" data-custom="${u.id}">Custom</button>
+      <button class="btn ${isBlocked ? 'green' : 'red'} small" data-block="${u.id}">${isBlocked ? '🔓 Unblock' : '🚫 Block'}</button>
+      <button class="btn purple small" data-detail="${u.id}">📊 Details</button>
+      <button class="btn red small" data-delete="${u.id}">🗑️ Delete</button>
     </div>
   `;
   container.appendChild(div);
-
   div.querySelector("[data-add]").onclick = () => adjustPoints(u.id, +100);
   div.querySelector("[data-rem]").onclick = () => adjustPoints(u.id, -100);
+  div.querySelector("[data-custom]").onclick = () => {
+    const amt = prompt("Amount (+100 or -50):", "+100");
+    if (!amt) return;
+    const n = parseInt(amt);
+    if (isNaN(n)) return toast("Invalid");
+    adjustPoints(u.id, n);
+  };
+  div.querySelector("[data-block]").onclick = () => toggleBlock(u.id, !isBlocked, u.name || "User");
+  div.querySelector("[data-detail]").onclick = () => showUserDetail(u.id);
+  div.querySelector("[data-delete]").onclick = () => deleteUserAccount(u.id, u.name || "User", u.phone || "");
 }
 
+// Delete User Account (full delete)
+async function deleteUserAccount(uid, userName, phone) {
+  showConfirm(
+    "🗑️ Delete User Account?",
+    `<b>${userName}</b> (${phone})<br><br>এই ইউজারের অ্যাকাউন্ট এবং সব ডাটা (Points, Spins, Tokens) স্থায়ীভাবে ডিলিট হয়ে যাবে।<br><br><b style="color:var(--err)">Undo করা যাবে না!</b>`,
+    async () => {
+      try {
+        await deleteDoc(doc(db, "users", uid));
+        // Delete their spins
+        try {
+          const spinsQ = query(collection(db, "spins"), where("uid", "==", uid));
+          const spinsSnap = await getDocs(spinsQ);
+          for (const d of spinsSnap.docs) {
+            await deleteDoc(doc(db, "spins", d.id));
+          }
+        } catch(e) {}
+        // Delete their redeem requests
+        try {
+          const rQ = query(collection(db, "redeem_requests"), where("uid", "==", uid));
+          const rSnap = await getDocs(rQ);
+          for (const d of rSnap.docs) {
+            await deleteDoc(doc(db, "redeem_requests", d.id));
+          }
+        } catch(e) {}
+        toast(`🗑️ Deleted: ${userName}`);
+        if (!$("userResultCard").classList.contains("hidden")) $("searchUserBtn").click();
+        if (!$("userListCard").classList.contains("hidden")) $("loadAllUsersBtn").click();
+        loadDashboard();
+      } catch(e) { toast("Error: " + e.message); }
+    }
+  );
+}
+
+// Show User Detail
+async function showUserDetail(uid) {
+  try {
+    const snap = await getDoc(doc(db, "users", uid));
+    if (!snap.exists()) return toast("User not found");
+    const u = snap.data();
+    const spins = u.spins || 0;
+    const points = u.points || 0;
+    const tokensUsed = (u.tokensUsed || []).length;
+    const content = `
+      <div style="text-align:center;margin-bottom:14px">
+        <div style="width:70px;height:70px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--brand));display:inline-flex;align-items:center;justify-content:center;font-weight:900;font-size:1.6rem;color:#fff">
+          ${(u.name || "U").charAt(0).toUpperCase()}
+        </div>
+        <h3 style="color:var(--gold);margin:10px 0 4px;font-size:1.15rem">${u.name || "Unknown"}</h3>
+        <div style="font-size:.82rem;color:var(--muted)">📱 ${u.phone || "-"}</div>
+        ${u.isAdmin ? '<div style="margin-top:6px"><span class="badge winner">⭐ ADMIN</span></div>' : ''}
+        ${u.blocked ? '<div style="margin-top:6px"><span class="badge blocked">🚫 BLOCKED</span></div>' : ''}
+      </div>
+      <div class="user-detail-grid">
+        <div class="user-detail-item">
+          <div class="ud-label">💰 Points</div>
+          <div class="ud-value">${points}</div>
+        </div>
+        <div class="user-detail-item">
+          <div class="ud-label">🎯 Spins</div>
+          <div class="ud-value">${spins}</div>
+        </div>
+        <div class="user-detail-item">
+          <div class="ud-label">🎫 Tokens Used</div>
+          <div class="ud-value">${tokensUsed}</div>
+        </div>
+        <div class="user-detail-item">
+          <div class="ud-label">💸 Redeemed</div>
+          <div class="ud-value">${u.totalRedeemed || 0}</div>
+        </div>
+      </div>
+      <div style="font-size:.78rem;color:var(--muted);margin-top:10px;line-height:1.6">
+        <div>📅 Joined: ${fmtDate(u.createdAt)}</div>
+        <div>🔐 Last Login: ${fmtDate(u.lastLogin)}</div>
+        <div>🆔 User ID: <code style="background:rgba(0,0,0,.3);padding:2px 6px;border-radius:4px;font-size:.72rem">${uid}</code></div>
+      </div>
+    `;
+    $("userDetailContent").innerHTML = content;
+    $("userDetailOv").classList.add("open");
+  } catch(e) { toast("Error: " + e.message); }
+}
+
+async function toggleBlock(uid, block, userName) {
+  showConfirm(`${block ? "🚫 Block" : "🔓 Unblock"} User?`, `${block ? "Block" : "Unblock"} <b>${userName}</b>?`, async () => {
+    try {
+      await updateDoc(doc(db, "users", uid), { blocked: block, blockedAt: block ? serverTimestamp() : null });
+      toast(block ? "🚫 Blocked" : "🔓 Unblocked");
+      setTimeout(() => {
+        if (!$("userResultCard").classList.contains("hidden")) $("searchUserBtn").click();
+        if (!$("userListCard").classList.contains("hidden")) $("loadAllUsersBtn").click();
+        loadDashboard();
+      }, 400);
+    } catch(e) { toast("Error"); }
+  });
+}
 async function adjustPoints(uid, delta) {
   try {
     await updateDoc(doc(db, "users", uid), { points: increment(delta) });
     toast(`Points ${delta > 0 ? "+" : ""}${delta}`);
-    setTimeout(() => { $("searchUserBtn").click(); $("loadAllUsersBtn").click(); loadDashboard(); }, 400);
-  } catch (e) {
-    toast("Error adjusting points");
-  }
+    setTimeout(() => {
+      if (!$("userResultCard").classList.contains("hidden")) $("searchUserBtn").click();
+      if (!$("userListCard").classList.contains("hidden")) $("loadAllUsersBtn").click();
+      loadDashboard();
+    }, 400);
+  } catch (e) { toast("Error"); }
 }
 
-// ============== TOKEN GENERATOR ==============
+// ============== TOKENS ==============
 $("genBtn").onclick = async () => {
   setErr("genErr", "");
   const count = parseInt($("genCount").value, 10) || 0;
   const prefix = ($("genPrefix").value || "ARNX").toUpperCase().replace(/[^A-Z0-9]/g, "");
   if (count < 1 || count > 1000) return setErr("genErr", "Enter 1-1000.");
-
   const btn = $("genBtn");
   btn.disabled = true;
-  btn.innerHTML = '<span class="spinner"></span>Generating...';
-
+  btn.innerHTML = '<span class="spinner"></span>...';
   try {
     const codes = [];
     const charset = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
     for (let i = 0; i < count; i++) {
-      let mid1 = "", mid2 = "";
-      for (let j = 0; j < 4; j++) mid1 += charset[Math.floor(Math.random() * charset.length)];
-      for (let j = 0; j < 4; j++) mid2 += charset[Math.floor(Math.random() * charset.length)];
-      codes.push(`${prefix}-${mid1}-${mid2}`);
+      let m1 = "", m2 = "";
+      for (let j = 0; j < 4; j++) m1 += charset[Math.floor(Math.random() * charset.length)];
+      for (let j = 0; j < 4; j++) m2 += charset[Math.floor(Math.random() * charset.length)];
+      codes.push(`${prefix}-${m1}-${m2}`);
     }
-
     const chunks = [];
     for (let i = 0; i < codes.length; i += 400) chunks.push(codes.slice(i, i + 400));
-
     let saved = 0;
     for (const chunk of chunks) {
       const promises = chunk.map(code =>
         setDoc(doc(db, "tokens", code), { is_used: false, createdAt: serverTimestamp() })
           .then(() => saved++)
-          .catch(e => console.warn("Skip dup:", code))
+          .catch(e => console.warn("Skip:", code))
       );
       await Promise.all(promises);
     }
-
+    lastGeneratedTokens = codes;
     $("genList").textContent = codes.join("\n");
     $("genOutput").style.display = "block";
     toast(`✅ Generated ${saved} tokens`);
-  } catch (err) {
-    console.error(err);
-    setErr("genErr", "Error generating. Try fewer.");
-  } finally {
-    btn.disabled = false;
-    btn.textContent = "⚡ Generate";
-  }
+  } catch (err) { setErr("genErr", "Error: " + err.message); }
+  finally { btn.disabled = false; btn.textContent = "⚡ Generate"; }
 };
 
 $("copyTokensBtn").onclick = async () => {
-  const text = $("genList").textContent;
-  try {
-    await navigator.clipboard.writeText(text);
-    toast("📋 Copied to clipboard");
-  } catch (e) {
+  if (!lastGeneratedTokens.length) return toast("⚠️ Generate first");
+  const text = lastGeneratedTokens.join("\n");
+  try { await navigator.clipboard.writeText(text); toast("📋 Copied!"); }
+  catch (e) {
     const ta = document.createElement("textarea");
-    ta.value = text;
-    document.body.appendChild(ta);
-    ta.select();
-    document.execCommand("copy");
-    ta.remove();
-    toast("📋 Copied");
+    ta.value = text; document.body.appendChild(ta); ta.select();
+    document.execCommand("copy"); ta.remove(); toast("📋 Copied");
   }
+};
+
+$("downloadTokensBtn").onclick = async () => {
+  if (!lastGeneratedTokens.length) return toast("⚠️ Generate first");
+  const count = lastGeneratedTokens.length;
+  const now = new Date().toLocaleString("en-GB", { timeZone: "Asia/Dhaka" });
+  const rows = [["MISHTI SPIN - TOKENS"], [`Generated: ${now}`], [`Total: ${count}`], [], ["Token Code"]];
+  lastGeneratedTokens.forEach(t => rows.push([t]));
+  const csv = rows.map(r => r.map(c => `"${String(c).replace(/"/g, '""')}"`).join(",")).join("\n");
+  const blob = new Blob(["\ufeff" + csv], { type: "text/csv;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `tokens-${count}-${Date.now()}.csv`;
+  document.body.appendChild(a); a.click(); a.remove();
+  try { await navigator.clipboard.writeText(lastGeneratedTokens.join("\n")); } catch(e){}
+  toast(`📥 Downloaded ${count}`);
 };
 
 $("loadTokenStatsBtn").onclick = async () => {
@@ -543,13 +1794,173 @@ $("loadTokenStatsBtn").onclick = async () => {
     let used = 0, unused = 0;
     snap.forEach(d => { d.data().is_used ? used++ : unused++; });
     $("tokenStats").innerHTML = `
-      <div class="stat"><b>${snap.size}</b><small>Total</small></div>
-      <div class="stat" style="margin-top:8px"><b>${used}</b><small>Used</small></div>
-      <div class="stat" style="margin-top:8px"><b>${unused}</b><small>Unused</small></div>
+      <div class="stats-grid">
+        <div class="stat-card"><span class="stat-num">${snap.size}</span><span class="stat-label">Total</span></div>
+        <div class="stat-card"><span class="stat-num">${used}</span><span class="stat-label">Used</span></div>
+        <div class="stat-card"><span class="stat-num">${unused}</span><span class="stat-label">Unused</span></div>
+      </div>
     `;
-  } finally {
-    $("loadingNote").style.display = "none";
+  } finally { $("loadingNote").style.display = "none"; }
+};
+
+$("loadTokensBtn").onclick = async () => {
+  $("loadingNote").style.display = "block";
+  $("tokensList").innerHTML = '<div class="note">Loading...</div>';
+  try {
+    const snap = await getDocs(collection(db, "tokens"));
+    allTokensCache = [];
+    snap.forEach(d => allTokensCache.push({ id: d.id, ...d.data() }));
+    renderTokens();
+  } catch (e) { $("tokensList").innerHTML = '<div class="note">Error</div>'; }
+  finally { $("loadingNote").style.display = "none"; }
+};
+
+document.querySelectorAll("[data-filter]").forEach(btn => {
+  btn.onclick = () => {
+    document.querySelectorAll("[data-filter]").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    tokenFilter = btn.dataset.filter;
+    renderTokens();
+  };
+});
+
+$("tokenSearchInput").addEventListener("input", e => {
+  tokenSearch = e.target.value.trim().toUpperCase();
+  renderTokens();
+});
+
+function renderTokens() {
+  if (!allTokensCache.length) {
+    $("tokensList").innerHTML = '<div class="note">No tokens. Click "Load" first.</div>';
+    $("tokenCountLabel").textContent = "";
+    return;
   }
+  let filtered = allTokensCache;
+  if (tokenFilter === "used") filtered = filtered.filter(t => t.is_used);
+  if (tokenFilter === "unused") filtered = filtered.filter(t => !t.is_used);
+  if (tokenSearch) filtered = filtered.filter(t => t.id.includes(tokenSearch));
+  filtered.sort((a, b) => {
+    if (a.is_used !== b.is_used) return a.is_used ? 1 : -1;
+    const at = a.createdAt?.toDate?.()?.getTime() || 0;
+    const bt = b.createdAt?.toDate?.()?.getTime() || 0;
+    return bt - at;
+  });
+  $("tokenCountLabel").textContent = `Showing ${Math.min(filtered.length, 500)} of ${filtered.length} (${tokenFilter})`;
+  const list = $("tokensList");
+  list.innerHTML = "";
+  if (!filtered.length) { list.innerHTML = '<div class="note">No match.</div>'; return; }
+  filtered.slice(0, 500).forEach(t => {
+    const div = document.createElement("div");
+    div.className = "token-row";
+    const badge = t.is_used ? '<span class="badge used">USED</span>' : '<span class="badge unused">UNUSED</span>';
+    const usedInfo = t.is_used
+      ? `<div class="token-info">Used: ${t.used_at ? fmtDate(t.used_at) : "-"}</div>`
+      : `<div class="token-info">Created: ${t.createdAt ? fmtDate(t.createdAt) : "-"}</div>`;
+    div.innerHTML = `
+      <div style="flex:1;min-width:180px">
+        <div class="token-code">${t.id}</div>
+        ${usedInfo}
+      </div>
+      ${badge}
+      <button class="btn red small" data-del="${t.id}">🗑️</button>
+    `;
+    list.appendChild(div);
+    div.querySelector("[data-del]").onclick = () => deleteToken(t.id);
+  });
+}
+
+async function deleteToken(tokenId) {
+  showConfirm("🗑️ Delete Token?", `Delete token <b>${tokenId}</b>?`, async () => {
+    try {
+      await deleteDoc(doc(db, "tokens", tokenId));
+      allTokensCache = allTokensCache.filter(t => t.id !== tokenId);
+      renderTokens();
+      toast("🗑️ Deleted: " + tokenId);
+    } catch (e) {
+      toast("❌ Error: " + (e.message || "unknown"));
+    }
+  });
+}
+
+$("deleteUsedBtn").onclick = async () => {
+  if (!allTokensCache.length) return toast("⚠️ আগে 'Load' button ক্লিক করো");
+  const used = allTokensCache.filter(t => t.is_used);
+  if (!used.length) return toast("✅ No used tokens to delete");
+  showConfirm("🗑️ Delete All Used Tokens?", `Delete all <b>${used.length}</b> USED tokens? This cannot be undone.`, async () => {
+    const btn = $("deleteUsedBtn");
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span>Deleting...';
+    try {
+      let deleted = 0;
+      for (let i = 0; i < used.length; i += 10) {
+        const chunk = used.slice(i, i + 10);
+        await Promise.all(chunk.map(t => 
+          deleteDoc(doc(db, "tokens", t.id))
+            .then(() => deleted++)
+            .catch(e => console.warn("Skip:", t.id, e.message))
+        ));
+      }
+      allTokensCache = allTokensCache.filter(t => !t.is_used);
+      renderTokens();
+      toast(`🗑️ Deleted ${deleted} used tokens`);
+    } catch (e) {
+      toast("❌ Error: " + (e.message || "unknown"));
+    } finally {
+      btn.disabled = false;
+      btn.textContent = "🗑️ Delete All Used";
+    }
+  });
+};
+
+$("deleteUnusedBtn").onclick = async () => {
+  if (!allTokensCache.length) return toast("⚠️ আগে 'Load' button ক্লিক করো");
+  const unused = allTokensCache.filter(t => !t.is_used);
+  if (!unused.length) return toast("✅ No unused tokens to delete");
+  showConfirm("🗑️ Delete All Unused Tokens?", `Delete all <b>${unused.length}</b> UNUSED tokens? This cannot be undone.`, async () => {
+    const btn = $("deleteUnusedBtn");
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span>Deleting...';
+    try {
+      let deleted = 0;
+      for (let i = 0; i < unused.length; i += 10) {
+        const chunk = unused.slice(i, i + 10);
+        await Promise.all(chunk.map(t => 
+          deleteDoc(doc(db, "tokens", t.id))
+            .then(() => deleted++)
+            .catch(e => console.warn("Skip:", t.id, e.message))
+        ));
+      }
+      allTokensCache = allTokensCache.filter(t => t.is_used);
+      renderTokens();
+      toast(`🗑️ Deleted ${deleted} unused tokens`);
+    } catch (e) {
+      toast("❌ Error: " + (e.message || "unknown"));
+    } finally {
+      btn.disabled = false;
+      btn.textContent = "🗑️ Delete All Unused";
+    }
+  });
+};
+
+$("exportTokensBtn").onclick = async () => {
+  if (!allTokensCache.length) return toast("Load first");
+  let filtered = allTokensCache;
+  if (tokenFilter === "used") filtered = filtered.filter(t => t.is_used);
+  if (tokenFilter === "unused") filtered = filtered.filter(t => !t.is_used);
+  if (tokenSearch) filtered = filtered.filter(t => t.id.includes(tokenSearch));
+  const rows = [["Token", "Status", "Used At", "Created At"]];
+  filtered.forEach(t => {
+    rows.push([t.id, t.is_used ? "USED" : "UNUSED",
+      t.used_at ? fmtDate(t.used_at) : "", t.createdAt ? fmtDate(t.createdAt) : ""]);
+  });
+  const csv = rows.map(r => r.map(c => `"${String(c).replace(/"/g, '""')}"`).join(",")).join("\n");
+  const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `tokens-${tokenFilter}-${Date.now()}.csv`;
+  document.body.appendChild(a); a.click(); a.remove();
+  toast(`📥 ${filtered.length}`);
 };
 
 // ============== WINNERS ==============
@@ -561,13 +1972,11 @@ document.querySelectorAll("[data-winner]").forEach(btn => {
     loadWinners();
   };
 });
-
 $("loadWinnersBtn").onclick = loadWinners;
-
 async function loadWinners() {
   $("loadingNote").style.display = "block";
   try {
-    let q = query(collection(db, "spins"), orderBy("createdAt", "desc"), limit(100));
+    const q = query(collection(db, "spins"), orderBy("createdAt", "desc"), limit(100));
     const snap = await getDocs(q);
     const list = $("winnersList");
     list.innerHTML = "";
@@ -576,7 +1985,7 @@ async function loadWinners() {
       const s = d.data();
       if (winnerFilter !== "all" && s.prizeType !== winnerFilter) return;
       count++;
-      const icon = s.prizeType === "box" ? "🎁" : s.prizeType === "free" ? "🚚" : "🎯";
+      const icon = s.prizeType === "box" ? "🎁" : s.prizeType === "free" ? "🚚" : s.prizeType === "zero" ? "💀" : "🎯";
       const div = document.createElement("div");
       div.className = "list-item";
       div.innerHTML = `
@@ -589,10 +1998,8 @@ async function loadWinners() {
       `;
       list.appendChild(div);
     });
-    if (count === 0) list.innerHTML = '<div class="note">No winners found.</div>';
-  } finally {
-    $("loadingNote").style.display = "none";
-  }
+    if (count === 0) list.innerHTML = '<div class="note">No winners.</div>';
+  } finally { $("loadingNote").style.display = "none"; }
 }
 
 // ============== REDEEM ==============
@@ -603,7 +2010,7 @@ $("loadRedeemBtn").onclick = async () => {
     const snap = await getDocs(q);
     const list = $("redeemList");
     list.innerHTML = "";
-    if (snap.empty) { list.innerHTML = '<div class="note">No redeem requests yet.</div>'; return; }
+    if (snap.empty) { list.innerHTML = '<div class="note">No requests.</div>'; return; }
     snap.forEach(d => {
       const r = d.data();
       const div = document.createElement("div");
@@ -613,79 +2020,273 @@ $("loadRedeemBtn").onclick = async () => {
           <div class="name">${r.name || "-"} <span class="badge ${r.status || "pending"}">${r.status || "pending"}</span></div>
           <div class="sub">📱 ${r.phone || "-"}</div>
           <div class="sub">💸 ${r.taka || 0} taka (${r.points || 0} pts) · ${fmtDate(r.createdAt)}</div>
-          <div class="sub" style="font-size:.7rem;color:#8a6a5a">UID: ${r.uid || "-"}</div>
         </div>
-        <div style="display:flex;gap:6px;flex-wrap:wrap">
-          <button class="btn green small" data-approve="${d.id}">✅ Approve</button>
-          <button class="btn ghost small" data-reject="${d.id}">❌ Reject</button>
+        <div style="display:flex;gap:6px;width:100%">
+          <button class="btn green small" data-approve="${d.id}" style="flex:1">✅</button>
+          <button class="btn red small" data-reject="${d.id}" style="flex:1">❌</button>
         </div>
       `;
       list.appendChild(div);
       div.querySelector("[data-approve]").onclick = () => updateRedeem(d.id, "approved");
       div.querySelector("[data-reject]").onclick = () => updateRedeem(d.id, "rejected");
     });
-  } finally {
-    $("loadingNote").style.display = "none";
-  }
+  } finally { $("loadingNote").style.display = "none"; }
 };
-
 async function updateRedeem(id, status) {
   try {
-    // Get request first
     const reqRef = doc(db, "redeem_requests", id);
     const reqSnap = await getDoc(reqRef);
-    if (!reqSnap.exists()) return toast("Request not found");
-
+    if (!reqSnap.exists()) return toast("Not found");
     const req = reqSnap.data();
     const oldStatus = req.status || "pending";
-
-    // If approving and not already approved, deduct points
     if (status === "approved" && oldStatus !== "approved") {
-      if (!req.uid) {
-        console.error("Missing UID in redeem request");
-        return toast("⚠️ Missing user ID");
-      }
-
+      if (!req.uid) return toast("⚠️ Missing user ID");
       const userRef = doc(db, "users", req.uid);
       const userSnap = await getDoc(userRef);
-
-      if (!userSnap.exists()) {
-        toast("⚠️ User not found");
-        return;
-      }
-
+      if (!userSnap.exists()) return toast("⚠️ User not found");
       const u = userSnap.data();
-      const currentPts = u.points || 0;
-      const redeemPts = req.points || 0;
-
-      // Deduct points, track redeemed
       await updateDoc(userRef, {
-        points: Math.max(0, currentPts - redeemPts),
-        totalRedeemed: (u.totalRedeemed || 0) + redeemPts
+        points: Math.max(0, (u.points || 0) - (req.points || 0)),
+        totalRedeemed: (u.totalRedeemed || 0) + (req.points || 0)
       });
     }
-
-    // Update status
-    await updateDoc(reqRef, {
-      status,
-      handledAt: serverTimestamp(),
-      handledBy: adminPhone || "admin"
-    });
-
+    await updateDoc(reqRef, { status, handledAt: serverTimestamp(), handledBy: adminPhone });
     toast("✅ " + status);
     $("loadRedeemBtn").click();
     loadDashboard();
-  } catch (e) {
-    console.error("REDEEM UPDATE ERROR:", e);
-    toast("Error: " + (e.message || "unknown"));
-  }
+  } catch (e) { toast("Error: " + (e.message || "unknown")); }
 }
 
-// Phone input
+// ============== TOOLS: Global Search ==============
+document.querySelectorAll("[data-gsearch]").forEach(btn => {
+  btn.onclick = () => {
+    document.querySelectorAll("[data-gsearch]").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    globalSearchFilter = btn.dataset.gsearch;
+  };
+});
+
+$("globalSearchBtn").onclick = async () => {
+  const q = $("globalSearchInput").value.trim().toLowerCase();
+  if (!q) return toast("⚠️ Enter search term");
+  const container = $("globalSearchResults");
+  container.innerHTML = '<div class="note" style="text-align:center"><span class="spinner"></span> Searching...</div>';
+  try {
+    const results = [];
+    if (globalSearchFilter === "all" || globalSearchFilter === "users") {
+      const usersSnap = await getDocs(collection(db, "users"));
+      usersSnap.forEach(d => {
+        const u = d.data();
+        if ((u.name || "").toLowerCase().includes(q) || (u.phone || "").includes(q)) {
+          results.push({ type: "user", data: { id: d.id, ...u } });
+        }
+      });
+    }
+    if (globalSearchFilter === "all" || globalSearchFilter === "tokens") {
+      const tokensSnap = await getDocs(collection(db, "tokens"));
+      tokensSnap.forEach(d => {
+        if (d.id.toLowerCase().includes(q)) {
+          results.push({ type: "token", data: { id: d.id, ...d.data() } });
+        }
+      });
+    }
+    if (globalSearchFilter === "all" || globalSearchFilter === "events") {
+      const eventsSnap = await getDocs(collection(db, "event_tokens"));
+      eventsSnap.forEach(d => {
+        const e = d.data();
+        if ((e.name || "").toLowerCase().includes(q) || d.id.toLowerCase().includes(q)) {
+          results.push({ type: "event", data: { id: d.id, ...e } });
+        }
+      });
+    }
+    container.innerHTML = "";
+    if (!results.length) {
+      container.innerHTML = '<div class="note" style="text-align:center">No results found</div>';
+      return;
+    }
+    container.innerHTML = `<div class="note" style="text-align:center;margin-bottom:8px">Found ${results.length} result(s)</div>`;
+    results.slice(0, 50).forEach(r => {
+      const div = document.createElement("div");
+      div.className = "search-result-item " + r.type;
+      if (r.type === "user") {
+        const u = r.data;
+        div.innerHTML = `
+          <div class="sr-type">👥 USER</div>
+          <div class="sr-value">${u.name || "Unknown"} ${u.isAdmin ? "⭐" : ""}</div>
+          <div style="font-size:.76rem;color:var(--muted);margin-top:4px">📱 ${u.phone || "-"} · Points: ${u.points || 0} · Spins: ${u.spins || 0}</div>
+        `;
+      } else if (r.type === "token") {
+        const t = r.data;
+        div.innerHTML = `
+          <div class="sr-type">🎫 TOKEN ${t.is_used ? "(USED)" : "(UNUSED)"}</div>
+          <div class="sr-value" style="font-family:'Courier New',monospace">${t.id}</div>
+          <div style="font-size:.76rem;color:var(--muted);margin-top:4px">Created: ${t.createdAt ? fmtDate(t.createdAt) : "-"}</div>
+        `;
+      } else if (r.type === "event") {
+        const e = r.data;
+        div.innerHTML = `
+          <div class="sr-type">🎁 EVENT TOKEN</div>
+          <div class="sr-value">${e.name} · ${e.code}</div>
+          <div style="font-size:.76rem;color:var(--muted);margin-top:4px">⚡ ${e.spins} spins · Used: ${e.usedCount || 0}/${e.maxUses}</div>
+        `;
+      }
+      container.appendChild(div);
+    });
+  } catch(e) {
+    console.error(e);
+    container.innerHTML = `<div class="note" style="text-align:center">❌ Error: ${e.message}</div>`;
+  }
+};
+
+// ============== TOOLS: Backup/Export ==============
+$("backupJsonBtn").onclick = async () => {
+  const btn = $("backupJsonBtn");
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>Backing up...';
+  try {
+    const backup = { exportedAt: new Date().toISOString(), adminPhone };
+    const collections = ["users", "tokens", "event_tokens", "spins", "redeem_requests", "tournaments", "settings"];
+    for (const colName of collections) {
+      backup[colName] = {};
+      const snap = await getDocs(collection(db, colName));
+      snap.forEach(d => {
+        const data = d.data();
+        const cleaned = {};
+        Object.keys(data).forEach(k => {
+          const v = data[k];
+          if (v && typeof v.toDate === "function") cleaned[k] = v.toDate().toISOString();
+          else cleaned[k] = v;
+        });
+        backup[colName][d.id] = cleaned;
+      });
+    }
+    const json = JSON.stringify(backup, null, 2);
+    const blob = new Blob([json], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `mishti-backup-${Date.now()}.json`;
+    document.body.appendChild(a); a.click(); a.remove();
+    const total = Object.keys(backup).filter(k => typeof backup[k] === "object").reduce((sum, k) => sum + Object.keys(backup[k]).length, 0);
+    toast(`💾 Backup saved (${total} items)`);
+  } catch(e) {
+    toast("Error: " + e.message);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = "💾 Download Full Backup (JSON)";
+  }
+};
+
+function exportCSV(name, rows) {
+  const csv = rows.map(r => r.map(c => `"${String(c).replace(/"/g, '""')}"`).join(",")).join("\n");
+  const blob = new Blob(["\ufeff" + csv], { type: "text/csv;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `${name}-${Date.now()}.csv`;
+  document.body.appendChild(a); a.click(); a.remove();
+}
+
+$("exportUsersCsvBtn").onclick = async () => {
+  const snap = await getDocs(collection(db, "users"));
+  const rows = [["Name", "Phone", "Points", "Spins", "Tokens Used", "Blocked", "Admin", "Joined"]];
+  snap.forEach(d => {
+    const u = d.data();
+    rows.push([u.name || "", u.phone || "", u.points || 0, u.spins || 0, (u.tokensUsed || []).length, u.blocked ? "YES" : "NO", u.isAdmin ? "YES" : "NO", u.createdAt ? fmtDate(u.createdAt) : ""]);
+  });
+  exportCSV("users", rows);
+  toast(`📥 ${snap.size} users exported`);
+};
+
+$("exportTokensCsvBtn").onclick = async () => {
+  const snap = await getDocs(collection(db, "tokens"));
+  const rows = [["Token", "Status", "Created", "Used At"]];
+  snap.forEach(d => {
+    const t = d.data();
+    rows.push([d.id, t.is_used ? "USED" : "UNUSED", t.createdAt ? fmtDate(t.createdAt) : "", t.used_at ? fmtDate(t.used_at) : ""]);
+  });
+  exportCSV("tokens", rows);
+  toast(`📥 ${snap.size} tokens exported`);
+};
+
+$("exportSpinsCsvBtn").onclick = async () => {
+  const snap = await getDocs(collection(db, "spins"));
+  const rows = [["Name", "Phone", "Prize", "Prize Type", "Spin #", "Coupon", "Date"]];
+  snap.forEach(d => {
+    const s = d.data();
+    rows.push([s.name || "", s.phone || "", s.prizeLabel || "", s.prizeType || "", s.spinNo || "", s.coupon || "", s.createdAt ? fmtDate(s.createdAt) : ""]);
+  });
+  exportCSV("spins", rows);
+  toast(`📥 ${snap.size} spins exported`);
+};
+
+// ============== TOOLS: Quick Links ==============
+$("copyAppUrlBtn").onclick = async () => {
+  try { await navigator.clipboard.writeText(APP_URL); toast("📋 App URL copied!"); }
+  catch(e) { toast(APP_URL); }
+};
+$("copyAdminUrlBtn").onclick = async () => {
+  const adminUrl = APP_URL + "admin.html";
+  try { await navigator.clipboard.writeText(adminUrl); toast("📋 Admin URL copied!"); }
+  catch(e) { toast(adminUrl); }
+};
+
+// ============== TOOLS: Cleanup ==============
+$("cleanupOldSpinsBtn").onclick = async () => {
+  showConfirm("🧹 Cleanup Old Spins?", "Delete all spins older than 30 days?", async () => {
+    const btn = $("cleanupOldSpinsBtn");
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span>Cleaning...';
+    try {
+      const cutoff = Date.now() - 30 * 86400000;
+      const snap = await getDocs(collection(db, "spins"));
+      let deleted = 0;
+      for (const d of snap.docs) {
+        const s = d.data();
+        const t = s.createdAt?.toDate?.()?.getTime() || 0;
+        if (t < cutoff) {
+          await deleteDoc(doc(db, "spins", d.id));
+          deleted++;
+        }
+      }
+      toast(`🧹 Deleted ${deleted} old spins`);
+    } catch(e) { toast("Error: " + e.message); }
+    finally { btn.disabled = false; btn.textContent = "🧹 Delete Spins Older Than 30 Days"; }
+  });
+};
+
+$("cleanupRejectedBtn").onclick = async () => {
+  showConfirm("🧹 Cleanup Rejected?", "Delete all rejected redeem requests?", async () => {
+    const btn = $("cleanupRejectedBtn");
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span>Cleaning...';
+    try {
+      const snap = await getDocs(collection(db, "redeem_requests"));
+      let deleted = 0;
+      for (const d of snap.docs) {
+        if (d.data().status === "rejected") {
+          await deleteDoc(doc(db, "redeem_requests", d.id));
+          deleted++;
+        }
+      }
+      toast(`🧹 Deleted ${deleted} rejected requests`);
+    } catch(e) { toast("Error: " + e.message); }
+    finally { btn.disabled = false; btn.textContent = "🧹 Delete Rejected Redeem Requests"; }
+  });
+};
+
+// ============== INPUTS ==============
 $("adminPhone").addEventListener("input", e => {
   e.target.value = e.target.value.replace(/\D/g, "").slice(0, 11);
 });
+$("tokenSearchInput").addEventListener("input", e => {
+  e.target.value = e.target.value.toUpperCase().replace(/[^A-Z0-9-]/g, "");
+});
+$("evtCode").addEventListener("input", e => {
+  e.target.value = e.target.value.toUpperCase().replace(/[^A-Z0-9-]/g, "");
+});
 
+window.__MISHTI_ADMIN__ = { db, auth };
 </script>
 </body>
 </html>
